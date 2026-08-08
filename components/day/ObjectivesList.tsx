@@ -31,14 +31,12 @@ export function ObjectivesList({ objectives, onCompletionChange }: ObjectivesLis
   const [completed, setCompleted] = useState<Record<number, boolean>>({});
 
   const toggleObjective = (index: number) => {
-    setCompleted((prev) => {
-      const updated = { ...prev, [index]: !prev[index] };
+    const updated = { ...completed, [index]: !completed[index] };
+    setCompleted(updated);
+    if (onCompletionChange) {
       const count = Object.values(updated).filter(Boolean).length;
-      if (onCompletionChange) {
-        onCompletionChange(count);
-      }
-      return updated;
-    });
+      onCompletionChange(count);
+    }
   };
 
   const completedCount = Object.values(completed).filter(Boolean).length;
