@@ -1,198 +1,303 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle, UserCircle2, Sparkles } from "lucide-react";
 import { TopAppBar } from "@/components/dashboard/TopAppBar";
+import { DesktopHeader } from "@/components/dashboard/DesktopHeader";
 import { StreakCard } from "@/components/dashboard/StreakCard";
+import { MomentumCard } from "@/components/dashboard/MomentumCard";
 import { ProgressCard } from "@/components/dashboard/ProgressCard";
 import { TodayChallengeCard } from "@/components/dashboard/TodayChallengeCard";
 import { AchievementsPanel } from "@/components/dashboard/AchievementsPanel";
 import { WeeklyHeatmap } from "@/components/dashboard/WeeklyHeatmap";
 import { LeaderboardPreview } from "@/components/dashboard/LeaderboardPreview";
 import { BottomNav } from "@/components/dashboard/BottomNav";
-import { getDashboardData, todayChallenge } from "@/data/dashboard";
-
-// ─── TOGGLE THIS TO SWITCH EDGE CASES ────────────────────────────────────────
-// Options: "normal" | "firstDay" | "missedDay" | "emptyProfile"
-const ACTIVE_EDGE_CASE = "normal" as const;
-// ─────────────────────────────────────────────────────────────────────────────
+import { StateSwitcher } from "@/components/dashboard/StateSwitcher";
+import { NotificationPanel } from "@/components/dashboard/NotificationPanel";
+import { SettingsModal } from "@/components/dashboard/SettingsModal";
+import { ProfileModal } from "@/components/dashboard/ProfileModal";
+import { ProgressDetailModal } from "@/components/dashboard/ProgressDetailModal";
+import { AchievementDetailModal } from "@/components/dashboard/AchievementDetailModal";
+import {
+  getDashboardData,
+  todayChallenge,
+  initialNotifications,
+  defaultSettings,
+  EdgeCase,
+  NotificationItem,
+  UserSettings,
+  AchievementDetail,
+} from "@/data/dashboard";
 
 export default function DashboardPage() {
+  // Edge Case Switcher State
+  const [activeEdgeCase, setActiveEdgeCase] = useState<EdgeCase>("normal");
+
+  // Notifications State
+  const [notifications, setNotifications] = useState<NotificationItem[]>(initialNotifications);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
+  // Settings State
+  const [settings, setSettings] = useState<UserSettings>(defaultSettings);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  // Profile Modal State
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  // Progress Detail Modal State
+  const [isProgressDetailOpen, setIsProgressDetailOpen] = useState(false);
+
+  // Achievement Detail Modal State
+  const [selectedAchievement, setSelectedAchievement] = useState<AchievementDetail | null>(null);
+
+  // Resolve current state data
   const { user, leaderboard, isFirstDay, isMissedDay, isEmptyProfile } =
-    getDashboardData(ACTIVE_EDGE_CASE);
+    getDashboardData(activeEdgeCase);
+
+  const unreadCount = notifications.filter((n) => n.unread).length;
+
+  const handleMarkNotificationRead = (id: string) => {
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, unread: false } : n))
+    );
+  };
+
+  const handleMarkAllNotificationsRead = () => {
+    setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
+  };
 
   return (
-    <>
-      {/* Page */}
-      <main
-        className="min-h-dvh pb-28"
-        style={{ background: "#09090B", maxWidth: "480px", margin: "0 auto" }}
-      >
-        {/* Top App Bar */}
-        <TopAppBar
-          name={user.name}
-          avatar={user.avatar}
-          track={user.track}
-          notificationCount={isMissedDay ? 1 : isFirstDay ? 0 : 2}
-          isEmptyProfile={isEmptyProfile}
-        />
+    <div className="min-h-screen bg-[#09090B] text-zinc-100 flex flex-col selection:bg-indigo-500/20">
 
-        {/* ── Empty profile banner ──────────────────────────── */}
+      {/* 0. Preview Edge Case Switcher Bar */}
+      <StateSwitcher currentCase={activeEdgeCase} onChange={setActiveEdgeCase} />
+
+      {/* 1. Mobile App Header (< md) */}
+      <TopAppBar
+        name={user.name}
+        avatar={user.avatar}
+        track={user.track}
+        notificationCount={unreadCount}
+        isEmptyProfile={isEmptyProfile}
+        onOpenNotifications={() => setIsNotificationsOpen(true)}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+        onOpenProfile={() => setIsProfileOpen(true)}
+      />
+
+      {/* 2. Desktop Responsive Header (>= md) */}
+      <DesktopHeader
+        user={user}
+        unreadCount={unreadCount}
+        onOpenNotifications={() => setIsNotificationsOpen(true)}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+        onOpenProfile={() => setIsProfileOpen(true)}
+      />
+
+      {/* 3. Main Container */}
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-28 md:pb-12">
+
+        {/* ── Empty Profile Banner ───────────────────────────────── */}
         {isEmptyProfile && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            transition={{ duration: 0.3 }}
-            className="mx-5 mt-4"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6"
           >
-            <div
-              className="flex items-start gap-3 p-4 rounded-2xl"
-              style={{
-                background: "rgba(79, 70, 229, 0.08)",
-                border: "1px solid rgba(79, 70, 229, 0.2)",
-              }}
-            >
-              <UserCircle2 size={18} color="#818cf8" className="flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-semibold" style={{ color: "#818cf8" }}>
-                  Complete your profile
-                </p>
-                <p className="text-xs mt-0.5 leading-relaxed" style={{ color: "#a1a1aa" }}>
-                  Add your name, avatar, and pick a track to start your 60-day journey.
-                </p>
-                <button
-                  id="complete-profile-cta"
-                  className="mt-3 text-xs font-semibold px-3 py-1.5 rounded-xl transition-colors"
-                  style={{
-                    background: "rgba(79, 70, 229, 0.2)",
-                    border: "1px solid rgba(79, 70, 229, 0.3)",
-                    color: "#818cf8",
-                  }}
-                >
-                  Set up profile →
-                </button>
+            <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-amber-500/10 border border-amber-500/30 text-amber-200">
+              <div className="flex items-start gap-3">
+                <UserCircle2 size={22} className="text-amber-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-bold text-amber-200">Complete your challenger profile</h3>
+                  <p className="text-xs text-amber-300/80 mt-1 leading-relaxed">
+                    Set up your full name, college name, and active track to start recording your 60-day learning streak.
+                  </p>
+                </div>
               </div>
+              <button
+                onClick={() => setIsSettingsOpen(true)}
+                className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs flex-shrink-0 transition-colors shadow-md shadow-amber-500/20"
+              >
+                Setup Profile
+              </button>
             </div>
           </motion.div>
         )}
 
-        {/* ── Missed day banner ────────────────────────────────── */}
+        {/* ── Missed Day Recovery Banner ─────────────────────────── */}
         {isMissedDay && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            transition={{ duration: 0.3 }}
-            className="mx-5 mt-4"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6"
           >
-            <div
-              className="flex items-start gap-3 p-4 rounded-2xl"
-              style={{
-                background: "rgba(239, 68, 68, 0.07)",
-                border: "1px solid rgba(239, 68, 68, 0.2)",
-              }}
-            >
-              <AlertTriangle size={18} color="#f87171" className="flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-semibold" style={{ color: "#f87171" }}>
-                  Streak broken — {user.missedDays.length} days missed
-                </p>
-                <p className="text-xs mt-0.5 leading-relaxed" style={{ color: "#a1a1aa" }}>
-                  Submit today&apos;s challenge to start a new streak. You got this.
-                </p>
+            <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-rose-500/10 border border-rose-500/30 text-rose-200">
+              <div className="flex items-start gap-3">
+                <AlertTriangle size={22} className="text-rose-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-bold text-rose-200">
+                    Streak broken — You missed yesterday
+                  </h3>
+                  <p className="text-xs text-rose-300/80 mt-1 leading-relaxed">
+                    Your journey isn&apos;t over! Submit today&apos;s Day 12 challenge before midnight to restart your momentum.
+                  </p>
+                </div>
               </div>
+              <a
+                href="#today-challenge"
+                className="px-3.5 py-2 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs flex-shrink-0 transition-colors shadow-md shadow-rose-500/20"
+              >
+                Start Today
+              </a>
             </div>
           </motion.div>
         )}
 
-        {/* ── First day welcome ────────────────────────────────── */}
+        {/* ── First Day Welcome Banner ───────────────────────────── */}
         {isFirstDay && !isEmptyProfile && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            transition={{ duration: 0.3 }}
-            className="mx-5 mt-4"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6"
           >
-            <div
-              className="flex items-start gap-3 p-4 rounded-2xl"
-              style={{
-                background: "rgba(34, 197, 94, 0.07)",
-                border: "1px solid rgba(34, 197, 94, 0.2)",
-              }}
-            >
-              <Sparkles size={18} color="#4ade80" className="flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-semibold" style={{ color: "#4ade80" }}>
-                  Welcome to ABTalks! 🎉
-                </p>
-                <p className="text-xs mt-0.5 leading-relaxed" style={{ color: "#a1a1aa" }}>
-                  Day 1 begins today. Complete your first challenge to start your streak.
-                </p>
+            <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-200">
+              <div className="flex items-start gap-3">
+                <Sparkles size={22} className="text-emerald-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-bold text-emerald-200">Welcome to Day 1 of ABTalks! 🎉</h3>
+                  <p className="text-xs text-emerald-300/80 mt-1 leading-relaxed">
+                    Your first streak starts today. Complete Day 1 objectives and post your public proof of work to kick off your streak!
+                  </p>
+                </div>
               </div>
+              <a
+                href={`/day/${user.currentDay}`}
+                className="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs flex-shrink-0 transition-colors shadow-md shadow-emerald-500/20"
+              >
+                Start Day 1
+              </a>
             </div>
           </motion.div>
         )}
 
-        {/* ── Scroll content ────────────────────────────────────── */}
-        <div className="px-5 pt-4 space-y-4">
+        {/* ── RESPONSIVE DASHBOARD GRID ───────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
 
-          {/* 1. Streak */}
-          <StreakCard
-            streak={user.streak}
-            longestStreak={user.longestStreak}
-            isMissedDay={isMissedDay}
-            isFirstDay={isFirstDay}
-          />
+          {/* Row 1: Streak (4 cols) + Momentum (4 cols) + Progress (4 cols) */}
+          <div className="md:col-span-4">
+            <StreakCard
+              streak={user.streak}
+              longestStreak={user.longestStreak}
+              isMissedDay={isMissedDay}
+              isFirstDay={isFirstDay}
+            />
+          </div>
 
-          {/* 2. Progress */}
-          <ProgressCard
-            currentDay={user.currentDay}
-            totalDays={60}
-            completedDays={user.completedDays}
-          />
+          <div className="md:col-span-4">
+            <MomentumCard
+              score={user.momentumScore}
+              label={user.momentumLabel}
+            />
+          </div>
 
-          {/* 3. Today's Challenge */}
-          <TodayChallengeCard
-            currentDay={user.currentDay}
-            title={
-              isEmptyProfile
-                ? "Pick a track to see your challenge"
-                : todayChallenge.title
-            }
-            estimatedTime={todayChallenge.estimatedTime}
-            difficulty={todayChallenge.difficulty}
-            isCompleted={user.todaySubmitted}
-            isMissedDay={isMissedDay}
-          />
+          <div className="md:col-span-4">
+            <ProgressCard
+              currentDay={user.currentDay}
+              totalDays={60}
+              completedDays={user.completedDays}
+              onClick={() => setIsProgressDetailOpen(true)}
+            />
+          </div>
 
-          {/* 4. Achievements + XP */}
-          <AchievementsPanel
-            completedDays={user.completedDays.length}
-            streak={user.streak}
-            xp={user.totalXp}
-            level={user.level}
-            isFirstDay={isFirstDay}
-          />
+          {/* Row 2: Today's Challenge (8 cols) + Achievements (4 cols) */}
+          <div className="md:col-span-8" id="today-challenge">
+            <TodayChallengeCard
+              currentDay={user.currentDay}
+              title={
+                isEmptyProfile
+                  ? "Pick a track to unlock your daily challenge"
+                  : todayChallenge.title
+              }
+              estimatedTime={todayChallenge.estimatedTime}
+              difficulty={todayChallenge.difficulty}
+              isCompleted={user.todaySubmitted}
+              isMissedDay={isMissedDay}
+              isFirstDay={isFirstDay}
+            />
+          </div>
 
-          {/* 5. Activity Heatmap */}
-          <WeeklyHeatmap
-            completedDays={user.completedDays}
-            missedDays={user.missedDays}
-            enrolledAt={user.enrolledAt}
-          />
+          <div className="md:col-span-4">
+            <AchievementsPanel
+              completedDays={user.completedDays.length}
+              streak={user.streak}
+              xp={user.totalXp}
+              level={user.level}
+              isFirstDay={isFirstDay}
+              onSelectAchievement={(ach) => setSelectedAchievement(ach)}
+            />
+          </div>
 
-          {/* 6. Leaderboard Preview */}
-          <LeaderboardPreview
-            entries={leaderboard}
-            isFirstDay={isFirstDay || isEmptyProfile}
-          />
+          {/* Row 3: Activity Heatmap (7 cols) + Leaderboard (5 cols) */}
+          <div className="md:col-span-7" id="activity">
+            <WeeklyHeatmap
+              completedDays={user.completedDays}
+              missedDays={user.missedDays}
+              enrolledAt={user.enrolledAt}
+            />
+          </div>
 
-          {/* Bottom padding for nav */}
-          <div className="h-4" />
+          <div className="md:col-span-5">
+            <LeaderboardPreview
+              entries={leaderboard}
+              isFirstDay={isFirstDay || isEmptyProfile}
+            />
+          </div>
+
         </div>
+
       </main>
 
-      {/* Bottom navigation */}
-      <BottomNav />
-    </>
+      {/* 4. Mobile Bottom Navigation (hidden on desktop) */}
+      <BottomNav
+        currentDay={user.currentDay}
+        onOpenProfile={() => setIsProfileOpen(true)}
+      />
+
+      {/* 5. Interactive Modals & Panels */}
+      <NotificationPanel
+        notifications={notifications}
+        isOpen={isNotificationsOpen}
+        onClose={() => setIsNotificationsOpen(false)}
+        onMarkRead={handleMarkNotificationRead}
+        onMarkAllRead={handleMarkAllNotificationsRead}
+      />
+
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        initialSettings={settings}
+        onSave={(newSettings) => setSettings(newSettings)}
+      />
+
+      <ProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        user={user}
+        onEditClick={() => setIsSettingsOpen(true)}
+      />
+
+      <ProgressDetailModal
+        isOpen={isProgressDetailOpen}
+        onClose={() => setIsProgressDetailOpen(false)}
+        user={user}
+      />
+
+      <AchievementDetailModal
+        achievement={selectedAchievement}
+        isOpen={selectedAchievement !== null}
+        onClose={() => setSelectedAchievement(null)}
+      />
+
+    </div>
   );
 }
