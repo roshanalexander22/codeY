@@ -1,18 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Target, Zap } from "lucide-react";
+import { Target, Zap, Info } from "lucide-react";
 
 interface ProgressCardProps {
   currentDay: number;
   totalDays: number;
   completedDays: number[];
+  onClick?: () => void;
 }
 
 export function ProgressCard({
   currentDay,
   totalDays,
   completedDays,
+  onClick,
 }: ProgressCardProps) {
   const progress = (completedDays.length / totalDays) * 100;
   const circumference = 2 * Math.PI * 44; // radius = 44
@@ -28,7 +30,9 @@ export function ProgressCard({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.2 }}
-      className="rounded-3xl p-5"
+      whileHover={{ y: -2 }}
+      onClick={onClick}
+      className="rounded-3xl p-5 cursor-pointer hover:border-indigo-500/40 transition-all flex flex-col justify-between"
       style={{
         background: "#18181B",
         border: "1px solid rgba(79, 70, 229, 0.2)",
@@ -36,8 +40,9 @@ export function ProgressCard({
     >
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-sm font-semibold" style={{ color: "#fafafa" }}>
+          <h3 className="text-sm font-semibold flex items-center gap-1.5" style={{ color: "#fafafa" }}>
             Challenge Progress
+            <Info size={12} className="text-indigo-400 opacity-70" />
           </h3>
           <p className="text-xs mt-0.5" style={{ color: "#a1a1aa" }}>
             60-Day journey
