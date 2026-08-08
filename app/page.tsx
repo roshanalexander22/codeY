@@ -3,11 +3,17 @@
 import * as React from "react";
 import { Navbar } from "@/components/landing/Navbar";
 import { HeroSection } from "@/components/landing/HeroSection";
+import { JourneyTimeline } from "@/components/landing/JourneyTimeline";
+import { DayOnePreview } from "@/components/landing/DayOnePreview";
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
+import { ProofOfWork } from "@/components/landing/ProofOfWork";
+import { TransformationSection } from "@/components/landing/TransformationSection";
 import { BenefitsSection } from "@/components/landing/BenefitsSection";
 import { StatsSection } from "@/components/landing/StatsSection";
 import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
+import { MissedDaySection } from "@/components/landing/MissedDaySection";
 import { FAQSection } from "@/components/landing/FAQSection";
+import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
 import { JoinModal } from "@/components/landing/JoinModal";
 
@@ -18,32 +24,50 @@ export default function LandingPage() {
   const handleCloseJoinModal = () => setIsJoinModalOpen(false);
 
   return (
-    <div className="min-h-screen bg-[#09090B] text-[#FAFAFA] selection:bg-[#4F46E5] selection:text-white flex flex-col font-sans">
+    <div className="min-h-screen bg-[#09090B] text-[#FAFAFA] selection:bg-[#4F46E5] selection:text-white flex flex-col font-sans overflow-x-hidden">
       {/* Top Navbar */}
       <Navbar onOpenJoinModal={handleOpenJoinModal} />
 
-      {/* Main Landing Sections */}
+      {/* Main Landing Page Experience */}
       <main className="flex-1">
-        {/* Hero Section with interactive streak simulator */}
+        {/* 1. Hero Section with Live Momentum & Streak Simulator */}
         <HeroSection onOpenJoinModal={handleOpenJoinModal} />
 
-        {/* Section 2: How it Works (5 steps) */}
+        {/* 2. 60-Day Journey Timeline (Day 01 -> Day 60) */}
+        <JourneyTimeline />
+
+        {/* 3. Interactive Day 1 & Tonight's Build Preview */}
+        <DayOnePreview />
+
+        {/* 4. How It Works (5-Step System) */}
         <HowItWorksSection />
 
-        {/* Section 3: Benefits (Bento grid) */}
+        {/* 5. Proof-of-Work Loop (Build -> Commit -> Post -> Proof -> Streak -> Portfolio) */}
+        <ProofOfWork />
+
+        {/* 6. Mindset Shift & Transformation (Before vs After) */}
+        <TransformationSection />
+
+        {/* 7. Bento Grid Benefits */}
         <BenefitsSection />
 
-        {/* Section 4: Stats Counters */}
+        {/* 8. Trust Metrics & Stats */}
         <StatsSection />
 
-        {/* Section 5: Student Testimonials */}
+        {/* 9. Progression Student Stories */}
         <TestimonialsSection />
 
-        {/* Section 6: FAQ Accordion */}
+        {/* 10. Missed Day Reassurance */}
+        <MissedDaySection />
+
+        {/* 11. Accessible FAQ Accordion */}
         <FAQSection />
+
+        {/* 12. Final High-Conversion CTA */}
+        <FinalCTA onOpenJoinModal={handleOpenJoinModal} />
       </main>
 
-      {/* Section 7: Footer */}
+      {/* Footer */}
       <Footer />
 
       {/* Join Challenge Dialog Modal */}

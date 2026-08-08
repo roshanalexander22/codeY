@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Flame, Rocket, CheckCircle2 } from "lucide-react";
+import { Flame, Rocket } from "lucide-react";
 
 const joinSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
