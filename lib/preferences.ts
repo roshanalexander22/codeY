@@ -155,8 +155,20 @@ export function applyPreferencesToDOM(prefs: UserPreferences): void {
   if (typeof window === "undefined") return;
   const root = document.documentElement;
 
-  // Theme class direct sync
-  if (prefs.theme === "light") {
+  // Theme class direct sync with system detection
+  if (prefs.theme === "system") {
+    const isSystemDark =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (isSystemDark) {
+      root.classList.remove("light");
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+      root.classList.add("light");
+    }
+  } else if (prefs.theme === "light") {
     root.classList.remove("dark");
     root.classList.add("light");
   } else if (prefs.theme === "dark") {

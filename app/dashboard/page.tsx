@@ -31,7 +31,11 @@ import {
   AchievementDetail,
 } from "@/data/dashboard";
 
+import { useStudentProfile } from "@/context/ProfileContext";
+
 export default function DashboardPage() {
+  const { profile } = useStudentProfile();
+
   // Edge Case Switcher State
   const [activeEdgeCase, setActiveEdgeCase] = useState<EdgeCase>("normal");
 
@@ -188,8 +192,8 @@ export default function DashboardPage() {
           {/* Row 1: Streak (4 cols) + Momentum (4 cols) + Progress (4 cols) */}
           <div className="md:col-span-4">
             <StreakCard
-              streak={user.streak}
-              longestStreak={user.longestStreak}
+              streak={profile.streak || user.streak}
+              longestStreak={profile.longestStreak || user.longestStreak}
               isMissedDay={isMissedDay}
               isFirstDay={isFirstDay}
             />
@@ -206,7 +210,7 @@ export default function DashboardPage() {
             <ProgressCard
               currentDay={user.currentDay}
               totalDays={60}
-              completedDays={user.completedDays}
+              completedDays={profile.completedDays.length > 0 ? profile.completedDays : user.completedDays}
               onClick={() => setIsProgressDetailOpen(true)}
             />
           </div>
@@ -222,7 +226,7 @@ export default function DashboardPage() {
               }
               estimatedTime={todayChallenge.estimatedTime}
               difficulty={todayChallenge.difficulty}
-              isCompleted={user.todaySubmitted}
+              isCompleted={user.todaySubmitted || profile.completedDays.includes(12)}
               isMissedDay={isMissedDay}
               isFirstDay={isFirstDay}
             />
@@ -230,10 +234,10 @@ export default function DashboardPage() {
 
           <div className="md:col-span-4">
             <AchievementsPanel
-              completedDays={user.completedDays.length}
-              streak={user.streak}
-              xp={user.totalXp}
-              level={user.level}
+              completedDays={profile.completedDays.length > 0 ? profile.completedDays.length : user.completedDays.length}
+              streak={profile.streak || user.streak}
+              xp={profile.totalXp || user.totalXp}
+              level={profile.level || user.level}
               isFirstDay={isFirstDay}
               onSelectAchievement={(ach) => setSelectedAchievement(ach)}
             />
@@ -242,7 +246,7 @@ export default function DashboardPage() {
           {/* Row 3: Activity Heatmap (7 cols) + Leaderboard (5 cols) */}
           <div className="md:col-span-7" id="activity">
             <WeeklyHeatmap
-              completedDays={user.completedDays}
+              completedDays={profile.completedDays.length > 0 ? profile.completedDays : user.completedDays}
               missedDays={user.missedDays}
               enrolledAt={user.enrolledAt}
             />

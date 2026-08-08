@@ -37,14 +37,14 @@ export function DayProgressBar({
         >
           {completedDays.length} days done
         </span>
-        <span className="text-xs" style={{ color: "var(--muted)" }}>
+        <span className="text-xs" style={{ color: "var(--muted-foreground)" }}>
           {daysLeft} remaining
         </span>
       </div>
 
       {/* Progress track */}
       <div
-        className="progress-track w-full"
+        className="progress-track w-full bg-white/10 rounded-full h-2 overflow-hidden"
         role="progressbar"
         aria-valuenow={completedDays.length}
         aria-valuemin={0}
@@ -52,7 +52,7 @@ export function DayProgressBar({
         aria-label={`${completedDays.length} of ${totalDays} days completed`}
       >
         <motion.div
-          className="progress-fill"
+          className="progress-fill h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-emerald-400"
           initial={{ width: 0 }}
           animate={{ width: inView ? `${progress}%` : 0 }}
           transition={{
@@ -83,21 +83,21 @@ export function DayProgressBar({
                 background: isCurrent
                   ? "var(--primary)"
                   : isCompleted
-                    ? "var(--success)"
+                    ? "#22c55e"
                     : isPast
-                      ? "var(--danger)"
+                      ? "#ef4444"
                       : "var(--border)",
-                opacity: isCurrent ? 1 : isCompleted ? 0.8 : isPast ? 0.7 : 0.35,
+                opacity: isCurrent ? 1 : isCompleted ? 0.9 : isPast ? 0.7 : 0.35,
                 boxShadow: isCurrent ? "0 0 8px var(--primary)" : undefined,
               }}
             />
           );
         })}
       </div>
-      <p className="mt-1 text-xs" style={{ color: "var(--muted)" }}>
+      <p className="mt-1.5 text-xs" style={{ color: "var(--muted-foreground)" }}>
         <span style={{ color: "var(--primary)" }}>■</span> Today &nbsp;
-        <span style={{ color: "var(--success)" }}>■</span> Done &nbsp;
-        <span style={{ color: "var(--danger)" }}>■</span> Missed
+        <span style={{ color: "#22c55e" }}>■</span> Done &nbsp;
+        <span style={{ color: "#ef4444" }}>■</span> Missed
       </p>
     </motion.div>
   );

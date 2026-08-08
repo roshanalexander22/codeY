@@ -71,6 +71,7 @@ interface NextChallenge {
 
 import { SettingsModal } from "@/components/settings/SettingsModal";
 import { ProfileMenu } from "@/components/profile/ProfileMenu";
+import { useStudentProfile } from "@/context/ProfileContext";
 
 interface DayPageClientProps {
   challenge: Challenge;
@@ -110,8 +111,20 @@ export function DayPageClient({
       user.completedDays.length > 0);
   const challengeComplete = dayId > 60;
 
+  const { profile, updateProfile } = useStudentProfile();
+
   const handleSubmitSuccess = (_data: SubmissionFormData) => {
-    setNewStreak((prev) => prev + 1);
+    const updatedCompleted = Array.from(new Set([...profile.completedDays, dayId]));
+    const updatedStreak = (profile.streak || user.streak) + 1;
+    const updatedXp = (profile.totalXp || user.totalXp) + challenge.xpReward;
+
+    updateProfile({
+      completedDays: updatedCompleted,
+      streak: updatedStreak,
+      totalXp: updatedXp,
+    });
+
+    setNewStreak(updatedStreak);
     setSubmitted(true);
     setShowSuccess(true);
     toast.success("Day " + dayId + " submitted!", {
