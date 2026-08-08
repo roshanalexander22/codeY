@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Layers, Code, GitPullRequest, Share2, Flame, ArrowDown } from "lucide-react";
+import { Layers, Code, GitPullRequest, Share2, Flame } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -61,58 +61,58 @@ export function HowItWorksSection() {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 bg-[#09090B] relative">
+    <section id="how-it-works" className="py-20 bg-[#09090B] border-t border-[#27272A]/50 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-4 mb-16">
+        <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
           <Badge variant="primary">Simple 5-Step System</Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#FAFAFA] tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#FAFAFA] tracking-tight">
             How ABTalks Works
           </h2>
-          <p className="text-[#A1A1AA] text-base leading-relaxed">
+          <p className="text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
             A battle-tested routine designed to turn passive tutorial watching into active, job-ready building habits.
           </p>
         </div>
 
         {/* Steps Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-3.5 relative">
           {steps.map((step, idx) => {
             const IconComponent = step.icon;
             return (
               <motion.div
                 key={step.num}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
+                transition={{ duration: 0.35, delay: idx * 0.08, ease: "easeOut" }}
                 className="relative flex flex-col h-full"
               >
-                <Card className="flex-1 bg-[#18181B] border-[#27272A] p-6 flex flex-col justify-between hover:border-[#3F3F46] group transition-all duration-300">
-                  <div className="space-y-4">
+                <Card className="flex-1 bg-[#18181B] border-[#27272A] p-5 flex flex-col justify-between hover:border-[#3F3F46] group transition-all duration-300">
+                  <div className="space-y-3.5">
                     {/* Step Icon & Number */}
                     <div className="flex items-center justify-between">
-                      <div className={`h-12 w-12 rounded-[16px] ${step.bgColor} border ${step.borderColor} flex items-center justify-center`}>
-                        <IconComponent className={`h-6 w-6 ${step.color}`} />
+                      <div className={`h-11 w-11 rounded-[14px] ${step.bgColor} border ${step.borderColor} flex items-center justify-center`}>
+                        <IconComponent className={`h-5 w-5 ${step.color}`} />
                       </div>
-                      <span className="font-mono text-2xl font-black text-[#A1A1AA]/30 group-hover:text-[#FAFAFA]/50 transition-colors">
+                      <span className="font-mono text-xl font-black text-[#A1A1AA]/30 group-hover:text-[#FAFAFA]/50 transition-colors">
                         {step.num}
                       </span>
                     </div>
 
                     {/* Step Title */}
-                    <h3 className="text-lg font-bold text-[#FAFAFA] group-hover:text-[#818CF8] transition-colors">
+                    <h3 className="text-base font-bold text-[#FAFAFA] group-hover:text-[#818CF8] transition-colors">
                       {step.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed">
+                    <p className="text-xs text-[#A1A1AA] leading-relaxed">
                       {step.description}
                     </p>
                   </div>
 
-                  <div className="pt-4 mt-2">
-                    <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-[#09090B] border border-[#27272A] text-[#A1A1AA]">
+                  <div className="pt-3 mt-1">
+                    <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[#09090B] border border-[#27272A] text-[#A1A1AA]">
                       {step.badge}
                     </span>
                   </div>

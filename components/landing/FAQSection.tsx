@@ -8,47 +8,65 @@ export function FAQSection() {
   const faqItems = [
     {
       id: "faq-1",
-      question: "What exactly is ABTalks 60-Day Challenge?",
+      question: "What is the 60-day challenge?",
       answer:
-        "ABTalks is a structured 60-day build-in-public initiative. You select a track (Frontend, Fullstack, AI, DevOps), commit code daily to your GitHub repo, and post your daily learnings on LinkedIn. It turns isolated study into visible public proof of competence.",
+        "ABTalks 60-Day Challenge is a structured build-in-public program for college students. You select a track (Frontend, Fullstack, AI, DevOps), build a small project feature daily, commit your code to GitHub, and share your progress on LinkedIn.",
     },
     {
       id: "faq-2",
-      question: "Do I need to be an advanced programmer to participate?",
+      question: "What happens each day?",
       answer:
-        "Not at all! Whether you are a beginner learning TypeScript or an intermediate dev sharpening your React and Next.js skills, the prompts adapt to your skill level. The key goal is daily consistency.",
+        "Every day at 00:00, a new bite-sized challenge prompt unlocks. You spend 30–45 minutes coding, push your commit to your public GitHub repo, and paste your submission link to maintain your streak.",
     },
     {
       id: "faq-3",
-      question: "What happens if I miss a single day?",
+      question: "Do I need to be an experienced developer?",
       answer:
-        "Life happens! You get 2 'Freeze Shields' per 60-day cycle to preserve your streak without penalty. However, to earn the Verified Developer badge, you must reach 60 active commit days.",
+        "Not at all! The prompts are designed for beginners and intermediate students. Day 1 starts with basic environment setup and Git concepts, building up step-by-step to production REST APIs and fullstack apps.",
     },
     {
       id: "faq-4",
-      question: "How do recruiters and hiring managers find my profile?",
+      question: "How much time does a day take?",
       answer:
-        "Finishing the 60 days unlocks your profile on the official ABTalks Talent Directory. Our partner recruiters filter candidates by track, verified GitHub commit logs, and streak consistency score.",
+        "Daily challenges are calibrated for 30–45 minutes of focused building — easy to fit into a busy college schedule after classes or late at night.",
     },
     {
       id: "faq-5",
-      question: "Is there any fee or paid subscription required?",
+      question: "Why GitHub?",
       answer:
-        "No. ABTalks 60-Day Challenge is 100% free for developers. Our goal is to empower student builders to become impossible to ignore.",
+        "GitHub commits are the ultimate proof of work in software engineering. Recruiters trust verified GitHub commit logs over unverified resume claims.",
+    },
+    {
+      id: "faq-6",
+      question: "Why LinkedIn?",
+      answer:
+        "Sharing your daily progress under #ABTalks60Days builds your public personal brand and puts your work directly on the feeds of engineering managers and recruiters.",
+    },
+    {
+      id: "faq-7",
+      question: "What happens if I miss a day?",
+      answer:
+        "Don't panic! Every student gets 2 automatic Freeze Shields per 60-day cycle to protect their streak during exams or emergencies. Your code and progress are never lost.",
+    },
+    {
+      id: "faq-8",
+      question: "What happens after Day 60?",
+      answer:
+        "Completing 60 days unlocks your official ABTalks 60-Day Verified Developer Badge, your verified 60-commit portfolio, and direct listing in our recruiter talent directory.",
     },
   ];
 
   return (
-    <section id="faq" className="py-24 bg-[#09090B] border-t border-[#27272A]/50 relative">
+    <section id="faq" className="py-20 bg-[#09090B] border-t border-[#27272A]/50 relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
-        <div className="text-center space-y-4 mb-16">
-          <Badge variant="primary">Got Questions?</Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#FAFAFA] tracking-tight">
+        <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
+          <Badge variant="primary">Clear Answers</Badge>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#FAFAFA] tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-[#A1A1AA] text-base leading-relaxed">
-            Everything you need to know about starting your 60-day journey.
+          <p className="text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
+            Everything you need to know before starting your Day 1 journey.
           </p>
         </div>
 
