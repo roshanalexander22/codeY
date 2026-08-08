@@ -107,14 +107,15 @@ export function MomentumCard({ score, label }: MomentumCardProps) {
 
         {/* Pace row */}
         <div className="flex items-center justify-between text-[11px] mb-2">
-          <span className="text-zinc-500">Current pace</span>
-          <span className="font-semibold" style={{ color }}>
-            {isHigh
-              ? "Above average"
-              : isMedium
-              ? "On track"
-              : "Needs attention"}
+          <span className="text-zinc-500 flex items-center gap-1">
+            <span className="text-emerald-400 font-bold">↑ 8%</span> this week
           </span>
+          <a
+            href="#progress"
+            className="font-semibold text-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-0.5 text-[10px]"
+          >
+            View progress &rarr;
+          </a>
         </div>
       </div>
 

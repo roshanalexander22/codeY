@@ -47,9 +47,18 @@ export function AchievementsPanel({
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-sm font-semibold" style={{ color: "#fafafa" }}>
-            Achievements
-          </h3>
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-semibold" style={{ color: "#fafafa" }}>
+              Achievements
+            </h3>
+            <button
+              type="button"
+              onClick={() => onSelectAchievement && onSelectAchievement(achievementDetails[0])}
+              className="text-[11px] font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
+            >
+              View all &rarr;
+            </button>
+          </div>
           <p className="text-xs mt-0.5" style={{ color: "#a1a1aa" }}>
             {isFirstDay
               ? "Earn your first badge today"
@@ -164,9 +173,13 @@ export function AchievementsPanel({
                 >
                   {item.label}
                 </p>
-                {item.earned && item.earnedOn && (
-                  <p className="text-[9px] mt-0.5" style={{ color: "#6b7280" }}>
-                    {item.earnedOn}
+                {item.earned && item.earnedOn ? (
+                  <p className="text-[9px] mt-0.5 text-emerald-400 font-medium">
+                    Unlocked
+                  </p>
+                ) : (
+                  <p className="text-[9px] mt-0.5 text-zinc-500 font-bold tabular-nums">
+                    {item.id === "halfway" ? "11 / 30" : item.id === "champion" ? "11 / 60" : "Locked"}
                   </p>
                 )}
               </div>

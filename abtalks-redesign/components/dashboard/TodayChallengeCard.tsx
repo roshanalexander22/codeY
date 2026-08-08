@@ -212,13 +212,13 @@ export function TodayChallengeCard({
         </h3>
 
         {/* Meta tags */}
-        <div className="flex items-center gap-2.5 mb-4 flex-wrap">
+        <div className="flex items-center gap-2.5 mb-3 flex-wrap">
           <div
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs text-zinc-400"
             style={{ background: "rgba(255,255,255,0.04)", border: "1px solid #27272a" }}
           >
             <Clock size={13} color="#a1a1aa" />
-            <span>{estimatedTime}</span>
+            <span>⏱ {estimatedTime}</span>
           </div>
 
           <div
@@ -231,6 +231,28 @@ export function TodayChallengeCard({
           >
             <span className="w-1.5 h-1.5 rounded-full" style={{ background: diff.color }} />
             <span>{diff.label}</span>
+          </div>
+
+          <div
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold text-indigo-300"
+            style={{ background: "rgba(79, 70, 229, 0.12)", border: "1px solid rgba(79, 70, 229, 0.25)" }}
+          >
+            <span>+150 XP</span>
+          </div>
+        </div>
+
+        {/* Skills */}
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-[11px] text-zinc-500 font-semibold">Skills:</span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {["Express", "MongoDB", "REST API"].map((skill) => (
+              <span
+                key={skill}
+                className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-zinc-800/80 text-zinc-300 border border-zinc-700/60"
+              >
+                {skill}
+              </span>
+            ))}
           </div>
         </div>
 
@@ -295,12 +317,12 @@ export function TodayChallengeCard({
       </div>
 
       {/* CTAs */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col sm:flex-row gap-2.5">
         {/* Primary CTA */}
         <Link
           href={`/day/${currentDay}`}
           id="open-today-challenge"
-          className="flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-2xl font-bold text-sm transition-all duration-200 group active:scale-[0.98]"
+          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-2xl font-bold text-sm transition-all duration-200 group active:scale-[0.98]"
           style={
             isCompleted
               ? {
@@ -323,13 +345,21 @@ export function TodayChallengeCard({
           ) : (
             <>
               <Play size={15} className="fill-white" />
-              <span>{ctaText}</span>
+              <span>Start Challenge</span>
               <ChevronRight
                 size={16}
                 className="group-hover:translate-x-1 transition-transform ml-auto"
               />
             </>
           )}
+        </Link>
+
+        {/* View Details CTA */}
+        <Link
+          href={`/day/${currentDay}`}
+          className="flex items-center justify-center gap-1.5 py-3 px-4 rounded-2xl font-semibold text-xs transition-all duration-200 active:scale-[0.98] bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-zinc-100 hover:border-zinc-700"
+        >
+          <span>View Details</span>
         </Link>
 
         {/* LinkedIn share — only visible when completed */}

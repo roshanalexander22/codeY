@@ -1,0 +1,16 @@
+feat(dashboard): master upgrade — QuickActions, WeeklyGoals, LearningInsights, Activity Analytics overhaul, SkillsProgress, NextMilestone, MotivationalCTA
+
+- feat(WeeklyHeatmap): full Activity Analytics overhaul with 2-col desktop layout, 4 stats cards, weekly activity bars, recent activity log, 7-day trend sparkline, and filter dropdown
+- feat(QuickActions): compact quick-action strip for challenge navigation
+- feat(WeeklyGoals): 3 goal progress meters and weekly status summary
+- feat(LearningInsights): 5 compact learning metric cards
+- feat(NextMilestoneCard): Day 14 milestone progress card with XP reward
+- feat(SkillsProgress): JavaScript, Node.js, React, and MongoDB skill progress bars
+- feat(RecentLearningTimeline): vertical submission & achievement event timeline
+- feat(MotivationalCTA): lower page streak retention banner and challenge trigger
+- polish(StreakCard): added 7-dot weekly active tracker and active days counter
+- polish(MomentumCard): added trend badge and View progress trigger
+- polish(ProgressCard): added Phase 1 info and pace indicator
+- polish(TodayChallengeCard): added +150 XP badge, skills tags, and dual CTAs
+- polish(AchievementsPanel): added View all link and locked badge progress counters
+- layout(page): reassembled page flow according to 14-step master dashboard hierarchy

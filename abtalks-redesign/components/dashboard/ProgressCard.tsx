@@ -44,8 +44,8 @@ export function ProgressCard({
             Challenge Progress
             <Info size={12} className="text-indigo-400 opacity-70" />
           </h3>
-          <p className="text-xs mt-0.5" style={{ color: "#a1a1aa" }}>
-            60-Day journey
+          <p className="text-[11px] mt-0.5 font-medium text-indigo-400">
+            Phase 1: Foundations & APIs
           </p>
         </div>
         <div

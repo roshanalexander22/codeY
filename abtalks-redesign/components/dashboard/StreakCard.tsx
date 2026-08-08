@@ -163,23 +163,39 @@ export function StreakCard({
           </div>
         </div>
 
-        {/* Right: best streak */}
-        <div className="text-right">
+        {/* Right: best streak & weekly dots */}
+        <div className="text-right flex flex-col items-end">
           <div className="flex items-center gap-1.5 justify-end mb-1">
             <TrendingUp size={12} color="#a1a1aa" />
             <span className="text-xs" style={{ color: "#a1a1aa" }}>
               Best
             </span>
+            <span className="text-sm font-bold text-zinc-100 ml-0.5">
+              {longestStreak}
+            </span>
           </div>
-          <span
-            className="text-xl font-bold"
-            style={{ color: "#fafafa" }}
-          >
-            {longestStreak}
-          </span>
-          <p className="text-xs" style={{ color: "#6b7280" }}>
-            days
-          </p>
+
+          {/* Weekly indicator */}
+          <div className="mt-2 text-right">
+            <p className="text-[10px] text-zinc-400 font-medium">
+              This week: <span className="text-zinc-200 font-bold">{isFirstDay ? "0" : isMissedDay ? "3" : "6"} / 7</span> active
+            </p>
+            <div className="flex items-center gap-1 mt-1 justify-end">
+              {(isFirstDay
+                ? [false, false, false, false, false, false, false]
+                : isMissedDay
+                ? [true, true, true, false, false, false, false]
+                : [true, true, true, true, true, true, false]
+              ).map((active, idx) => (
+                <span
+                  key={idx}
+                  className={`w-2 h-2 rounded-full inline-block ${
+                    active ? "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.5)]" : "bg-zinc-700"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

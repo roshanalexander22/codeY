@@ -9,9 +9,16 @@ import { StreakCard } from "@/components/dashboard/StreakCard";
 import { MomentumCard } from "@/components/dashboard/MomentumCard";
 import { ProgressCard } from "@/components/dashboard/ProgressCard";
 import { TodayChallengeCard } from "@/components/dashboard/TodayChallengeCard";
-import { AchievementsPanel } from "@/components/dashboard/AchievementsPanel";
+import { QuickActions } from "@/components/dashboard/QuickActions";
+import { WeeklyGoals } from "@/components/dashboard/WeeklyGoals";
+import { LearningInsights } from "@/components/dashboard/LearningInsights";
 import { WeeklyHeatmap } from "@/components/dashboard/WeeklyHeatmap";
+import { AchievementsPanel } from "@/components/dashboard/AchievementsPanel";
+import { NextMilestoneCard } from "@/components/dashboard/NextMilestoneCard";
+import { SkillsProgress } from "@/components/dashboard/SkillsProgress";
+import { RecentLearningTimeline } from "@/components/dashboard/RecentLearningTimeline";
 import { LeaderboardPreview } from "@/components/dashboard/LeaderboardPreview";
+import { MotivationalCTA } from "@/components/dashboard/MotivationalCTA";
 import { BottomNav } from "@/components/dashboard/BottomNav";
 import { StateSwitcher } from "@/components/dashboard/StateSwitcher";
 import { NotificationPanel } from "@/components/dashboard/NotificationPanel";
@@ -28,6 +35,7 @@ import {
   NotificationItem,
   UserSettings,
   AchievementDetail,
+  achievementDetails,
 } from "@/data/dashboard";
 
 export default function DashboardPage() {
@@ -95,14 +103,13 @@ export default function DashboardPage() {
       />
 
       {/* 3. Main Container */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 pb-28 md:pb-12">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 pb-28 md:pb-12 space-y-6">
 
         {/* ── Empty Profile Banner ───────────────────────────────── */}
         {isEmptyProfile && (
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6"
           >
             <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-amber-500/10 border border-amber-500/30 text-amber-200">
               <div className="flex items-start gap-3">
@@ -129,7 +136,6 @@ export default function DashboardPage() {
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6"
           >
             <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-rose-500/10 border border-rose-500/30 text-rose-200">
               <div className="flex items-start gap-3">
@@ -158,7 +164,6 @@ export default function DashboardPage() {
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6"
           >
             <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-200">
               <div className="flex items-start gap-3">
@@ -180,10 +185,8 @@ export default function DashboardPage() {
           </motion.div>
         )}
 
-        {/* ── RESPONSIVE DASHBOARD GRID ───────────────────────────── */}
+        {/* ── 1. TOP DASHBOARD (Streak, Momentum, Progress) ─────────── */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
-
-          {/* Row 1: Streak (4 cols) + Momentum (4 cols) + Progress (4 cols) */}
           <div className="md:col-span-4 flex flex-col">
             <StreakCard
               streak={user.streak}
@@ -200,7 +203,7 @@ export default function DashboardPage() {
             />
           </div>
 
-          <div className="md:col-span-4 flex flex-col">
+          <div className="md:col-span-4 flex flex-col" id="progress">
             <ProgressCard
               currentDay={user.currentDay}
               totalDays={60}
@@ -208,25 +211,67 @@ export default function DashboardPage() {
               onClick={() => setIsProgressDetailOpen(true)}
             />
           </div>
+        </div>
 
-          {/* Row 2: Today's Challenge (7 cols) + Achievements (5 cols) */}
-          <div className="md:col-span-7" id="today-challenge">
-            <TodayChallengeCard
-              currentDay={user.currentDay}
-              title={
-                isEmptyProfile
-                  ? "Pick a track to unlock your daily challenge"
-                  : todayChallenge.title
-              }
-              estimatedTime={todayChallenge.estimatedTime}
-              difficulty={todayChallenge.difficulty}
-              isCompleted={user.todaySubmitted}
-              isMissedDay={isMissedDay}
-              isFirstDay={isFirstDay}
+        {/* ── 2. TODAY'S CHALLENGE ─────────────────────────────────── */}
+        <div id="today-challenge">
+          <TodayChallengeCard
+            currentDay={user.currentDay}
+            title={
+              isEmptyProfile
+                ? "Pick a track to unlock your daily challenge"
+                : todayChallenge.title
+            }
+            estimatedTime={todayChallenge.estimatedTime}
+            difficulty={todayChallenge.difficulty}
+            isCompleted={user.todaySubmitted}
+            isMissedDay={isMissedDay}
+            isFirstDay={isFirstDay}
+          />
+        </div>
+
+        {/* ── 3. QUICK ACTIONS ─────────────────────────────────────── */}
+        <QuickActions
+          currentDay={user.currentDay}
+          onOpenProgress={() => setIsProgressDetailOpen(true)}
+          onOpenAchievements={() => setSelectedAchievement(achievementDetails[0])}
+        />
+
+        {/* ── 4. WEEKLY GOALS & LEARNING INSIGHTS GRID ─────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
+          <div className="md:col-span-4">
+            <WeeklyGoals
+              completedThisWeek={isFirstDay ? 0 : isMissedDay ? 2 : 4}
+              targetChallenges={5}
+              streakThisWeek={isFirstDay ? 0 : isMissedDay ? 3 : 7}
+              targetStreak={7}
+              xpThisWeek={isFirstDay ? 0 : isMissedDay ? 150 : 320}
+              targetXp={500}
             />
           </div>
 
-          <div className="md:col-span-5">
+          <div className="md:col-span-8 flex flex-col justify-between">
+            <LearningInsights
+              streak={user.streak}
+              completedCount={user.completedDays.length}
+              totalXp={user.totalXp}
+            />
+          </div>
+        </div>
+
+        {/* ── 5. ACTIVITY ANALYTICS (Full width card with internal 2-col desktop layout) ── */}
+        <div id="activity">
+          <WeeklyHeatmap
+            completedDays={user.completedDays}
+            missedDays={user.missedDays}
+            enrolledAt={user.enrolledAt}
+            streak={user.streak}
+          />
+        </div>
+
+        {/* ── 6. ACHIEVEMENTS & NEXT MILESTONE ─────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6" id="achievements">
+          <div className="md:col-span-7">
             <AchievementsPanel
               completedDays={user.completedDays.length}
               streak={user.streak}
@@ -237,22 +282,40 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Row 3: Activity Heatmap (7 cols) + Leaderboard (5 cols) */}
-          <div className="md:col-span-7" id="activity">
-            <WeeklyHeatmap
-              completedDays={user.completedDays}
-              missedDays={user.missedDays}
-              enrolledAt={user.enrolledAt}
-            />
-          </div>
-
           <div className="md:col-span-5">
-            <LeaderboardPreview
-              entries={leaderboard}
-              isFirstDay={isFirstDay || isEmptyProfile}
+            <NextMilestoneCard
+              currentDay={user.currentDay}
+              milestoneDay={14}
+              rewardXp={250}
             />
           </div>
+        </div>
 
+        {/* ── 7. SKILLS PROGRESS & RECENT LEARNING ─────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
+          <div className="md:col-span-6">
+            <SkillsProgress />
+          </div>
+
+          <div className="md:col-span-6">
+            <RecentLearningTimeline />
+          </div>
+        </div>
+
+        {/* ── 8. LEADERBOARD PREVIEW ────────────────────────────────── */}
+        <div>
+          <LeaderboardPreview
+            entries={leaderboard}
+            isFirstDay={isFirstDay || isEmptyProfile}
+          />
+        </div>
+
+        {/* ── 9. MOTIVATIONAL CTA ───────────────────────────────────── */}
+        <div>
+          <MotivationalCTA
+            streak={user.streak}
+            currentDay={user.currentDay}
+          />
         </div>
 
       </main>
