@@ -9,6 +9,9 @@ interface TopAppBarProps {
   track: string;
   notificationCount?: number;
   isEmptyProfile?: boolean;
+  onOpenNotifications?: () => void;
+  onOpenSettings?: () => void;
+  onOpenProfile?: () => void;
 }
 
 export function TopAppBar({
@@ -17,6 +20,9 @@ export function TopAppBar({
   track,
   notificationCount = 0,
   isEmptyProfile,
+  onOpenNotifications,
+  onOpenSettings,
+  onOpenProfile,
 }: TopAppBarProps) {
   const firstName = name.split(" ")[0];
   const hour = new Date().getHours();
@@ -28,7 +34,7 @@ export function TopAppBar({
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="flex items-center justify-between px-5 pt-safe-top pb-2 sticky top-0 z-40"
+      className="md:hidden flex items-center justify-between px-5 pt-safe-top pb-2 sticky top-0 z-40"
       style={{
         background: "rgba(9, 9, 11, 0.92)",
         backdropFilter: "blur(20px)",
@@ -37,10 +43,14 @@ export function TopAppBar({
         paddingTop: "env(safe-area-inset-top, 12px)",
       }}
     >
-      {/* Avatar + greeting */}
-      <div className="flex items-center gap-3">
+      {/* Avatar + greeting (Clickable for profile) */}
+      <button
+        onClick={onOpenProfile}
+        className="flex items-center gap-3 text-left group transition-transform active:scale-95"
+        aria-label="Open profile menu"
+      >
         <div className="relative">
-          {isEmptyProfile ? (
+          {isEmptyProfile || !avatar ? (
             <div
               className="w-10 h-10 rounded-full flex items-center justify-center"
               style={{
@@ -85,12 +95,12 @@ export function TopAppBar({
             {isEmptyProfile ? "Set up profile" : firstName} 👋
           </p>
         </div>
-      </div>
+      </button>
 
       {/* Right actions */}
       <div className="flex items-center gap-2">
         {/* Track badge */}
-        {!isEmptyProfile && (
+        {!isEmptyProfile && track && (
           <div
             className="hidden sm:flex items-center px-2.5 py-1 rounded-full"
             style={{
@@ -107,12 +117,13 @@ export function TopAppBar({
         {/* Notification bell */}
         <button
           id="notification-bell"
-          className="relative w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200"
+          onClick={onOpenNotifications}
+          className="relative w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200 hover:bg-zinc-800"
           style={{
             background: "rgba(255,255,255,0.04)",
             border: "1px solid #27272a",
           }}
-          aria-label="Notifications"
+          aria-label="Open notifications"
         >
           <Bell size={16} color="#a1a1aa" />
           {notificationCount > 0 && (
@@ -130,12 +141,13 @@ export function TopAppBar({
         {/* Settings */}
         <button
           id="settings-button"
-          className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200"
+          onClick={onOpenSettings}
+          className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200 hover:bg-zinc-800"
           style={{
             background: "rgba(255,255,255,0.04)",
             border: "1px solid #27272a",
           }}
-          aria-label="Settings"
+          aria-label="Open settings"
         >
           <Settings size={16} color="#a1a1aa" />
         </button>

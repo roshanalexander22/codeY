@@ -2,18 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Trophy, Star, Zap, Shield, Flame, Code2, Rocket } from "lucide-react";
-
-interface Achievement {
-  id: string;
-  label: string;
-  description: string;
-  icon: React.ElementType;
-  color: string;
-  bg: string;
-  border: string;
-  earned: boolean;
-  earnedOn?: string;
-}
+import { achievementDetails, AchievementDetail } from "@/data/dashboard";
 
 interface AchievementsPanelProps {
   completedDays: number;
@@ -21,6 +10,7 @@ interface AchievementsPanelProps {
   xp: number;
   level: number;
   isFirstDay?: boolean;
+  onSelectAchievement?: (achievement: AchievementDetail) => void;
 }
 
 export function AchievementsPanel({
@@ -29,74 +19,9 @@ export function AchievementsPanel({
   xp,
   level,
   isFirstDay,
+  onSelectAchievement,
 }: AchievementsPanelProps) {
-  const achievements: Achievement[] = [
-    {
-      id: "first-blood",
-      label: "First Blood",
-      description: "Complete Day 1",
-      icon: Zap,
-      color: "#818cf8",
-      bg: "rgba(79, 70, 229, 0.1)",
-      border: "rgba(79, 70, 229, 0.25)",
-      earned: completedDays >= 1,
-      earnedOn: "Jul 27",
-    },
-    {
-      id: "week-one",
-      label: "Week One",
-      description: "7-day streak",
-      icon: Flame,
-      color: "#f59e0b",
-      bg: "rgba(245, 158, 11, 0.1)",
-      border: "rgba(245, 158, 11, 0.25)",
-      earned: streak >= 7,
-      earnedOn: "Aug 2",
-    },
-    {
-      id: "consistent",
-      label: "Consistent",
-      description: "11-day streak",
-      icon: Star,
-      color: "#fbbf24",
-      bg: "rgba(251, 191, 36, 0.1)",
-      border: "rgba(251, 191, 36, 0.25)",
-      earned: streak >= 11,
-      earnedOn: "Aug 6",
-    },
-    {
-      id: "builder",
-      label: "Builder",
-      description: "12+ days done",
-      icon: Code2,
-      color: "#a78bfa",
-      bg: "rgba(167, 139, 250, 0.1)",
-      border: "rgba(167, 139, 250, 0.25)",
-      earned: completedDays >= 12,
-    },
-    {
-      id: "halfway",
-      label: "Halfway",
-      description: "30 days done",
-      icon: Shield,
-      color: "#22c55e",
-      bg: "rgba(34, 197, 94, 0.1)",
-      border: "rgba(34, 197, 94, 0.25)",
-      earned: completedDays >= 30,
-    },
-    {
-      id: "champion",
-      label: "Champion",
-      description: "60 days done",
-      icon: Trophy,
-      color: "#f97316",
-      bg: "rgba(249, 115, 22, 0.1)",
-      border: "rgba(249, 115, 22, 0.25)",
-      earned: completedDays >= 60,
-    },
-  ];
-
-  const earnedCount = achievements.filter((a) => a.earned).length;
+  const earnedCount = achievementDetails.filter((a) => a.earned).length;
 
   return (
     <motion.div
@@ -116,7 +41,9 @@ export function AchievementsPanel({
             Achievements
           </h3>
           <p className="text-xs mt-0.5" style={{ color: "#a1a1aa" }}>
-            {isFirstDay ? "Earn your first badge today" : `${earnedCount} of ${achievements.length} unlocked`}
+            {isFirstDay
+              ? "Earn your first badge today"
+              : `${earnedCount} of ${achievementDetails.length} unlocked`}
           </p>
         </div>
 
@@ -161,11 +88,22 @@ export function AchievementsPanel({
 
       {/* Achievements grid */}
       <div className="grid grid-cols-3 gap-3">
-        {achievements.map((achievement, i) => {
-          const Icon = achievement.icon;
+        {achievementDetails.map((item, i) => {
+          const iconMap: Record<string, React.ElementType> = {
+            Zap,
+            Flame,
+            Star,
+            Code2,
+            Shield,
+            Trophy,
+          };
+          const Icon = iconMap[item.iconName] || Trophy;
+
           return (
-            <motion.div
-              key={achievement.id}
+            <motion.button
+              key={item.id}
+              type="button"
+              onClick={() => onSelectAchievement && onSelectAchievement(item)}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{
@@ -173,40 +111,40 @@ export function AchievementsPanel({
                 duration: 0.3,
                 ease: "easeOut",
               }}
-              className="flex flex-col items-center gap-2 p-3 rounded-2xl"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="flex flex-col items-center gap-2 p-3 rounded-2xl cursor-pointer text-left w-full transition-colors"
               style={{
-                background: achievement.earned ? achievement.bg : "rgba(255,255,255,0.02)",
-                border: `1px solid ${achievement.earned ? achievement.border : "#27272a"}`,
-                opacity: achievement.earned ? 1 : 0.4,
+                background: item.earned ? item.bg : "rgba(255,255,255,0.02)",
+                border: `1px solid ${item.earned ? item.border : "#27272a"}`,
+                opacity: item.earned ? 1 : 0.45,
               }}
+              aria-label={`View achievement ${item.label}`}
             >
               <div
                 className="w-9 h-9 rounded-xl flex items-center justify-center"
                 style={{
-                  background: achievement.earned ? achievement.bg : "transparent",
+                  background: item.earned ? item.bg : "transparent",
                 }}
               >
-                <Icon
-                  size={18}
-                  color={achievement.earned ? achievement.color : "#4b5563"}
-                />
+                <Icon size={18} color={item.earned ? item.color : "#4b5563"} />
               </div>
               <div className="text-center">
                 <p
                   className="text-xs font-semibold leading-tight"
                   style={{
-                    color: achievement.earned ? "#fafafa" : "#4b5563",
+                    color: item.earned ? "#fafafa" : "#4b5563",
                   }}
                 >
-                  {achievement.label}
+                  {item.label}
                 </p>
-                {achievement.earned && achievement.earnedOn && (
-                  <p className="text-xs mt-0.5" style={{ color: "#6b7280" }}>
-                    {achievement.earnedOn}
+                {item.earned && item.earnedOn && (
+                  <p className="text-[10px] mt-0.5" style={{ color: "#6b7280" }}>
+                    {item.earnedOn}
                   </p>
                 )}
               </div>
-            </motion.div>
+            </motion.button>
           );
         })}
       </div>
