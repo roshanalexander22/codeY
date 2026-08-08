@@ -20,6 +20,14 @@ import { ProfileModal } from "@/components/dashboard/ProfileModal";
 import { ProfileMenu } from "@/components/profile/ProfileMenu";
 import { ProgressDetailModal } from "@/components/dashboard/ProgressDetailModal";
 import { AchievementDetailModal } from "@/components/dashboard/AchievementDetailModal";
+
+import { QuickActions } from "@/components/dashboard/QuickActions";
+import { WeeklyGoals } from "@/components/dashboard/WeeklyGoals";
+import { LearningInsights } from "@/components/dashboard/LearningInsights";
+import { NextMilestoneCard } from "@/components/dashboard/NextMilestoneCard";
+import { SkillsProgress } from "@/components/dashboard/SkillsProgress";
+import { RecentLearningTimeline } from "@/components/dashboard/RecentLearningTimeline";
+import { MotivationalCTA } from "@/components/dashboard/MotivationalCTA";
 import {
   getDashboardData,
   todayChallenge,
@@ -189,7 +197,19 @@ export default function DashboardPage() {
         {/* ── RESPONSIVE DASHBOARD GRID ───────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
 
-          {/* Row 1: Streak (4 cols) + Momentum (4 cols) + Progress (4 cols) */}
+          {/* Row 1: Quick Actions (12 cols) */}
+          <div className="md:col-span-12">
+            <QuickActions
+              currentDay={user.currentDay}
+              onOpenProgress={() => setIsProgressDetailOpen(true)}
+              onOpenAchievements={() => {
+                const el = document.getElementById("achievements");
+                el?.scrollIntoView({ behavior: "smooth" });
+              }}
+            />
+          </div>
+
+          {/* Row 2: Streak (4 cols) + Momentum (4 cols) + Progress (4 cols) */}
           <div className="md:col-span-4">
             <StreakCard
               streak={profile.streak || user.streak}
@@ -215,7 +235,16 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Row 2: Today's Challenge (8 cols) + Achievements (4 cols) */}
+          {/* Row 3: Learning Insights (12 cols) */}
+          <div className="md:col-span-12">
+            <LearningInsights
+              streak={profile.streak || user.streak}
+              completedCount={profile.completedDays.length > 0 ? profile.completedDays.length : user.completedDays.length}
+              totalXp={profile.totalXp || user.totalXp}
+            />
+          </div>
+
+          {/* Row 4: Today's Challenge (8 cols) + Achievements (4 cols) */}
           <div className="md:col-span-8" id="today-challenge">
             <TodayChallengeCard
               currentDay={user.currentDay}
@@ -232,7 +261,7 @@ export default function DashboardPage() {
             />
           </div>
 
-          <div className="md:col-span-4">
+          <div className="md:col-span-4" id="achievements">
             <AchievementsPanel
               completedDays={profile.completedDays.length > 0 ? profile.completedDays.length : user.completedDays.length}
               streak={profile.streak || user.streak}
@@ -243,7 +272,33 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Row 3: Activity Heatmap (7 cols) + Leaderboard (5 cols) */}
+          {/* Row 5: Weekly Goals (6 cols) + Next Milestone (6 cols) */}
+          <div className="md:col-span-6">
+            <WeeklyGoals
+              completedThisWeek={profile.completedDays.length > 0 ? profile.completedDays.length : 4}
+              streakThisWeek={profile.streak || user.streak}
+              xpThisWeek={profile.totalXp || 320}
+            />
+          </div>
+
+          <div className="md:col-span-6">
+            <NextMilestoneCard
+              currentDay={user.currentDay}
+              milestoneDay={14}
+              rewardXp={250}
+            />
+          </div>
+
+          {/* Row 6: Skills Progress (6 cols) + Recent Learning Timeline (6 cols) */}
+          <div className="md:col-span-6">
+            <SkillsProgress />
+          </div>
+
+          <div className="md:col-span-6">
+            <RecentLearningTimeline />
+          </div>
+
+          {/* Row 7: Activity Heatmap (7 cols) + Leaderboard (5 cols) */}
           <div className="md:col-span-7" id="activity">
             <WeeklyHeatmap
               completedDays={profile.completedDays.length > 0 ? profile.completedDays : user.completedDays}
@@ -256,6 +311,14 @@ export default function DashboardPage() {
             <LeaderboardPreview
               entries={leaderboard}
               isFirstDay={isFirstDay || isEmptyProfile}
+            />
+          </div>
+
+          {/* Row 8: Motivational CTA Banner (12 cols) */}
+          <div className="md:col-span-12">
+            <MotivationalCTA
+              streak={profile.streak || user.streak}
+              currentDay={user.currentDay}
             />
           </div>
 
