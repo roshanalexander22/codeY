@@ -33,6 +33,16 @@
 
 :root {
   color-scheme: dark;
+  /* Additional tokens for Challenge Day components */
+  --foreground: #FAFAFA;
+  --card-hover: #1f1f23;
+  --primary-glow: rgba(79, 70, 229, 0.15);
+  --primary-hover: #4338CA;
+  --success-glow: rgba(34, 197, 94, 0.15);
+  --warning-glow: rgba(245, 158, 11, 0.15);
+  --danger: #EF4444;
+  --danger-glow: rgba(239, 68, 68, 0.15);
+  --radius: 1rem;
 }
 
 body {
@@ -40,20 +50,33 @@ body {
   color: #FAFAFA;
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
-  selection-background-color: #4F46E5;
-  selection-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--primary-glow);
+  color: #FAFAFA;
+}
+
+/* ===== FOCUS ===== */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #09090B;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #27272A;
-  border-radius: 4px;
+  border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #3F3F46;
@@ -85,4 +108,189 @@ body {
     opacity: 0.7;
     box-shadow: 0 0 5px rgba(79, 70, 229, 0.2);
   }
+}
+
+/* ===== CARD (Challenge Day) ===== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  transition: border-color 0.2s ease;
+}
+
+/* ===== BUTTON (Challenge Day) ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: 16px;
+  padding: 14px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  white-space: nowrap;
+  user-select: none;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 24px var(--primary-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--card-hover);
+  border-color: #3f3f46;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== BADGE (Challenge Day) ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.badge-primary {
+  background: var(--primary-glow);
+  color: #818cf8;
+  border-color: rgba(79, 70, 229, 0.3);
+}
+
+.badge-success {
+  background: var(--success-glow);
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.badge-warning {
+  background: var(--warning-glow);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.badge-danger {
+  background: var(--danger-glow);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.badge-neutral {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+
+/* ===== CUSTOM INPUT (Challenge Day) ===== */
+.custom-input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  padding: 14px 16px;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  font-family: inherit;
+}
+
+.custom-input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-glow);
+  background: rgba(79, 70, 229, 0.04);
+}
+
+.custom-input.error {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 4px var(--danger-glow) !important;
+}
+
+textarea.custom-input {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* ===== PROGRESS ===== */
+.progress-track {
+  background: var(--border);
+  border-radius: 999px;
+  height: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, var(--primary), #818cf8);
+  border-radius: 999px;
+  height: 100%;
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ===== STREAK FIRE ===== */
+@keyframes flicker {
+  0%, 100% { transform: scale(1) rotate(-2deg); }
+  50% { transform: scale(1.08) rotate(2deg); }
+}
+
+.streak-fire {
+  animation: flicker 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* ===== XP COUNTER ===== */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.xp-appear {
+  animation: countUp 0.4s ease-out forwards;
+}
+
+/* ===== SAFE AREAS ===== */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
 }
