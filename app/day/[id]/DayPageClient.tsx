@@ -6,14 +6,34 @@ import { DayHeader } from "@/components/day/DayHeader";
 import { DayProgressBar } from "@/components/day/DayProgressBar";
 import { DayBadge } from "@/components/day/DayBadge";
 import { ChallengeCard } from "@/components/day/ChallengeCard";
+import { BuildPreview } from "@/components/day/BuildPreview";
+import { BuildPlan } from "@/components/day/BuildPlan";
 import { ObjectivesList } from "@/components/day/ObjectivesList";
 import { DeliverablesCard } from "@/components/day/DeliverablesCard";
 import { ResourcesCard } from "@/components/day/ResourcesCard";
 import { TipsCard } from "@/components/day/TipsCard";
+import { SubmissionChecklist } from "@/components/day/SubmissionChecklist";
+import { SubmissionReadiness } from "@/components/day/SubmissionReadiness";
 import { SubmissionForm } from "@/components/day/SubmissionForm";
 import { SuccessDialog } from "@/components/day/SuccessDialog";
 import { EdgeCaseBanner } from "@/components/day/EdgeCaseBanner";
 import { type SubmissionFormData } from "@/lib/validators";
+
+interface BuildStep {
+  step: number;
+  title: string;
+  description: string;
+  time: string;
+}
+
+interface Resource {
+  type: string;
+  category?: string;
+  title: string;
+  description?: string;
+  url: string;
+  duration: string;
+}
 
 interface Challenge {
   id: number;
@@ -24,9 +44,11 @@ interface Challenge {
   difficulty: string;
   estimatedTime: string;
   xpReward: number;
+  skills?: string[];
   objectives: string[];
+  buildSteps?: BuildStep[];
   deliverables: { type: string; label: string; icon: string }[];
-  resources: { type: string; title: string; url: string; duration: string }[];
+  resources: Resource[];
   tips: { text: string; mentor: string }[];
 }
 
@@ -65,6 +87,15 @@ export function DayPageClient({
   const [showSuccess, setShowSuccess] = useState(false);
   const [newStreak, setNewStreak] = useState(user.streak);
   const [submitted, setSubmitted] = useState(isAlreadySubmitted);
+  const [completedObjectivesCount, setCompletedObjectivesCount] = useState(0);
+
+  // Form field completion states for SubmissionReadiness calculation
+  const [formFieldsState, setFormFieldsState] = useState({
+    githubRepo: false,
+    commitUrl: false,
+    linkedinUrl: false,
+    reflection: false,
+  });
 
   const isFirstDay = user.streak === 0 && user.completedDays.length === 0;
   const missedYesterday =
@@ -76,7 +107,7 @@ export function DayPageClient({
       user.completedDays.length > 0);
   const challengeComplete = dayId > 60;
 
-  const handleSubmitSuccess = (data: SubmissionFormData) => {
+  const handleSubmitSuccess = (_data: SubmissionFormData) => {
     setNewStreak((prev) => prev + 1);
     setSubmitted(true);
     setShowSuccess(true);
@@ -90,7 +121,7 @@ export function DayPageClient({
     formSection?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Determine edge case to show
+  // Determine edge case banner
   const edgeCaseType = submitted
     ? "already-submitted"
     : challengeComplete
@@ -101,63 +132,121 @@ export function DayPageClient({
           ? "no-streak"
           : null;
 
+  // Readiness checklist fields
+  const readinessFields = [
+    {
+      key: "objectives",
+      label: `Objectives (${completedObjectivesCount}/${challenge.objectives.length})`,
+      filled: completedObjectivesCount === challenge.objectives.length && challenge.objectives.length > 0,
+    },
+    {
+      key: "githubRepo",
+      label: "GitHub Repository URL",
+      filled: formFieldsState.githubRepo,
+    },
+    {
+      key: "commitUrl",
+      label: "Today's Commit URL",
+      filled: formFieldsState.commitUrl,
+    },
+    {
+      key: "linkedinUrl",
+      label: "LinkedIn Post URL",
+      filled: formFieldsState.linkedinUrl,
+    },
+    {
+      key: "reflection",
+      label: "Learning Reflection",
+      filled: formFieldsState.reflection,
+    },
+  ];
+
   return (
-    <main
-      className="min-h-dvh"
-      style={{ background: "var(--background)", maxWidth: "480px", margin: "0 auto" }}
-    >
-      {/* Sticky Header */}
-      <DayHeader streak={newStreak} dayId={dayId} />
+    <div className="day-page-wrapper min-h-screen">
+      {/* Sticky Header across full width */}
+      <DayHeader streak={newStreak} dayId={dayId} track={challenge.track} />
 
-      {/* Edge case banners */}
-      {edgeCaseType && (
-        <EdgeCaseBanner
-          type={edgeCaseType}
-          onViewSubmission={edgeCaseType === "already-submitted" ? handleViewSubmission : undefined}
-        />
-      )}
+      {/* Main Container - Mobile 1-col, Desktop 2-col */}
+      <main className="day-layout-grid">
+        {/* LEFT COLUMN: Challenge instructions & learning resources */}
+        <div className="space-y-4">
+          {/* Edge case banners */}
+          {edgeCaseType && (
+            <EdgeCaseBanner
+              type={edgeCaseType}
+              onViewSubmission={edgeCaseType === "already-submitted" ? handleViewSubmission : undefined}
+            />
+          )}
 
-      {/* Progress bar */}
-      <DayProgressBar
-        currentDay={dayId}
-        totalDays={60}
-        completedDays={submitted ? [...user.completedDays, dayId] : user.completedDays}
-      />
+          {/* Hero Challenge Card */}
+          <ChallengeCard
+            title={challenge.title}
+            description={challenge.description}
+            context={challenge.context}
+            skills={challenge.skills}
+            isAlreadySubmitted={submitted}
+          />
 
-      {/* Day badge */}
-      <DayBadge
-        dayId={dayId}
-        track={challenge.track}
-        difficulty={challenge.difficulty}
-        estimatedTime={challenge.estimatedTime}
-        xpReward={challenge.xpReward}
-      />
+          {/* Visual Schematic Preview */}
+          <BuildPreview />
 
-      {/* Challenge content */}
-      <ChallengeCard
-        title={challenge.title}
-        description={challenge.description}
-        context={challenge.context}
-      />
+          {/* Learning Objectives (Interactive) */}
+          <ObjectivesList
+            objectives={challenge.objectives}
+            onCompletionChange={(count) => setCompletedObjectivesCount(count)}
+          />
 
-      <ObjectivesList objectives={challenge.objectives} />
+          {/* Step-by-Step Plan */}
+          {challenge.buildSteps && challenge.buildSteps.length > 0 && (
+            <BuildPlan steps={challenge.buildSteps} />
+          )}
 
-      <DeliverablesCard deliverables={challenge.deliverables} />
+          {/* Deliverables Card */}
+          <DeliverablesCard deliverables={challenge.deliverables} />
 
-      <ResourcesCard resources={challenge.resources} />
+          {/* Resources */}
+          <ResourcesCard resources={challenge.resources} />
 
-      <TipsCard tips={challenge.tips} />
+          {/* Mentor Tips */}
+          <TipsCard tips={challenge.tips} />
+        </div>
 
-      {/* Submission form */}
-      <section id="submission-section" aria-label="Proof of work submission">
-        <SubmissionForm
-          dayId={dayId}
-          onSuccess={handleSubmitSuccess}
-          isAlreadySubmitted={submitted}
-        />
-      </section>
+        {/* RIGHT COLUMN: Progress & Proof of Work Submission (Sticky on Desktop) */}
+        <div className="day-side-column-sticky space-y-4 mt-4 lg:mt-0">
+          {/* Progress bar */}
+          <DayProgressBar
+            currentDay={dayId}
+            totalDays={60}
+            completedDays={submitted ? [...user.completedDays, dayId] : user.completedDays}
+          />
 
-      {/* Success dialog */}
+          {/* Day metadata badge */}
+          <DayBadge
+            dayId={dayId}
+            track={challenge.track}
+            difficulty={challenge.difficulty}
+            estimatedTime={challenge.estimatedTime}
+            xpReward={challenge.xpReward}
+          />
+
+          {/* Pre-submission Checklist */}
+          <SubmissionChecklist />
+
+          {/* Submission Readiness Meter */}
+          <SubmissionReadiness fields={readinessFields} />
+
+          {/* Proof of Work Submission Form */}
+          <section id="submission-section" aria-label="Proof of work submission">
+            <SubmissionForm
+              dayId={dayId}
+              onSuccess={handleSubmitSuccess}
+              isAlreadySubmitted={submitted}
+            />
+          </section>
+        </div>
+      </main>
+
+      {/* Success Dialog */}
       <SuccessDialog
         isOpen={showSuccess}
         dayId={dayId}
@@ -166,6 +255,6 @@ export function DayPageClient({
         tomorrowChallenge={nextChallenge}
         onClose={() => setShowSuccess(false)}
       />
-    </main>
+    </div>
   );
 }

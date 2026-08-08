@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, CheckCircle2, XCircle, Trophy, RotateCcw } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Trophy, RotateCcw } from "lucide-react";
 
 type EdgeCaseType = "no-streak" | "missed-yesterday" | "already-submitted" | "challenge-complete";
 
@@ -13,10 +13,10 @@ interface EdgeCaseBannerProps {
 const configs = {
   "no-streak": {
     icon: RotateCcw,
-    emoji: "👋",
-    title: "Day 1 — Welcome!",
+    emoji: "🚀",
+    title: "Your first day starts here",
     message:
-      "This is the beginning. Don't think too much. Just build something today and submit your proof.",
+      "Complete today's challenge to kickstart your 60-day coding streak and build momentum.",
     bg: "rgba(79, 70, 229, 0.08)",
     border: "rgba(79, 70, 229, 0.3)",
     iconColor: "#818cf8",
@@ -24,14 +24,14 @@ const configs = {
   },
   "missed-yesterday": {
     icon: AlertTriangle,
-    emoji: "⚠️",
-    title: "Streak reset",
+    emoji: "💪",
+    title: "Yesterday got away from you",
     message:
-      "You missed yesterday. Your streak is back to 0 — but you're still in the challenge. Start fresh today.",
-    bg: "rgba(239, 68, 68, 0.08)",
-    border: "rgba(239, 68, 68, 0.3)",
-    iconColor: "#f87171",
-    titleColor: "#fca5a5",
+      "You don't lose the skills or code you've already built. Dust off your terminal and jump right back in today.",
+    bg: "rgba(245, 158, 11, 0.08)",
+    border: "rgba(245, 158, 11, 0.3)",
+    iconColor: "#fbbf24",
+    titleColor: "#fde68a",
   },
   "already-submitted": {
     icon: CheckCircle2,
@@ -57,7 +57,6 @@ const configs = {
 
 export function EdgeCaseBanner({ type, onViewSubmission }: EdgeCaseBannerProps) {
   const config = configs[type];
-  const Icon = config.icon;
 
   return (
     <AnimatePresence>
@@ -86,16 +85,30 @@ export function EdgeCaseBanner({ type, onViewSubmission }: EdgeCaseBannerProps) 
             </p>
             {type === "already-submitted" && onViewSubmission && (
               <button
+                type="button"
                 onClick={onViewSubmission}
-                className="mt-3 text-sm font-semibold"
+                className="mt-3 text-sm font-semibold hover:underline"
                 style={{ color: "#4ade80", background: "none", border: "none", cursor: "pointer", padding: 0 }}
               >
                 View your submission →
               </button>
             )}
+            {type === "missed-yesterday" && (
+              <button
+                type="button"
+                onClick={() => {
+                  document.getElementById("submission-section")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="mt-3 text-sm font-semibold hover:underline"
+                style={{ color: "#fbbf24", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+              >
+                Continue today&apos;s challenge →
+              </button>
+            )}
             {type === "challenge-complete" && (
               <button
-                className="mt-3 text-sm font-semibold"
+                type="button"
+                className="mt-3 text-sm font-semibold hover:underline"
                 style={{ color: "#fbbf24", background: "none", border: "none", cursor: "pointer", padding: 0 }}
               >
                 Download Certificate →

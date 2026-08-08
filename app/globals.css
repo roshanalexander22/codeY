@@ -294,3 +294,39 @@ textarea.custom-input {
   min-height: 44px;
   min-width: 44px;
 }
+
+/* ===== DAY PAGE RESPONSIVE LAYOUT ===== */
+.day-page-wrapper {
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.day-layout-grid {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .day-layout-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem 1.5rem;
+    align-items: start;
+  }
+}
+
+.day-side-column-sticky {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .day-side-column-sticky {
+    position: sticky;
+    top: 5rem;
+  }
+}

@@ -1,11 +1,13 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, BookOpen, Video, FileText, GitBranch, Play } from "lucide-react";
+import { motion } from "framer-motion";
+import { ExternalLink, BookOpen, FileText, GitBranch, Play, Wrench, Sparkles } from "lucide-react";
 
 interface Resource {
   type: string;
+  category?: string;
   title: string;
+  description?: string;
   url: string;
   duration: string;
 }
@@ -19,6 +21,8 @@ const typeConfig: Record<string, { icon: React.ElementType; color: string; bg: s
   Docs: { icon: BookOpen, color: "#818cf8", bg: "rgba(79, 70, 229, 0.12)" },
   Article: { icon: FileText, color: "#4ade80", bg: "rgba(34, 197, 94, 0.12)" },
   GitHub: { icon: GitBranch, color: "#A1A1AA", bg: "rgba(161, 161, 170, 0.12)" },
+  TOOLS: { icon: Wrench, color: "#fbbf24", bg: "rgba(245, 158, 11, 0.12)" },
+  INSPIRE: { icon: Sparkles, color: "#c084fc", bg: "rgba(192, 132, 252, 0.12)" },
 };
 
 export function ResourcesCard({ resources }: ResourcesCardProps) {
@@ -45,14 +49,17 @@ export function ResourcesCard({ resources }: ResourcesCardProps) {
             className="text-xs font-semibold uppercase tracking-widest"
             style={{ color: "#818cf8", letterSpacing: "0.1em" }}
           >
-            Resources
+            Resources & Reference
           </span>
         </div>
 
         {/* Resource list */}
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           {resources.map((resource, index) => {
-            const config = typeConfig[resource.type] ?? typeConfig.Article;
+            const config =
+              typeConfig[resource.category ?? ""] ??
+              typeConfig[resource.type] ??
+              typeConfig.Article;
             const Icon = config.icon;
 
             return (
@@ -66,7 +73,7 @@ export function ResourcesCard({ resources }: ResourcesCardProps) {
                 viewport={{ once: true, margin: "-20px" }}
                 transition={{ duration: 0.2, ease: "easeOut", delay: index * 0.05 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-3 rounded-2xl p-3 w-full"
+                className="flex items-center gap-3 rounded-2xl p-3 w-full transition-all duration-200 hover:border-indigo-500/30"
                 style={{
                   background: "rgba(255, 255, 255, 0.02)",
                   border: "1px solid var(--border)",
@@ -76,36 +83,44 @@ export function ResourcesCard({ resources }: ResourcesCardProps) {
               >
                 {/* Icon */}
                 <div
-                  className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: config.bg }}
                 >
-                  <Icon size={14} style={{ color: config.color }} />
+                  <Icon size={15} style={{ color: config.color }} />
                 </div>
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <p
-                    className="text-sm font-medium truncate"
-                    style={{ color: "var(--foreground)" }}
-                  >
-                    {resource.title}
-                  </p>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span
-                      className="text-xs"
-                      style={{
-                        color: config.color,
-                        background: config.bg,
-                        padding: "2px 8px",
-                        borderRadius: "999px",
-                      }}
+                  <div className="flex items-center gap-2">
+                    <p
+                      className="text-sm font-medium truncate"
+                      style={{ color: "var(--foreground)" }}
                     >
-                      {resource.type}
-                    </span>
-                    <span className="text-xs" style={{ color: "var(--muted-foreground)" }}>
-                      {resource.duration}
-                    </span>
+                      {resource.title}
+                    </p>
+                    {resource.category && (
+                      <span
+                        className="text-[0.65rem] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                        style={{
+                          color: config.color,
+                          background: config.bg,
+                        }}
+                      >
+                        {resource.category}
+                      </span>
+                    )}
                   </div>
+                  {resource.description ? (
+                    <p className="text-xs truncate mt-0.5" style={{ color: "var(--muted-foreground)" }}>
+                      {resource.description}
+                    </p>
+                  ) : (
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-xs" style={{ color: "var(--muted-foreground)" }}>
+                        {resource.duration}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Arrow */}

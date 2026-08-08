@@ -2,9 +2,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { CheckCircle2, Zap, Flame, ArrowRight, X } from "lucide-react";
+import { CheckCircle2, Zap, ArrowRight, X, Eye } from "lucide-react";
 import Link from "next/link";
-import { type SubmissionFormData } from "@/lib/validators";
 
 interface TomorrowChallenge {
   id: number;
@@ -87,184 +86,212 @@ export function SuccessDialog({
             aria-hidden="true"
           />
 
-          {/* Dialog */}
-          <motion.div
-            key="dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="success-title"
-            initial={{ opacity: 0, scale: 0.9, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 8 }}
-            transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+          {/* Dialog Container */}
+          <div
             style={{
               position: "fixed",
-              bottom: 0,
-              left: 0,
-              right: 0,
+              inset: 0,
               zIndex: 101,
-              padding: "0 16px",
-              paddingBottom: "env(safe-area-inset-bottom, 24px)",
-              maxWidth: "480px",
-              margin: "0 auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "16px",
+              pointerEvents: "none",
             }}
           >
-            <div
-              className="card p-6"
+            <motion.div
+              key="dialog"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="success-title"
+              initial={{ opacity: 0, scale: 0.9, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 8 }}
+              transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
               style={{
-                borderRadius: "32px 32px 24px 24px",
-                background: "linear-gradient(170deg, #18181B 0%, rgba(79, 70, 229, 0.08) 100%)",
-                borderColor: "rgba(79, 70, 229, 0.3)",
+                pointerEvents: "auto",
+                width: "100%",
+                maxWidth: "480px",
               }}
             >
-              {/* Close button */}
-              <button
-                onClick={onClose}
-                className="absolute top-4 right-4 w-8 h-8 rounded-xl flex items-center justify-center"
+              <div
+                className="card p-6 relative overflow-hidden"
                 style={{
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid var(--border)",
-                  cursor: "pointer",
+                  borderRadius: "24px",
+                  background: "linear-gradient(170deg, #18181B 0%, rgba(79, 70, 229, 0.12) 100%)",
+                  borderColor: "rgba(79, 70, 229, 0.35)",
+                  boxShadow: "0 20px 50px rgba(0, 0, 0, 0.5)",
                 }}
-                aria-label="Close"
               >
-                <X size={15} style={{ color: "var(--muted-foreground)" }} />
-              </button>
-
-              {/* Check icon */}
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.1, duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
-                className="flex justify-center mb-4"
-              >
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center"
+                {/* Close button */}
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="absolute top-4 right-4 w-8 h-8 rounded-xl flex items-center justify-center transition-colors hover:bg-white/10"
                   style={{
-                    background: "rgba(34, 197, 94, 0.15)",
-                    border: "2px solid rgba(34, 197, 94, 0.4)",
-                    boxShadow: "0 0 32px rgba(34, 197, 94, 0.2)",
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid var(--border)",
+                    cursor: "pointer",
                   }}
+                  aria-label="Close"
                 >
-                  <CheckCircle2 size={28} style={{ color: "#4ade80" }} />
-                </div>
-              </motion.div>
+                  <X size={15} style={{ color: "var(--muted-foreground)" }} />
+                </button>
 
-              {/* Title */}
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15, duration: 0.25 }}
-                className="text-center mb-6"
-              >
-                <h2
-                  id="success-title"
-                  className="text-xl font-black mb-1"
-                  style={{ color: "var(--foreground)" }}
+                {/* Check icon */}
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.1, duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
+                  className="flex justify-center mb-4"
                 >
-                  Day {dayId} Complete! 🎉
-                </h2>
-                <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
-                  Your proof of work is submitted.
-                </p>
-              </motion.div>
-
-              {/* Stats row */}
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.25 }}
-                className="grid grid-cols-2 gap-3 mb-5"
-              >
-                {/* XP earned */}
-                <div
-                  className="rounded-2xl p-4 text-center"
-                  style={{
-                    background: "rgba(79, 70, 229, 0.1)",
-                    border: "1px solid rgba(79, 70, 229, 0.25)",
-                  }}
-                >
-                  <Zap
-                    size={20}
-                    fill="currentColor"
-                    className="mx-auto mb-1"
-                    style={{ color: "#818cf8" }}
-                  />
-                  <p
-                    className="text-2xl font-black xp-appear"
-                    style={{ color: "#c7d2fe" }}
+                  <div
+                    className="w-16 h-16 rounded-full flex items-center justify-center"
+                    style={{
+                      background: "rgba(34, 197, 94, 0.15)",
+                      border: "2px solid rgba(34, 197, 94, 0.4)",
+                      boxShadow: "0 0 32px rgba(34, 197, 94, 0.25)",
+                    }}
                   >
-                    +{xp}
-                  </p>
-                  <p className="text-xs" style={{ color: "#818cf8" }}>
-                    XP Earned
-                  </p>
-                </div>
+                    <CheckCircle2 size={28} style={{ color: "#4ade80" }} />
+                  </div>
+                </motion.div>
 
-                {/* Streak */}
-                <div
-                  className="rounded-2xl p-4 text-center"
-                  style={{
-                    background: "rgba(245, 158, 11, 0.1)",
-                    border: "1px solid rgba(245, 158, 11, 0.25)",
-                  }}
-                >
-                  <span className="text-xl streak-fire block mb-1">🔥</span>
-                  <p className="text-2xl font-black" style={{ color: "#fde68a" }}>
-                    {newStreak}
-                  </p>
-                  <p className="text-xs" style={{ color: "#fbbf24" }}>
-                    Day Streak
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Tomorrow preview */}
-              {tomorrowChallenge && (
+                {/* Title */}
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.25 }}
-                  className="rounded-2xl p-4 mb-5"
-                  style={{
-                    background: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid var(--border)",
-                  }}
+                  transition={{ delay: 0.15, duration: 0.25 }}
+                  className="text-center mb-6"
                 >
-                  <p className="text-xs font-semibold mb-2" style={{ color: "var(--muted-foreground)" }}>
-                    Coming up tomorrow →
+                  <h2
+                    id="success-title"
+                    className="text-xl font-black mb-1"
+                    style={{ color: "var(--foreground)" }}
+                  >
+                    Day {dayId} Complete! 🎉
+                  </h2>
+                  <p className="text-sm font-medium" style={{ color: "#818cf8" }}>
+                    You&apos;re building momentum.
                   </p>
-                  <p className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>
-                    Day {tomorrowChallenge.id}: {tomorrowChallenge.title}
+                  <p className="text-xs mt-0.5" style={{ color: "var(--muted-foreground)" }}>
+                    Your proof of work is verified and submitted.
                   </p>
-                  <div className="flex items-center gap-3 mt-1">
-                    <span className="badge badge-warning" style={{ fontSize: "0.65rem" }}>
-                      {tomorrowChallenge.difficulty}
-                    </span>
-                    <span className="text-xs" style={{ color: "var(--muted-foreground)" }}>
-                      {tomorrowChallenge.estimatedTime}
-                    </span>
+                </motion.div>
+
+                {/* Stats row */}
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.25 }}
+                  className="grid grid-cols-2 gap-3 mb-5"
+                >
+                  {/* XP earned */}
+                  <div
+                    className="rounded-2xl p-4 text-center"
+                    style={{
+                      background: "rgba(79, 70, 229, 0.1)",
+                      border: "1px solid rgba(79, 70, 229, 0.25)",
+                    }}
+                  >
+                    <Zap
+                      size={20}
+                      fill="currentColor"
+                      className="mx-auto mb-1"
+                      style={{ color: "#818cf8" }}
+                    />
+                    <p
+                      className="text-2xl font-black xp-appear"
+                      style={{ color: "#c7d2fe" }}
+                    >
+                      +{xp}
+                    </p>
+                    <p className="text-xs" style={{ color: "#818cf8" }}>
+                      XP Earned
+                    </p>
+                  </div>
+
+                  {/* Streak */}
+                  <div
+                    className="rounded-2xl p-4 text-center"
+                    style={{
+                      background: "rgba(245, 158, 11, 0.1)",
+                      border: "1px solid rgba(245, 158, 11, 0.25)",
+                    }}
+                  >
+                    <span className="text-xl streak-fire block mb-1">🔥</span>
+                    <p className="text-2xl font-black" style={{ color: "#fde68a" }}>
+                      {newStreak}
+                    </p>
+                    <p className="text-xs" style={{ color: "#fbbf24" }}>
+                      Day Streak
+                    </p>
                   </div>
                 </motion.div>
-              )}
 
-              {/* CTA */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.35, duration: 0.25 }}
-              >
-                <Link
-                  href="/dashboard"
-                  className="btn btn-primary w-full flex items-center justify-center gap-2"
-                  id="go-to-dashboard-btn"
+                {/* Tomorrow preview */}
+                {tomorrowChallenge && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.25 }}
+                    className="rounded-2xl p-4 mb-5"
+                    style={{
+                      background: "rgba(255, 255, 255, 0.03)",
+                      border: "1px solid var(--border)",
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-xs font-semibold" style={{ color: "var(--muted-foreground)" }}>
+                        Next Challenge → Day {tomorrowChallenge.id}
+                      </p>
+                      <span className="text-[0.65rem] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-medium">
+                        Available tomorrow
+                      </span>
+                    </div>
+                    <p className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>
+                      {tomorrowChallenge.title}
+                    </p>
+                    <div className="flex items-center gap-3 mt-1.5">
+                      <span className="badge badge-warning" style={{ fontSize: "0.65rem" }}>
+                        {tomorrowChallenge.difficulty}
+                      </span>
+                      <span className="text-xs" style={{ color: "var(--muted-foreground)" }}>
+                        {tomorrowChallenge.estimatedTime}
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* CTAs */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.35, duration: 0.25 }}
+                  className="space-y-2"
                 >
-                  Back to Dashboard
-                  <ArrowRight size={16} />
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
+                  <Link
+                    href="/dashboard"
+                    className="btn btn-primary w-full flex items-center justify-center gap-2"
+                    id="go-to-dashboard-btn"
+                  >
+                    Back to Dashboard
+                    <ArrowRight size={16} />
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="w-full py-2.5 text-xs text-center font-medium rounded-xl flex items-center justify-center gap-1.5 hover:bg-white/5 transition-colors"
+                    style={{ color: "var(--muted-foreground)", background: "transparent", border: "none", cursor: "pointer" }}
+                  >
+                    <Eye size={13} />
+                    Review today&apos;s work
+                  </button>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>
