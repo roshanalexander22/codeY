@@ -52,16 +52,16 @@ export function TestimonialsSection() {
   ];
 
   return (
-    <section id="testimonials" className="py-20 bg-[#09090B] border-t border-[#27272A]/50 relative">
+    <section id="testimonials" className="py-20 bg-[var(--background)] border-t border-[var(--border)] text-[var(--foreground)] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
           <Badge variant="primary">Progression Stories</Badge>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#FAFAFA] tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
             Real Student Transformations
           </h2>
-          <p className="text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
+          <p className="text-sm sm:text-base text-[var(--muted-foreground)] leading-relaxed">
             Not empty reviews — real timelines showing how 60 consecutive days of public building changes careers.
           </p>
         </div>
@@ -76,15 +76,15 @@ export function TestimonialsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.35, delay: idx * 0.08, ease: "easeOut" }}
             >
-              <Card className="bg-[#18181B] border-[#27272A] p-6 h-full flex flex-col justify-between hover:border-[#3F3F46] transition-all">
+              <Card className="bg-[var(--card)] border-[var(--border)] text-[var(--foreground)] p-6 h-full flex flex-col justify-between hover:border-[var(--primary)] transition-all glass-card">
                 <div className="space-y-5">
                   {/* Top Row: Avatar & Streak Badge */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Avatar src={item.avatar} fallback={item.fallback} size="lg" />
                       <div>
-                        <h3 className="font-bold text-[#FAFAFA] text-base">{item.name}</h3>
-                        <p className="text-xs text-[#A1A1AA]">{item.role}</p>
+                        <h3 className="font-bold text-[var(--foreground)] text-base">{item.name}</h3>
+                        <p className="text-xs text-[var(--muted-foreground)]">{item.role}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#F59E0B]/15 text-[#F59E0B] border border-[#F59E0B]/30 text-xs font-bold font-mono">
@@ -94,26 +94,26 @@ export function TestimonialsSection() {
                   </div>
 
                   {/* Progression Mini-Timeline */}
-                  <div className="space-y-2.5 pt-2 border-t border-[#27272A]/50">
+                  <div className="space-y-2.5 pt-2 border-t border-[var(--border)]">
                     {item.timeline.map((t, i) => (
                       <div key={i} className="flex items-start gap-2.5 text-xs">
-                        <span className="font-mono font-bold text-[#818CF8] bg-[#4F46E5]/10 px-1.5 py-0.5 rounded shrink-0">
+                        <span className="font-mono font-bold text-[var(--primary)] bg-[var(--primary-glow)] px-1.5 py-0.5 rounded shrink-0">
                           {t.day}
                         </span>
-                        <span className="text-[#FAFAFA] leading-snug">{t.text}</span>
+                        <span className="text-[var(--foreground)] leading-snug">{t.text}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Outcome Footer */}
-                <div className="pt-4 border-t border-[#27272A] mt-5 flex items-center justify-between">
+                <div className="pt-4 border-t border-[var(--border)] mt-5 flex items-center justify-between">
                   <span className="text-xs font-semibold text-[#4ADE80] flex items-center gap-1.5">
                     <CheckCircle2 className="h-4 w-4 text-[#22C55E]" />
                     {item.outcome}
                   </span>
-                  <div className="flex items-center gap-2 text-[#A1A1AA]">
-                    <GithubIcon className="h-4 w-4 hover:text-white cursor-pointer transition-colors" />
+                  <div className="flex items-center gap-2 text-[var(--muted-foreground)]">
+                    <GithubIcon className="h-4 w-4 hover:text-[var(--foreground)] cursor-pointer transition-colors" />
                     <LinkedinIcon className="h-4 w-4 hover:text-[#0A66C2] cursor-pointer transition-colors" />
                   </div>
                 </div>

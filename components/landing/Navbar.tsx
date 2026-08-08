@@ -34,19 +34,19 @@ export function Navbar({ onOpenJoinModal, onOpenSettings }: NavbarProps) {
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? "bg-[#09090B]/85 backdrop-blur-md border-b border-[#27272A]/80 py-3 shadow-xl"
+          ? "bg-[var(--card)]/85 backdrop-blur-md border-b border-[var(--border)] py-3 shadow-xl glass-nav"
           : "bg-transparent py-4 sm:py-5"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Brand Logo */}
         <a href="#" className="flex items-center gap-2.5 group">
-          <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-[12px] bg-gradient-to-br from-[#4F46E5] to-[#6366F1] flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.5)] group-hover:scale-105 transition-transform duration-200">
+          <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-[12px] bg-[var(--primary)] flex items-center justify-center shadow-[0_0_20px_var(--primary-glow)] group-hover:scale-105 transition-transform duration-200">
             <Flame className="h-5 w-5 text-white animate-pulse" />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold text-base sm:text-lg text-[#FAFAFA] tracking-tight flex items-center gap-1.5">
-              ABTalks <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-[#4F46E5]/20 text-[#818CF8] border border-[#4F46E5]/40 font-mono">60DAYS</span>
+            <span className="font-bold text-base sm:text-lg text-[var(--foreground)] tracking-tight flex items-center gap-1.5">
+              ABTalks <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-[var(--primary-glow)] text-[var(--primary)] border border-[var(--primary)] font-mono">60DAYS</span>
             </span>
           </div>
         </a>
@@ -57,7 +57,7 @@ export function Navbar({ onOpenJoinModal, onOpenSettings }: NavbarProps) {
             <a
               key={link.name}
               href={link.href}
-              className="text-xs sm:text-sm font-medium text-[#A1A1AA] hover:text-[#FAFAFA] transition-colors"
+              className="text-xs sm:text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
             >
               {link.name}
             </a>
@@ -69,7 +69,7 @@ export function Navbar({ onOpenJoinModal, onOpenSettings }: NavbarProps) {
           {onOpenSettings && (
             <button
               onClick={onOpenSettings}
-              className="p-2.5 rounded-xl bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:text-white hover:border-[#4F46E5]/40 transition-colors"
+              className="p-2.5 rounded-xl bg-[var(--card)] border border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:border-[var(--primary)] transition-colors"
               aria-label="Open settings"
               title="Open Settings"
             >
@@ -88,16 +88,16 @@ export function Navbar({ onOpenJoinModal, onOpenSettings }: NavbarProps) {
           {onOpenSettings && (
             <button
               onClick={onOpenSettings}
-              className="p-2.5 rounded-xl bg-[#18181B] border border-[#27272A] text-[#FAFAFA] hover:bg-[#27272A] transition-colors"
+              className="p-2.5 rounded-xl bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] transition-colors"
               aria-label="Open settings"
             >
-              <Settings className="h-5 w-5 text-[#A1A1AA]" />
+              <Settings className="h-5 w-5 text-[var(--muted-foreground)]" />
             </button>
           )}
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2.5 rounded-xl bg-[#18181B] border border-[#27272A] text-[#FAFAFA] hover:bg-[#27272A] transition-colors"
+            className="p-2.5 rounded-xl bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] transition-colors"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -107,14 +107,14 @@ export function Navbar({ onOpenJoinModal, onOpenSettings }: NavbarProps) {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[#27272A] bg-[#09090B]/95 backdrop-blur-xl px-4 pt-3 pb-5 space-y-3 animate-in slide-in-from-top duration-200">
+        <div className="md:hidden border-b border-[var(--border)] bg-[var(--card)]/95 backdrop-blur-xl px-4 pt-3 pb-5 space-y-3 animate-in slide-in-from-top duration-200 glass-modal">
           <nav className="flex flex-col space-y-2">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-[#A1A1AA] hover:text-[#FAFAFA] py-2 px-3 rounded-lg hover:bg-[#18181B]"
+                className="text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] py-2 px-3 rounded-lg hover:bg-white/10"
               >
                 {link.name}
               </a>

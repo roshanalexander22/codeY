@@ -32,7 +32,7 @@ export function ProgressCard({
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.2 }}
       whileHover={{ y: -2 }}
       onClick={onClick}
-      className="rounded-3xl p-5 cursor-pointer hover:border-indigo-500/40 transition-all flex flex-col justify-between card"
+      className="rounded-3xl p-5 cursor-pointer hover:border-indigo-500/40 transition-all flex flex-col justify-between card glass-card"
       style={{
         background: "var(--card)",
         border: "1px solid var(--border)",

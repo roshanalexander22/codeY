@@ -24,11 +24,11 @@ export function WeeklyHeatmap({
   const today = new Date();
   const enrolled = new Date(enrolledAt);
 
-  // Build a 7-week grid (49 days), GitHub-style
+  // Build a 5-week grid (35 days) for a compact height matching leaderboard
   const weeks: DayCell[][] = [];
-  const startDate = subDays(today, 41); // 6 weeks back from today
+  const startDate = subDays(today, 27); // 4 weeks back from today
 
-  for (let week = 0; week < 7; week++) {
+  for (let week = 0; week < 5; week++) {
     const weekCells: DayCell[] = [];
     for (let day = 0; day < 7; day++) {
       const date = addDays(startDate, week * 7 + day);
@@ -87,18 +87,14 @@ export function WeeklyHeatmap({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.55 }}
-      className="rounded-3xl p-5 card"
-      style={{
-        background: "var(--card)",
-        border: "1px solid var(--border)",
-      }}
+      className="rounded-3xl p-5 bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] glass-card"
     >
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         <div>
           <h3 className="text-sm font-semibold text-[var(--foreground)]">
-            Activity
+            Activity Heatmap
           </h3>
-          <p className="text-xs mt-0.5 text-[var(--muted-foreground)]">
+          <p className="text-xs text-[var(--muted-foreground)]">
             {completedCount} submissions total
           </p>
         </div>
@@ -127,19 +123,18 @@ export function WeeklyHeatmap({
       </div>
 
       {/* Day-of-week labels */}
-      <div className="flex gap-1 mb-1.5 pl-0">
+      <div className="flex gap-1 mb-1.5">
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
           <div
             key={i}
-            className="flex-1 text-center text-xs text-[var(--muted-foreground)]"
-            style={{ fontSize: "10px" }}
+            className="flex-1 text-center text-[10px] text-[var(--muted-foreground)] font-mono"
           >
             {d}
           </div>
         ))}
       </div>
 
-      {/* Heatmap grid - 7 cols (days) x 7 rows (weeks) */}
+      {/* Heatmap grid - 7 cols (days) x 5 rows (weeks) */}
       <div className="space-y-1">
         {weeks.map((week, wi) => (
           <div key={wi} className="flex gap-1">
@@ -148,11 +143,10 @@ export function WeeklyHeatmap({
               return (
                 <motion.div
                   key={di}
-                  className="flex-1 rounded-sm"
+                  className="flex-1 rounded-sm h-6 sm:h-7"
                   style={{
                     background: style.bg,
                     border: `1px solid ${style.border}`,
-                    aspectRatio: "1",
                   }}
                   initial={{ opacity: 0, scale: 0.6 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -168,14 +162,10 @@ export function WeeklyHeatmap({
         ))}
       </div>
 
-      {/* Month labels - subtle */}
-      <div className="flex justify-between mt-2">
-        <span className="text-xs text-[var(--muted-foreground)]" style={{ fontSize: "10px" }}>
-          6 weeks ago
-        </span>
-        <span className="text-xs text-[var(--muted-foreground)]" style={{ fontSize: "10px" }}>
-          Today
-        </span>
+      {/* Month labels */}
+      <div className="flex justify-between mt-2 pt-1 border-t border-[var(--border)] text-[10px] text-[var(--muted-foreground)]">
+        <span>4 weeks ago</span>
+        <span>Today</span>
       </div>
     </motion.div>
   );

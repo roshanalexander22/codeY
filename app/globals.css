@@ -224,13 +224,15 @@ html.light .glass-nav {
 /* Light mode text contrast overrides */
 html.light .text-zinc-100,
 html.light .text-zinc-200,
+html.light [class*="text-[#FAFAFA]"],
 html.light .text-white {
   color: #18181B !important;
 }
 
 html.light .text-zinc-300,
 html.light .text-zinc-400,
-html.light .text-zinc-500 {
+html.light .text-zinc-500,
+html.light [class*="text-[#A1A1AA]"] {
   color: #52525B !important;
 }
 

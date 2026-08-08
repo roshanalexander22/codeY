@@ -7,9 +7,9 @@ import { ShieldCheck, Flame } from "lucide-react";
 
 export function MissedDaySection() {
   return (
-    <section className="py-16 bg-[#09090B] border-t border-[#27272A]/50 relative">
+    <section className="py-16 bg-[var(--background)] border-t border-[var(--border)] text-[var(--foreground)] relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        <Card className="bg-[#18181B] border-[#27272A] p-6 sm:p-8 hover:border-[#3F3F46] transition-all relative overflow-hidden">
+        <Card className="bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] p-6 sm:p-8 hover:border-[var(--primary)] transition-all relative overflow-hidden glass-card">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
             
             {/* Left Icon Badge */}
@@ -23,14 +23,14 @@ export function MissedDaySection() {
                 <Badge variant="warning" className="text-xs gap-1">
                   <Flame className="h-3.5 w-3.5 text-[#F59E0B]" /> STREAK PROTECTION
                 </Badge>
-                <span className="text-xs text-[#A1A1AA] font-mono">2 Freeze Shields Included</span>
+                <span className="text-xs text-[var(--muted-foreground)] font-mono">2 Freeze Shields Included</span>
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-bold text-[#FAFAFA] tracking-tight">
+              <h3 className="text-xl sm:text-2xl font-bold text-[var(--foreground)] tracking-tight">
                 Missed a Day? Your Streak Might Reset — Your Growth Doesn&apos;t.
               </h3>
 
-              <p className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[var(--muted-foreground)] leading-relaxed">
                 College exams, emergencies, or tough days happen. Every student gets 2 automatic Freeze Shields to protect their streak. Even if a streak resets, your written code and GitHub commits stay in your portfolio forever.
               </p>
             </div>

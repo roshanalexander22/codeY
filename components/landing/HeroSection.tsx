@@ -31,22 +31,22 @@ export function HeroSection({ onOpenJoinModal }: HeroSectionProps) {
   const commitGrid = React.useMemo(() => {
     return Array.from({ length: 60 }, (_, i) => {
       const day = i + 1;
-      let intensity = "bg-[#27272A]"; // default uncommitted
+      let intensity = "bg-white/10"; // default uncommitted
       if (day <= currentStreak) {
-        if (day % 7 === 0) intensity = "bg-[#4F46E5] shadow-[0_0_8px_#4F46E5]"; // max level
-        else if (day % 3 === 0) intensity = "bg-[#6366F1]";
-        else intensity = "bg-[#818CF8]/80";
+        if (day % 7 === 0) intensity = "bg-[var(--primary)] shadow-xs"; // max level
+        else if (day % 3 === 0) intensity = "bg-[var(--primary)]/80";
+        else intensity = "bg-[var(--primary)]/60";
       } else if (day === currentStreak + 1 && hasCommittedToday) {
-        intensity = "bg-[#22C55E] shadow-[0_0_8px_#22C55E]";
+        intensity = "bg-[#22C55E] shadow-xs";
       }
       return { day, intensity };
     });
   }, [currentStreak, hasCommittedToday]);
 
   return (
-    <section className="relative pt-28 pb-16 md:pt-36 md:pb-28 overflow-hidden">
+    <section className="relative pt-28 pb-16 md:pt-36 md:pb-28 overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
       {/* Background Radial Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[550px] h-[320px] sm:h-[550px] bg-[#4F46E5]/15 blur-[120px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[550px] h-[320px] sm:h-[550px] bg-[var(--primary-glow)] blur-[120px] rounded-full pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
@@ -67,21 +67,21 @@ export function HeroSection({ onOpenJoinModal }: HeroSectionProps) {
             {/* Top Pill Tag */}
             <div className="inline-flex items-center gap-2">
               <Badge variant="primary" className="gap-1.5 py-1 px-3 text-xs font-semibold">
-                <Sparkles className="h-3.5 w-3.5 text-[#818CF8]" />
+                <Sparkles className="h-3.5 w-3.5 text-[var(--primary)]" />
                 60-Day Build In Public Challenge
               </Badge>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#FAFAFA] leading-[1.12]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--foreground)] leading-[1.12]">
               Build in Public. <br />
-              <span className="bg-gradient-to-r from-[#4F46E5] via-[#818CF8] to-[#22C55E] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[var(--primary)] via-indigo-400 to-[#22C55E] bg-clip-text text-transparent">
                 Become Impossible to Ignore.
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-sm sm:text-base lg:text-lg text-[#A1A1AA] leading-relaxed max-w-lg mx-auto lg:mx-0">
+            <p className="text-sm sm:text-base lg:text-lg text-[var(--muted-foreground)] leading-relaxed max-w-lg mx-auto lg:mx-0">
               Commit code daily for 60 consecutive days. Share your progress on GitHub & LinkedIn, build a verified portfolio, and transform your developer career.
             </p>
 
@@ -91,7 +91,7 @@ export function HeroSection({ onOpenJoinModal }: HeroSectionProps) {
                 onClick={onOpenJoinModal}
                 variant="primary"
                 size="lg"
-                className="w-full sm:w-auto gap-2.5 text-base h-13 shadow-[0_0_30px_rgba(79,70,229,0.5)] cursor-pointer"
+                className="w-full sm:w-auto gap-2.5 text-base h-13 shadow-[0_0_30px_var(--primary-glow)] cursor-pointer"
               >
                 Start Day 1
                 <ArrowRight className="h-5 w-5" />
@@ -110,7 +110,7 @@ export function HeroSection({ onOpenJoinModal }: HeroSectionProps) {
             </div>
 
             {/* Key Perks Micro-list */}
-            <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs text-[#A1A1AA]">
+            <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs text-[var(--muted-foreground)]">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4 text-[#22C55E]" /> 100% Free
               </span>
@@ -130,19 +130,19 @@ export function HeroSection({ onOpenJoinModal }: HeroSectionProps) {
             transition={{ duration: 0.35, delay: 0.1, ease: "easeOut" }}
             className="flex-1 w-full max-w-[390px] sm:max-w-md lg:max-w-none"
           >
-            <Card hoverGlow={true} className="bg-[#18181B] border-[#27272A] p-5 sm:p-7 space-y-5 shadow-2xl relative">
+            <Card hoverGlow={true} className="bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] p-5 sm:p-7 space-y-5 shadow-2xl relative glass-card">
               
               {/* Header card info */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-[#27272A]">
+              <div className="flex items-center justify-between pb-3.5 border-b border-[var(--border)]">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-full bg-[#22C55E]/10 border border-[#22C55E]/30 flex items-center justify-center">
                     <Flame className="h-5 w-5 text-[#22C55E] animate-bounce" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#FAFAFA] text-base flex items-center gap-2">
+                    <h3 className="font-bold text-[var(--foreground)] text-base flex items-center gap-2">
                       Active Challenge Streak
                     </h3>
-                    <p className="text-xs text-[#A1A1AA]">60-Day Progress Simulator</p>
+                    <p className="text-xs text-[var(--muted-foreground)]">60-Day Progress Simulator</p>
                   </div>
                 </div>
 
@@ -155,14 +155,14 @@ export function HeroSection({ onOpenJoinModal }: HeroSectionProps) {
 
               {/* Stats overview row inside Card */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-[#09090B] p-3.5 rounded-[16px] border border-[#27272A]">
-                  <span className="text-[11px] text-[#A1A1AA] flex items-center gap-1 mb-1">
-                    <GitCommit className="h-3.5 w-3.5 text-[#4F46E5]" /> Public Commits
+                <div className="bg-white/5 p-3.5 rounded-[16px] border border-[var(--border)]">
+                  <span className="text-[11px] text-[var(--muted-foreground)] flex items-center gap-1 mb-1">
+                    <GitCommit className="h-3.5 w-3.5 text-[var(--primary)]" /> Public Commits
                   </span>
-                  <span className="text-xl font-extrabold text-[#FAFAFA] font-mono">{simulatedCommits}</span>
+                  <span className="text-xl font-extrabold text-[var(--foreground)] font-mono">{simulatedCommits}</span>
                 </div>
-                <div className="bg-[#09090B] p-3.5 rounded-[16px] border border-[#27272A]">
-                  <span className="text-[11px] text-[#A1A1AA] flex items-center gap-1 mb-1">
+                <div className="bg-white/5 p-3.5 rounded-[16px] border border-[var(--border)]">
+                  <span className="text-[11px] text-[var(--muted-foreground)] flex items-center gap-1 mb-1">
                     <Trophy className="h-3.5 w-3.5 text-[#F59E0B]" /> Milestone
                   </span>
                   <span className="text-xl font-extrabold text-[#22C55E] font-mono">{Math.round((currentStreak/60)*100)}%</span>
@@ -171,20 +171,20 @@ export function HeroSection({ onOpenJoinModal }: HeroSectionProps) {
 
               {/* Progress bar */}
               <div className="space-y-1.5">
-                <div className="flex justify-between text-xs text-[#A1A1AA]">
+                <div className="flex justify-between text-xs text-[var(--muted-foreground)]">
                   <span>Day {currentStreak} of 60 Goal</span>
-                  <span className="font-semibold text-[#818CF8]">{60 - currentStreak} days remaining</span>
+                  <span className="font-semibold text-[var(--primary)]">{60 - currentStreak} days remaining</span>
                 </div>
-                <Progress value={currentStreak} max={60} indicatorColor="bg-gradient-to-r from-[#4F46E5] to-[#22C55E]" />
+                <Progress value={currentStreak} max={60} indicatorColor="bg-gradient-to-r from-[var(--primary)] to-[#22C55E]" />
               </div>
 
               {/* 60-Day Commit Grid Matrix (GitHub / Linear Style) */}
               <div className="space-y-1.5 pt-1">
-                <div className="flex items-center justify-between text-xs text-[#A1A1AA]">
+                <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
                   <span>GitHub Contribution Matrix</span>
                   <span className="text-[10px] text-[#22C55E] font-semibold">Active Habit</span>
                 </div>
-                <div className="grid grid-cols-10 gap-1.5 p-3 rounded-[16px] bg-[#09090B] border border-[#27272A]">
+                <div className="grid grid-cols-10 gap-1.5 p-3 rounded-[16px] bg-white/5 border border-[var(--border)]">
                   {commitGrid.map((item) => (
                     <div
                       key={item.day}

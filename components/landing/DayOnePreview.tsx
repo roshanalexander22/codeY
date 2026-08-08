@@ -34,25 +34,25 @@ export function DayOnePreview() {
   };
 
   return (
-    <section id="day1-preview" className="py-20 bg-[#09090B] border-t border-[#27272A]/50 relative">
+    <section id="day1-preview" className="py-20 bg-[var(--background)] border-t border-[var(--border)] text-[var(--foreground)] relative">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
           <Badge variant="primary">Zero Uncertainty</Badge>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#FAFAFA] tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
             See Exactly What You&apos;ll Build
           </h2>
-          <p className="text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
+          <p className="text-sm sm:text-base text-[var(--muted-foreground)] leading-relaxed">
             No mystery. Every day gives you a bite-sized, practical project with step-by-step objectives.
           </p>
         </div>
 
-        {/* Two Preview Cards Grid (Day 1 Preview + Tonight's Build) */}
+        {/* Two Preview Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
           {/* Card 1: Interactive Day 1 Preview */}
-          <Card className="bg-[#18181B] border-[#27272A] p-6 flex flex-col justify-between hover:border-[#4F46E5]/60 transition-all relative overflow-hidden group">
+          <Card className="bg-[var(--card)] border-[var(--border)] text-[var(--foreground)] p-6 flex flex-col justify-between hover:border-[var(--primary)] transition-all relative overflow-hidden group glass-card">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <Badge variant="primary" className="font-mono text-xs">
@@ -64,10 +64,10 @@ export function DayOnePreview() {
               </div>
 
               <div>
-                <h3 className="text-lg font-bold text-[#FAFAFA] group-hover:text-[#818CF8] transition-colors">
+                <h3 className="text-lg font-bold text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
                   {day1Data.title}
                 </h3>
-                <p className="text-xs text-[#A1A1AA] leading-relaxed mt-2">
+                <p className="text-xs text-[var(--muted-foreground)] leading-relaxed mt-2">
                   {day1Data.description}
                 </p>
               </div>
@@ -75,7 +75,7 @@ export function DayOnePreview() {
               {/* Objectives bullet summary */}
               <div className="space-y-1.5 pt-1">
                 {day1Data.objectives.slice(0, 2).map((obj, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs text-[#FAFAFA]">
+                  <div key={i} className="flex items-center gap-2 text-xs text-[var(--foreground)]">
                     <CheckCircle2 className="h-3.5 w-3.5 text-[#22C55E] shrink-0" />
                     <span className="truncate">{obj}</span>
                   </div>
@@ -97,7 +97,7 @@ export function DayOnePreview() {
           </Card>
 
           {/* Card 2: Tonight's Build Card */}
-          <Card className="bg-[#18181B] border-[#27272A] p-6 flex flex-col justify-between hover:border-[#F59E0B]/60 transition-all relative overflow-hidden group">
+          <Card className="bg-[var(--card)] border-[var(--border)] text-[var(--foreground)] p-6 flex flex-col justify-between hover:border-[#F59E0B]/60 transition-all relative overflow-hidden group glass-card">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <Badge variant="warning" className="font-mono text-xs gap-1">
@@ -109,16 +109,16 @@ export function DayOnePreview() {
               </div>
 
               <div>
-                <h3 className="text-lg font-bold text-[#FAFAFA] group-hover:text-[#FBBF24] transition-colors">
+                <h3 className="text-lg font-bold text-[var(--foreground)] group-hover:text-[#FBBF24] transition-colors">
                   Build Something Small. Ship Something Real.
                 </h3>
-                <p className="text-xs text-[#A1A1AA] leading-relaxed mt-2">
+                <p className="text-xs text-[var(--muted-foreground)] leading-relaxed mt-2">
                   Designed for college students. Spend 45 minutes after class turning passive learning into visible proof.
                 </p>
               </div>
 
               {/* Perks list */}
-              <div className="space-y-1.5 pt-1 text-xs text-[#A1A1AA]">
+              <div className="space-y-1.5 pt-1 text-xs text-[var(--muted-foreground)]">
                 <div className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
                   <span>Clear step-by-step deliverable prompt</span>
@@ -158,7 +158,7 @@ export function DayOnePreview() {
           
           {/* Header Metadata pill */}
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="px-2.5 py-1 rounded-full bg-[#4F46E5]/15 text-[#818CF8] font-mono font-bold">
+            <span className="px-2.5 py-1 rounded-full bg-[var(--primary-glow)] text-[var(--primary)] font-mono font-bold">
               {day1Data.estimatedTime}
             </span>
             <span className="px-2.5 py-1 rounded-full bg-[#22C55E]/15 text-[#4ADE80] font-semibold">
@@ -171,16 +171,16 @@ export function DayOnePreview() {
 
           {/* Description */}
           <div className="space-y-1">
-            <h4 className="text-xs font-semibold text-[#A1A1AA] uppercase tracking-wider">Overview</h4>
-            <p className="text-sm text-[#FAFAFA] leading-relaxed">{day1Data.description}</p>
+            <h4 className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider">Overview</h4>
+            <p className="text-sm text-[var(--foreground)] leading-relaxed">{day1Data.description}</p>
           </div>
 
           {/* Objectives */}
           <div className="space-y-2">
-            <h4 className="text-xs font-semibold text-[#A1A1AA] uppercase tracking-wider">Key Objectives</h4>
+            <h4 className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider">Key Objectives</h4>
             <div className="space-y-1.5">
               {day1Data.objectives.map((obj, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-xs text-[#FAFAFA] bg-[#09090B] p-2.5 rounded-[12px] border border-[#27272A]">
+                <div key={idx} className="flex items-start gap-2 text-xs text-[var(--foreground)] bg-white/5 p-2.5 rounded-[12px] border border-[var(--border)]">
                   <CheckCircle2 className="h-4 w-4 text-[#22C55E] shrink-0 mt-0.5" />
                   <span>{obj}</span>
                 </div>
@@ -190,14 +190,14 @@ export function DayOnePreview() {
 
           {/* Deliverables */}
           <div className="space-y-2">
-            <h4 className="text-xs font-semibold text-[#A1A1AA] uppercase tracking-wider">Required Deliverables</h4>
+            <h4 className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider">Required Deliverables</h4>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {day1Data.deliverables.map((del, idx) => {
                 const IconC = del.icon;
                 return (
-                  <div key={idx} className="p-2.5 rounded-[12px] bg-[#09090B] border border-[#27272A] flex flex-col items-center text-center gap-1.5">
-                    <IconC className="h-4 w-4 text-[#818CF8]" />
-                    <span className="text-[11px] text-[#A1A1AA] font-medium leading-tight">{del.label}</span>
+                  <div key={idx} className="p-2.5 rounded-[12px] bg-white/5 border border-[var(--border)] flex flex-col items-center text-center gap-1.5">
+                    <IconC className="h-4 w-4 text-[var(--primary)]" />
+                    <span className="text-[11px] text-[var(--muted-foreground)] font-medium leading-tight">{del.label}</span>
                   </div>
                 );
               })}

@@ -36,7 +36,7 @@ export function StreakCard({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.1 }}
-      className="relative overflow-hidden rounded-3xl p-5 card"
+      className="relative overflow-hidden rounded-3xl p-5 card glass-card"
       style={{
         background: "var(--card)",
         border: `1px solid ${isMissedDay ? "var(--border)" : "rgba(239, 68, 68, 0.25)"}`,

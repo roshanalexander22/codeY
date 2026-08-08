@@ -31,24 +31,23 @@ export function ChallengeCard({
       className="px-4 py-2"
     >
       <div
-        className="card p-6"
+        className="card p-6 glass-card"
         style={{
-          background: "linear-gradient(135deg, var(--card) 0%, rgba(79, 70, 229, 0.08) 100%)",
-          borderColor: "rgba(79, 70, 229, 0.25)",
+          background: "linear-gradient(135deg, var(--card) 0%, var(--primary-glow) 100%)",
+          borderColor: "var(--primary)",
         }}
       >
         {/* Section label */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div
-              className="w-7 h-7 rounded-xl flex items-center justify-center"
-              style={{ background: "var(--primary-glow)", border: "1px solid rgba(79, 70, 229, 0.3)" }}
+              className="w-7 h-7 rounded-xl flex items-center justify-center bg-[var(--primary-glow)] border border-[var(--primary)]"
             >
-              <BookOpen size={14} style={{ color: "#818cf8" }} />
+              <BookOpen size={14} className="text-[var(--primary)]" />
             </div>
             <span
-              className="text-xs font-semibold uppercase tracking-widest"
-              style={{ color: "#818cf8", letterSpacing: "0.1em" }}
+              className="text-xs font-semibold uppercase tracking-widest text-[var(--primary)]"
+              style={{ letterSpacing: "0.1em" }}
             >
               Today&apos;s Challenge
             </span>
@@ -59,12 +58,7 @@ export function ChallengeCard({
               {skills.map((skill) => (
                 <span
                   key={skill}
-                  className="text-[0.65rem] font-medium px-2 py-0.5 rounded-full"
-                  style={{
-                    background: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid var(--border)",
-                    color: "var(--muted-foreground)",
-                  }}
+                  className="text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-white/5 border border-[var(--border)] text-[var(--muted-foreground)]"
                 >
                   {skill}
                 </span>
@@ -75,16 +69,14 @@ export function ChallengeCard({
 
         {/* Title */}
         <h1
-          className="text-xl sm:text-2xl font-black leading-tight mb-3"
-          style={{ color: "var(--foreground)" }}
+          className="text-xl sm:text-2xl font-black leading-tight mb-3 text-[var(--foreground)]"
         >
           {title}
         </h1>
 
         {/* Description */}
         <p
-          className="text-sm sm:text-base leading-relaxed mb-4"
-          style={{ color: "var(--foreground)", opacity: 0.85 }}
+          className="text-sm sm:text-base leading-relaxed mb-4 text-[var(--foreground)] opacity-90"
         >
           {description}
         </p>
@@ -95,12 +87,7 @@ export function ChallengeCard({
             {skills.map((skill) => (
               <span
                 key={skill}
-                className="text-[0.65rem] font-medium px-2 py-0.5 rounded-full"
-                style={{
-                  background: "rgba(255, 255, 255, 0.05)",
-                  border: "1px solid var(--border)",
-                  color: "var(--muted-foreground)",
-                }}
+                className="text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-white/5 border border-[var(--border)] text-[var(--muted-foreground)]"
               >
                 {skill}
               </span>
@@ -109,20 +96,16 @@ export function ChallengeCard({
         )}
 
         {/* Divider */}
-        <hr className="divider mb-4" />
+        <hr className="divider mb-4 border-[var(--border)]" />
 
         {/* Context / Mentor note */}
         <div
-          className="rounded-2xl p-4 mb-4"
-          style={{
-            background: "rgba(255, 255, 255, 0.03)",
-            border: "1px solid var(--border)",
-          }}
+          className="rounded-2xl p-4 mb-4 bg-white/5 border border-[var(--border)]"
         >
-          <p className="text-xs font-semibold mb-1" style={{ color: "#818cf8" }}>
+          <p className="text-xs font-semibold mb-1 text-[var(--primary)]">
             💬 Why this matters today
           </p>
-          <p className="text-sm leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+          <p className="text-sm leading-relaxed text-[var(--muted-foreground)]">
             {context}
           </p>
         </div>

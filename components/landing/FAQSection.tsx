@@ -57,15 +57,15 @@ export function FAQSection() {
   ];
 
   return (
-    <section id="faq" className="py-20 bg-[#09090B] border-t border-[#27272A]/50 relative">
+    <section id="faq" className="py-20 bg-[var(--background)] border-t border-[var(--border)] text-[var(--foreground)] relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
           <Badge variant="primary">Clear Answers</Badge>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#FAFAFA] tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
+          <p className="text-sm sm:text-base text-[var(--muted-foreground)] leading-relaxed">
             Everything you need to know before starting your Day 1 journey.
           </p>
         </div>

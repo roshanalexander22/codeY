@@ -11,14 +11,14 @@ export function StatsSection() {
       label: "Active Students",
       sublabel: "Committed across 40+ countries",
       icon: Users,
-      color: "text-[#4F46E5]",
+      color: "text-[var(--primary)]",
     },
     {
       value: "60",
       label: "Days Target",
       sublabel: "Consecutive daily code building",
       icon: Calendar,
-      color: "text-[#818CF8]",
+      color: "text-[var(--primary)]",
     },
     {
       value: "1M+",
@@ -37,9 +37,9 @@ export function StatsSection() {
   ];
 
   return (
-    <section id="stats" className="py-20 bg-[#09090B] border-t border-[#27272A]/50 relative overflow-hidden">
+    <section id="stats" className="py-20 bg-[var(--background)] border-t border-[var(--border)] text-[var(--foreground)] relative overflow-hidden">
       {/* Background Accent glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#4F46E5]/5 via-transparent to-[#22C55E]/5 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary-glow)] via-transparent to-[#22C55E]/5 pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
@@ -52,18 +52,18 @@ export function StatsSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
-                className="bg-[#18181B] border border-[#27272A] rounded-[24px] p-6 text-center hover:border-[#3F3F46] transition-all group"
+                className="bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] rounded-[24px] p-6 text-center hover:border-[var(--primary)] transition-all group glass-card"
               >
-                <div className="h-10 w-10 mx-auto mb-3 rounded-full bg-[#09090B] border border-[#27272A] flex items-center justify-center">
+                <div className="h-10 w-10 mx-auto mb-3 rounded-full bg-white/5 border border-[var(--border)] flex items-center justify-center">
                   <IconComp className={`h-5 w-5 ${stat.color}`} />
                 </div>
-                <div className="text-3xl sm:text-4xl font-black text-[#FAFAFA] tracking-tight group-hover:scale-105 transition-transform duration-200">
+                <div className="text-3xl sm:text-4xl font-black text-[var(--foreground)] tracking-tight group-hover:scale-105 transition-transform duration-200">
                   {stat.value}
                 </div>
-                <div className="text-sm font-bold text-[#818CF8] mt-1">
+                <div className="text-sm font-bold text-[var(--primary)] mt-1">
                   {stat.label}
                 </div>
-                <div className="text-xs text-[#A1A1AA] mt-1 leading-snug">
+                <div className="text-xs text-[var(--muted-foreground)] mt-1 leading-snug">
                   {stat.sublabel}
                 </div>
               </motion.div>

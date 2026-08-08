@@ -61,7 +61,7 @@ export function TodayChallengeCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.3 }}
       whileHover={{ y: -2 }}
-      className="rounded-3xl p-5 flex flex-col justify-between transition-all card"
+      className="rounded-3xl p-5 flex flex-col justify-between transition-all card glass-card"
       style={{
         background: "var(--card)",
         border: isCompleted

@@ -14,9 +14,9 @@ export function HowItWorksSection() {
       title: "Choose Track",
       description: "Select your preferred tech path: Frontend, Fullstack, AI Engineering, or DevOps. Get curated 60-day project prompts.",
       badge: "Step 1",
-      color: "text-[#4F46E5]",
-      bgColor: "bg-[#4F46E5]/10",
-      borderColor: "border-[#4F46E5]/30",
+      color: "text-[var(--primary)]",
+      bgColor: "bg-[var(--primary-glow)]",
+      borderColor: "border-[var(--primary)]",
     },
     {
       num: "02",
@@ -24,9 +24,9 @@ export function HowItWorksSection() {
       title: "Build Daily",
       description: "Spend 45–90 minutes each day writing clean code, solving real features, or refactoring production-grade modules.",
       badge: "Step 2",
-      color: "text-[#818CF8]",
-      bgColor: "bg-[#818CF8]/10",
-      borderColor: "border-[#818CF8]/30",
+      color: "text-[var(--primary)]",
+      bgColor: "bg-[var(--primary-glow)]",
+      borderColor: "border-[var(--primary)]",
     },
     {
       num: "03",
@@ -61,16 +61,16 @@ export function HowItWorksSection() {
   ];
 
   return (
-    <section id="how-it-works" className="py-20 bg-[#09090B] border-t border-[#27272A]/50 relative">
+    <section id="how-it-works" className="py-20 bg-[var(--background)] border-t border-[var(--border)] text-[var(--foreground)] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
           <Badge variant="primary">Simple 5-Step System</Badge>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#FAFAFA] tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[var(--foreground)] tracking-tight">
             How ABTalks Works
           </h2>
-          <p className="text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
+          <p className="text-sm sm:text-base text-[var(--muted-foreground)] leading-relaxed">
             A battle-tested routine designed to turn passive tutorial watching into active, job-ready building habits.
           </p>
         </div>
@@ -88,31 +88,31 @@ export function HowItWorksSection() {
                 transition={{ duration: 0.35, delay: idx * 0.08, ease: "easeOut" }}
                 className="relative flex flex-col h-full"
               >
-                <Card className="flex-1 bg-[#18181B] border-[#27272A] p-5 flex flex-col justify-between hover:border-[#3F3F46] group transition-all duration-300">
+                <Card className="flex-1 bg-[var(--card)] border-[var(--border)] text-[var(--foreground)] p-5 flex flex-col justify-between hover:border-[var(--primary)] group transition-all duration-300 glass-card">
                   <div className="space-y-3.5">
                     {/* Step Icon & Number */}
                     <div className="flex items-center justify-between">
                       <div className={`h-11 w-11 rounded-[14px] ${step.bgColor} border ${step.borderColor} flex items-center justify-center`}>
                         <IconComponent className={`h-5 w-5 ${step.color}`} />
                       </div>
-                      <span className="font-mono text-xl font-black text-[#A1A1AA]/30 group-hover:text-[#FAFAFA]/50 transition-colors">
+                      <span className="font-mono text-xl font-black text-[var(--muted-foreground)]/30 group-hover:text-[var(--foreground)]/50 transition-colors">
                         {step.num}
                       </span>
                     </div>
 
                     {/* Step Title */}
-                    <h3 className="text-base font-bold text-[#FAFAFA] group-hover:text-[#818CF8] transition-colors">
+                    <h3 className="text-base font-bold text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
                       {step.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-xs text-[#A1A1AA] leading-relaxed">
+                    <p className="text-xs text-[var(--muted-foreground)] leading-relaxed">
                       {step.description}
                     </p>
                   </div>
 
                   <div className="pt-3 mt-1">
-                    <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[#09090B] border border-[#27272A] text-[#A1A1AA]">
+                    <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-white/5 border border-[var(--border)] text-[var(--muted-foreground)]">
                       {step.badge}
                     </span>
                   </div>
