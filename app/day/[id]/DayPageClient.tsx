@@ -69,6 +69,8 @@ interface NextChallenge {
   estimatedTime: string;
 }
 
+import { SettingsModal } from "@/components/settings/SettingsModal";
+
 interface DayPageClientProps {
   challenge: Challenge;
   user: User;
@@ -161,10 +163,17 @@ export function DayPageClient({
     },
   ];
 
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
   return (
     <div className="day-page-wrapper min-h-screen">
       {/* Sticky Header across full width */}
-      <DayHeader streak={newStreak} dayId={dayId} track={challenge.track} />
+      <DayHeader
+        streak={newStreak}
+        dayId={dayId}
+        track={challenge.track}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+      />
 
       {/* Main Container - Mobile 1-col, Desktop 2-col */}
       <main className="day-layout-grid">
@@ -254,6 +263,12 @@ export function DayPageClient({
         newStreak={newStreak}
         tomorrowChallenge={nextChallenge}
         onClose={() => setShowSuccess(false)}
+      />
+
+      {/* Global Settings Modal */}
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
       />
     </div>
   );

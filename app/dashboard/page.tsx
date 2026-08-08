@@ -15,7 +15,7 @@ import { LeaderboardPreview } from "@/components/dashboard/LeaderboardPreview";
 import { BottomNav } from "@/components/dashboard/BottomNav";
 import { StateSwitcher } from "@/components/dashboard/StateSwitcher";
 import { NotificationPanel } from "@/components/dashboard/NotificationPanel";
-import { SettingsModal } from "@/components/dashboard/SettingsModal";
+import { SettingsModal } from "@/components/settings/SettingsModal";
 import { ProfileModal } from "@/components/dashboard/ProfileModal";
 import { ProgressDetailModal } from "@/components/dashboard/ProgressDetailModal";
 import { AchievementDetailModal } from "@/components/dashboard/AchievementDetailModal";
@@ -276,7 +276,7 @@ export default function DashboardPage() {
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         initialSettings={settings}
-        onSave={(newSettings) => setSettings(newSettings)}
+        onSave={(newSettings: any) => setSettings(newSettings)}
       />
 
       <ProfileModal

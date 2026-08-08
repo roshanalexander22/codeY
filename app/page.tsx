@@ -16,9 +16,11 @@ import { FAQSection } from "@/components/landing/FAQSection";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
 import { JoinModal } from "@/components/landing/JoinModal";
+import { SettingsModal } from "@/components/settings/SettingsModal";
 
 export default function LandingPage() {
   const [isJoinModalOpen, setIsJoinModalOpen] = React.useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 
   const handleOpenJoinModal = () => setIsJoinModalOpen(true);
   const handleCloseJoinModal = () => setIsJoinModalOpen(false);
@@ -26,7 +28,10 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#09090B] text-[#FAFAFA] selection:bg-[#4F46E5] selection:text-white flex flex-col font-sans overflow-x-hidden">
       {/* Top Navbar */}
-      <Navbar onOpenJoinModal={handleOpenJoinModal} />
+      <Navbar
+        onOpenJoinModal={handleOpenJoinModal}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+      />
 
       {/* Main Landing Page Experience */}
       <main className="flex-1">
@@ -72,6 +77,12 @@ export default function LandingPage() {
 
       {/* Join Challenge Dialog Modal */}
       <JoinModal isOpen={isJoinModalOpen} onClose={handleCloseJoinModal} />
+
+      {/* Global Settings Modal */}
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
     </div>
   );
 }

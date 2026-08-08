@@ -1,14 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { Flame, Menu, X, ArrowRight } from "lucide-react";
+import { Flame, Menu, X, ArrowRight, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface NavbarProps {
   onOpenJoinModal: () => void;
+  onOpenSettings?: () => void;
 }
 
-export function Navbar({ onOpenJoinModal }: NavbarProps) {
+export function Navbar({ onOpenJoinModal, onOpenSettings }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
@@ -63,22 +64,45 @@ export function Navbar({ onOpenJoinModal }: NavbarProps) {
           ))}
         </nav>
 
-        {/* Action CTA */}
+        {/* Action CTA & Settings */}
         <div className="hidden md:flex items-center gap-3">
+          {onOpenSettings && (
+            <button
+              onClick={onOpenSettings}
+              className="p-2.5 rounded-xl bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:text-white hover:border-[#4F46E5]/40 transition-colors"
+              aria-label="Open settings"
+              title="Open Settings"
+            >
+              <Settings className="h-4 w-4" />
+            </button>
+          )}
+
           <Button onClick={onOpenJoinModal} variant="primary" size="md" className="gap-2 text-xs sm:text-sm cursor-pointer">
             Start Day 1
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
 
-        {/* Mobile Hamburger Toggle */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2.5 rounded-xl bg-[#18181B] border border-[#27272A] text-[#FAFAFA] hover:bg-[#27272A] transition-colors"
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        {/* Mobile Hamburger Toggle & Settings */}
+        <div className="md:hidden flex items-center gap-2">
+          {onOpenSettings && (
+            <button
+              onClick={onOpenSettings}
+              className="p-2.5 rounded-xl bg-[#18181B] border border-[#27272A] text-[#FAFAFA] hover:bg-[#27272A] transition-colors"
+              aria-label="Open settings"
+            >
+              <Settings className="h-5 w-5 text-[#A1A1AA]" />
+            </button>
+          )}
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2.5 rounded-xl bg-[#18181B] border border-[#27272A] text-[#FAFAFA] hover:bg-[#27272A] transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Dropdown */}
@@ -96,7 +120,7 @@ export function Navbar({ onOpenJoinModal }: NavbarProps) {
               </a>
             ))}
           </nav>
-          <div className="pt-2">
+          <div className="pt-2 flex flex-col gap-2">
             <Button
               onClick={() => {
                 setMobileMenuOpen(false);

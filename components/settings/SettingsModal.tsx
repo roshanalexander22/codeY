@@ -1,0 +1,260 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ArrowLeft, Settings as SettingsIcon } from "lucide-react";
+import { usePreferences } from "@/hooks/usePreferences";
+import { SettingsCategory, SettingsSidebar, SETTINGS_CATEGORIES } from "./SettingsSidebar";
+import { SettingsHeader } from "./SettingsHeader";
+import { ProfileSettings } from "./ProfileSettings";
+import { AppearanceSettings } from "./AppearanceSettings";
+import { NotificationSettings } from "./NotificationSettings";
+import { ChallengeSettings } from "./ChallengeSettings";
+import { LearningSettings } from "./LearningSettings";
+import { AccessibilitySettings } from "./AccessibilitySettings";
+import { PrivacySettings } from "./PrivacySettings";
+import { DataSettings } from "./DataSettings";
+import { AccountSettings } from "./AccountSettings";
+import { AboutSettings } from "./AboutSettings";
+
+interface SettingsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  initialCategory?: SettingsCategory;
+  initialSettings?: unknown;
+  onSave?: (newSettings: unknown) => void;
+}
+
+export function SettingsModal({
+  isOpen,
+  onClose,
+  initialCategory = "profile",
+}: SettingsModalProps) {
+  const [activeCategory, setActiveCategory] = useState<SettingsCategory>(initialCategory);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [mobileSubPage, setMobileSubPage] = useState<boolean>(false);
+
+  const { preferences, updatePreferences, changeTheme, currentTheme, resetAll } = usePreferences();
+
+  // Reset to initial category on open
+  useEffect(() => {
+    if (isOpen) {
+      setActiveCategory(initialCategory);
+      setMobileSubPage(false);
+      setSearchQuery("");
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, initialCategory]);
+
+  // Keyboard shortcut: Escape to close
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
+  // Search filtering logic
+  useEffect(() => {
+    if (!searchQuery.trim()) return;
+    const q = searchQuery.toLowerCase();
+    if (q.includes("theme") || q.includes("dark") || q.includes("light") || q.includes("color") || q.includes("compact")) {
+      setActiveCategory("appearance");
+    } else if (q.includes("streak") || q.includes("reminder") || q.includes("pace") || q.includes("intensity")) {
+      setActiveCategory("challenge");
+    } else if (q.includes("notif") || q.includes("alert") || q.includes("email")) {
+      setActiveCategory("notifications");
+    } else if (q.includes("profile") || q.includes("name") || q.includes("avatar") || q.includes("college")) {
+      setActiveCategory("profile");
+    } else if (q.includes("contrast") || q.includes("text") || q.includes("motion") || q.includes("accessibility")) {
+      setActiveCategory("accessibility");
+    } else if (q.includes("privacy") || q.includes("public") || q.includes("github") || q.includes("linkedin")) {
+      setActiveCategory("privacy");
+    } else if (q.includes("reset") || q.includes("export") || q.includes("data") || q.includes("json")) {
+      setActiveCategory("data");
+    }
+  }, [searchQuery]);
+
+  const handleSelectCategoryMobile = (cat: SettingsCategory) => {
+    setActiveCategory(cat);
+    setMobileSubPage(true);
+  };
+
+  const renderActiveCategoryContent = () => {
+    switch (activeCategory) {
+      case "profile":
+        return <ProfileSettings preferences={preferences} onUpdate={updatePreferences} />;
+      case "appearance":
+        return (
+          <AppearanceSettings
+            preferences={preferences}
+            onUpdate={updatePreferences}
+            onChangeTheme={changeTheme}
+            currentTheme={currentTheme}
+          />
+        );
+      case "notifications":
+        return <NotificationSettings preferences={preferences} onUpdate={updatePreferences} />;
+      case "challenge":
+        return <ChallengeSettings preferences={preferences} onUpdate={updatePreferences} />;
+      case "learning":
+        return <LearningSettings preferences={preferences} onUpdate={updatePreferences} />;
+      case "accessibility":
+        return <AccessibilitySettings preferences={preferences} onUpdate={updatePreferences} />;
+      case "privacy":
+        return <PrivacySettings preferences={preferences} onUpdate={updatePreferences} />;
+      case "data":
+        return <DataSettings preferences={preferences} onReset={resetAll} />;
+      case "account":
+        return <AccountSettings preferences={preferences} />;
+      case "about":
+        return <AboutSettings />;
+      default:
+        return <ProfileSettings preferences={preferences} onUpdate={updatePreferences} />;
+    }
+  };
+
+  const activeCategoryMeta = SETTINGS_CATEGORIES.find((c) => c.id === activeCategory);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            key="settings-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={onClose}
+            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md"
+            aria-hidden="true"
+          />
+
+          {/* Modal Overlay Container */}
+          <div className="fixed inset-0 z-[101] flex items-center justify-center p-0 lg:p-6 pointer-events-none">
+            <motion.div
+              key="settings-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="settings-title"
+              initial={{ opacity: 0, scale: 0.96, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 16 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="pointer-events-auto w-full h-full lg:h-[85vh] lg:max-w-[1100px] lg:rounded-3xl border border-[var(--border)] overflow-hidden flex flex-col bg-[#09090B] text-[#FAFAFA] shadow-2xl"
+            >
+              {/* Modal Top Nav Bar */}
+              <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border)] bg-[#18181B]/80 backdrop-blur-md">
+                <div className="flex items-center gap-3">
+                  {mobileSubPage && (
+                    <button
+                      type="button"
+                      onClick={() => setMobileSubPage(false)}
+                      className="lg:hidden p-1.5 rounded-xl bg-white/5 text-zinc-300 hover:text-white"
+                      aria-label="Back to settings menu"
+                    >
+                      <ArrowLeft size={18} />
+                    </button>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <SettingsIcon size={18} style={{ color: "var(--primary)" }} />
+                    <h2 id="settings-title" className="text-base font-bold text-zinc-100">
+                      Global Settings & Preferences
+                    </h2>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/5 border border-[var(--border)] text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+                  aria-label="Close Settings"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              {/* Modal Body Layout */}
+              <div className="flex-1 overflow-hidden flex flex-col lg:flex-row">
+                {/* DESKTOP VIEW (≥1024px): 2 Columns */}
+                <div className="hidden lg:flex w-full h-full overflow-hidden">
+                  {/* Left Sidebar (250px) */}
+                  <div className="w-[260px] border-r border-[var(--border)] p-4 overflow-y-auto bg-[#09090B]/60 flex-shrink-0">
+                    <SettingsSidebar
+                      activeCategory={activeCategory}
+                      onSelectCategory={(cat) => setActiveCategory(cat)}
+                    />
+                  </div>
+
+                  {/* Right Main Content Area */}
+                  <div className="flex-1 overflow-y-auto p-6 bg-[#18181B]/40">
+                    <SettingsHeader
+                      name={preferences.profile.name}
+                      track={preferences.profile.track}
+                      streak={11}
+                      xp={1650}
+                      avatar={preferences.profile.avatar}
+                      searchQuery={searchQuery}
+                      onSearchChange={setSearchQuery}
+                    />
+
+                    <div className="card p-6 border border-[var(--border)] bg-[#18181B]">
+                      {renderActiveCategoryContent()}
+                    </div>
+                  </div>
+                </div>
+
+                {/* MOBILE VIEW (<1024px): 1-Column Sheet */}
+                <div className="lg:hidden flex-1 overflow-y-auto p-4">
+                  {!mobileSubPage ? (
+                    <div className="space-y-4 pb-12">
+                      <SettingsHeader
+                        name={preferences.profile.name}
+                        track={preferences.profile.track}
+                        streak={11}
+                        xp={1650}
+                        avatar={preferences.profile.avatar}
+                        searchQuery={searchQuery}
+                        onSearchChange={setSearchQuery}
+                      />
+
+                      <SettingsSidebar
+                        activeCategory={activeCategory}
+                        onSelectCategory={(cat) => handleSelectCategoryMobile(cat)}
+                      />
+                    </div>
+                  ) : (
+                    <div className="space-y-4 pb-12">
+                      <div className="flex items-center gap-2 pb-2 border-b border-[var(--border)]">
+                        {activeCategoryMeta && (
+                          <>
+                            <activeCategoryMeta.icon size={18} style={{ color: activeCategoryMeta.color }} />
+                            <span className="text-sm font-bold">{activeCategoryMeta.label}</span>
+                          </>
+                        )}
+                      </div>
+
+                      <div className="card p-4 border border-[var(--border)] bg-[#18181B]">
+                        {renderActiveCategoryContent()}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}

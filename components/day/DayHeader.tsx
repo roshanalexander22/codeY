@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Settings as SettingsIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -9,9 +9,15 @@ interface DayHeaderProps {
   streak: number;
   dayId: number;
   track?: string;
+  onOpenSettings?: () => void;
 }
 
-export function DayHeader({ streak, dayId, track = "Full Stack Development" }: DayHeaderProps) {
+export function DayHeader({
+  streak,
+  dayId,
+  track = "Full Stack Development",
+  onOpenSettings,
+}: DayHeaderProps) {
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
@@ -67,30 +73,49 @@ export function DayHeader({ streak, dayId, track = "Full Stack Development" }: D
           </span>
         </div>
 
-        {/* Right: Streak badge */}
-        <div
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl"
-          style={{
-            background:
-              streak > 0
-                ? "rgba(245, 158, 11, 0.12)"
-                : "rgba(255,255,255,0.06)",
-            border: `1px solid ${streak > 0 ? "rgba(245, 158, 11, 0.3)" : "var(--border)"}`,
-          }}
-        >
-          <span
-            className={cn("text-sm sm:text-base", streak > 0 && "streak-fire")}
-            role="img"
-            aria-label="streak"
+        {/* Right: Streak badge & Settings trigger */}
+        <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl"
+            style={{
+              background:
+                streak > 0
+                  ? "rgba(245, 158, 11, 0.12)"
+                  : "rgba(255,255,255,0.06)",
+              border: `1px solid ${streak > 0 ? "rgba(245, 158, 11, 0.3)" : "var(--border)"}`,
+            }}
           >
-            {streak > 0 ? "🔥" : "💤"}
-          </span>
-          <span
-            className="text-xs sm:text-sm font-bold"
-            style={{ color: streak > 0 ? "#fbbf24" : "var(--muted-foreground)" }}
-          >
-            {streak > 0 ? `${streak} day streak` : "0 streak"}
-          </span>
+            <span
+              className={cn("text-sm sm:text-base", streak > 0 && "streak-fire")}
+              role="img"
+              aria-label="streak"
+            >
+              {streak > 0 ? "🔥" : "💤"}
+            </span>
+            <span
+              className="text-xs sm:text-sm font-bold"
+              style={{ color: streak > 0 ? "#fbbf24" : "var(--muted-foreground)" }}
+            >
+              {streak > 0 ? `${streak} day streak` : "0 streak"}
+            </span>
+          </div>
+
+          {/* Settings Trigger Button */}
+          {onOpenSettings && (
+            <button
+              type="button"
+              onClick={onOpenSettings}
+              className="w-10 h-10 rounded-2xl flex items-center justify-center transition-colors hover:bg-white/10"
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid var(--border)",
+              }}
+              aria-label="Open Settings"
+              title="Open Settings"
+            >
+              <SettingsIcon size={18} style={{ color: "var(--foreground)" }} />
+            </button>
+          )}
         </div>
       </div>
     </motion.header>
