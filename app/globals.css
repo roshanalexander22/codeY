@@ -367,15 +367,67 @@ html.light {
   --muted-foreground: #71717A;
 }
 
-html.light body {
-  background-color: #F4F4F5;
-  color: #18181B;
+html.light body,
+html.light main,
+html.light .bg-\[\#09090B\],
+html.light .day-page-wrapper {
+  background-color: #F4F4F5 !important;
+  color: #18181B !important;
+}
+
+html.light .card,
+html.light .bg-\[\#18181B\],
+html.light .bg-\[\#18181b\] {
+  background-color: #FFFFFF !important;
+  color: #18181B !important;
+  border-color: #E4E4E7 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .text-zinc-100,
+html.light .text-zinc-200,
+html.light .text-\[\#FAFAFA\],
+html.light .text-\[\#fafafa\] {
+  color: #18181B !important;
+}
+
+html.light .text-zinc-400,
+html.light .text-zinc-500,
+html.light .text-\[\#A1A1AA\],
+html.light .text-\[\#a1a1aa\] {
+  color: #52525B !important;
+}
+
+html.light .border-\[\#27272A\],
+html.light .border-zinc-800 {
+  border-color: #E4E4E7 !important;
+}
+
+html.light header {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: #E4E4E7 !important;
 }
 
 /* ===== HIGH CONTRAST ===== */
 html[data-contrast="high"] {
-  --border: #71717A;
-  --muted-foreground: #E4E4E7;
+  --border: #71717A !important;
+  --muted-foreground: #F4F4F5 !important;
+}
+
+html[data-contrast="high"] .border,
+html[data-contrast="high"] [style*="border"] {
+  border-color: #71717A !important;
+}
+
+/* ===== COMPACT MODE ===== */
+html[data-compact="true"] .card,
+html[data-compact="true"] .p-5,
+html[data-compact="true"] .p-6 {
+  padding: 0.75rem 1rem !important;
+}
+
+html[data-compact="true"] .space-y-4 > * + * {
+  margin-top: 0.5rem !important;
 }
 
 /* ===== LARGER TEXT SCALE ===== */

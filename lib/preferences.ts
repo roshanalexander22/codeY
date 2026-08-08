@@ -155,6 +155,15 @@ export function applyPreferencesToDOM(prefs: UserPreferences): void {
   if (typeof window === "undefined") return;
   const root = document.documentElement;
 
+  // Theme class direct sync
+  if (prefs.theme === "light") {
+    root.classList.remove("dark");
+    root.classList.add("light");
+  } else if (prefs.theme === "dark") {
+    root.classList.remove("light");
+    root.classList.add("dark");
+  }
+
   // Accent color
   root.setAttribute("data-accent", prefs.accentColor);
 
