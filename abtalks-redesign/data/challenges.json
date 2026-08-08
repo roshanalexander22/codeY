@@ -1,0 +1,113 @@
+{
+  "currentUser": {
+    "id": "user_001",
+    "name": "Arjun Menon",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ArjunMenon",
+    "streak": 11,
+    "longestStreak": 18,
+    "totalXp": 1650,
+    "track": "Full Stack Development",
+    "enrolledAt": "2025-07-27",
+    "completedDays": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    "missedDays": [],
+    "submissions": {
+      "12": null
+    }
+  },
+  "challenges": [
+    {
+      "id": 1,
+      "title": "Hello, World — Your Dev Environment",
+      "description": "Set up your local development environment. This is the foundation everything else builds on. A bad environment setup causes 90% of beginner frustration.",
+      "context": "Before you write a single line of code that matters, your machine needs to be ready. Today is about getting your tools right so tomorrow you can focus entirely on building.",
+      "track": "Full Stack Development",
+      "difficulty": "Beginner",
+      "estimatedTime": "2-3 hours",
+      "xpReward": 100,
+      "objectives": [
+        "Install Node.js 20+ and verify with node --version",
+        "Install VS Code with essential extensions",
+        "Configure Git with your name and email",
+        "Create a GitHub account and SSH key pair",
+        "Push your first commit to a new repository"
+      ],
+      "deliverables": [
+        { "type": "repo", "label": "GitHub repository with your setup notes", "icon": "Github" },
+        { "type": "screenshot", "label": "Terminal showing node, git, npm versions", "icon": "Terminal" },
+        { "type": "post", "label": "LinkedIn post: Day 1 of your journey", "icon": "Linkedin" }
+      ],
+      "resources": [
+        { "type": "Video", "title": "VS Code Setup for Web Dev 2025", "url": "https://youtu.be/example", "duration": "18 min" },
+        { "type": "Docs", "title": "Git Getting Started Guide", "url": "https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup", "duration": "10 min read" },
+        { "type": "Article", "title": "SSH Keys for GitHub — Complete Guide", "url": "https://docs.github.com/en/authentication/connecting-to-github-with-ssh", "duration": "8 min read" }
+      ],
+      "tips": [
+        { "text": "Don't skip SSH setup — you'll thank yourself in week 2 when you're pushing code every day.", "mentor": "Riya S." },
+        { "text": "Install the Prettier extension in VS Code right now. Future you will be grateful.", "mentor": "Kiran M." }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Build a REST API with Express & MongoDB",
+      "description": "Today you build a full REST API from scratch — routes, controllers, middleware, and a real database. This is the backbone of every web application you'll build from here.",
+      "context": "You've spent 11 days learning how the web works. Today you put it all together. By end of day, you'll have a working API that a frontend can talk to. This is a major milestone — most students feel a real confidence shift after Day 12.",
+      "track": "Full Stack Development",
+      "difficulty": "Intermediate",
+      "estimatedTime": "4-5 hours",
+      "xpReward": 150,
+      "objectives": [
+        "Initialize a Node.js project with Express 5",
+        "Connect to MongoDB Atlas using Mongoose",
+        "Build CRUD routes for a 'todos' resource",
+        "Add input validation middleware",
+        "Test all endpoints with Thunder Client or Postman",
+        "Handle errors globally with an error middleware"
+      ],
+      "deliverables": [
+        { "type": "repo", "label": "GitHub repository with clean, documented code", "icon": "Github" },
+        { "type": "commit", "label": "Specific commit showing today's API work", "icon": "GitCommit" },
+        { "type": "post", "label": "LinkedIn post about what you built today", "icon": "Linkedin" }
+      ],
+      "resources": [
+        { "type": "Video", "title": "Express.js Crash Course 2025", "url": "https://youtu.be/example", "duration": "42 min" },
+        { "type": "Docs", "title": "Mongoose Schemas & Models", "url": "https://mongoosejs.com/docs/models.html", "duration": "15 min read" },
+        { "type": "Article", "title": "REST API Design Best Practices", "url": "https://restfulapi.net/", "duration": "12 min read" },
+        { "type": "GitHub", "title": "express-starter template", "url": "https://github.com/express-community/express-generator", "duration": "Reference" }
+      ],
+      "tips": [
+        { "text": "Don't hardcode your MongoDB URI. Use a .env file and dotenv from Day 1. This habit saves you from accidental credential leaks.", "mentor": "Arjun K." },
+        { "text": "Write your error middleware last, after all routes. Express processes middleware in order.", "mentor": "Sneha R." },
+        { "text": "Test each route as you build it — don't wait until the end. 4 working routes > 8 broken ones.", "mentor": "Dev M." }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Authentication with JWT",
+      "description": "Protect your API. Today you add signup, login, and route protection using JSON Web Tokens.",
+      "context": "An API that anyone can access isn't production-ready. Today you learn the most widely-used auth pattern in Node.js.",
+      "track": "Full Stack Development",
+      "difficulty": "Intermediate",
+      "estimatedTime": "3-4 hours",
+      "xpReward": 150,
+      "objectives": [
+        "Create user model with hashed passwords (bcrypt)",
+        "Build /auth/signup and /auth/login endpoints",
+        "Generate and verify JWT tokens",
+        "Build an auth middleware to protect routes",
+        "Test with invalid tokens and expired tokens"
+      ],
+      "deliverables": [
+        { "type": "repo", "label": "GitHub repo with auth implementation", "icon": "Github" },
+        { "type": "commit", "label": "Today's commit with auth code", "icon": "GitCommit" },
+        { "type": "post", "label": "LinkedIn post explaining JWT to beginners", "icon": "Linkedin" }
+      ],
+      "resources": [
+        { "type": "Video", "title": "JWT Authentication in Node.js", "url": "https://youtu.be/example", "duration": "28 min" },
+        { "type": "Docs", "title": "jsonwebtoken npm documentation", "url": "https://www.npmjs.com/package/jsonwebtoken", "duration": "10 min read" }
+      ],
+      "tips": [
+        { "text": "Store your JWT_SECRET in .env. Never hardcode it. Use a long random string — at least 32 characters.", "mentor": "Priya N." }
+      ]
+    }
+  ]
+}
