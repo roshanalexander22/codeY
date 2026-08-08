@@ -22,28 +22,25 @@ export default function DashboardPage() {
     getDashboardData(ACTIVE_EDGE_CASE);
 
   return (
-    <>
-      {/* Page */}
-      <main
-        className="min-h-dvh pb-28"
-        style={{ background: "#09090B", maxWidth: "480px", margin: "0 auto" }}
-      >
-        {/* Top App Bar */}
-        <TopAppBar
-          name={user.name}
-          avatar={user.avatar}
-          track={user.track}
-          notificationCount={isMissedDay ? 1 : isFirstDay ? 0 : 2}
-          isEmptyProfile={isEmptyProfile}
-        />
+    <div className="min-h-screen bg-[#09090B] pb-24">
+      {/* Top App Bar */}
+      <TopAppBar
+        name={user.name}
+        avatar={user.avatar}
+        track={user.track}
+        notificationCount={isMissedDay ? 1 : isFirstDay ? 0 : 2}
+        isEmptyProfile={isEmptyProfile}
+      />
 
+      {/* Main Container: Mobile 1-col, Desktop 2-col Grid */}
+      <main className="max-w-[1280px] mx-auto px-4 sm:px-6 py-4">
         {/* ── Empty profile banner ──────────────────────────── */}
         {isEmptyProfile && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             transition={{ duration: 0.3 }}
-            className="mx-5 mt-4"
+            className="mb-4"
           >
             <div
               className="flex items-start gap-3 p-4 rounded-2xl"
@@ -82,7 +79,7 @@ export default function DashboardPage() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             transition={{ duration: 0.3 }}
-            className="mx-5 mt-4"
+            className="mb-4"
           >
             <div
               className="flex items-start gap-3 p-4 rounded-2xl"
@@ -110,7 +107,7 @@ export default function DashboardPage() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             transition={{ duration: 0.3 }}
-            className="mx-5 mt-4"
+            className="mb-4"
           >
             <div
               className="flex items-start gap-3 p-4 rounded-2xl"
@@ -132,67 +129,69 @@ export default function DashboardPage() {
           </motion.div>
         )}
 
-        {/* ── Scroll content ────────────────────────────────────── */}
-        <div className="px-5 pt-4 space-y-4">
+        {/* Responsive Grid: Mobile 1-col, Desktop 2-col */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+          {/* Left / Main Column (2 spans on desktop) */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* 1. Streak */}
+            <StreakCard
+              streak={user.streak}
+              longestStreak={user.longestStreak}
+              isMissedDay={isMissedDay}
+              isFirstDay={isFirstDay}
+            />
 
-          {/* 1. Streak */}
-          <StreakCard
-            streak={user.streak}
-            longestStreak={user.longestStreak}
-            isMissedDay={isMissedDay}
-            isFirstDay={isFirstDay}
-          />
+            {/* 2. Today's Challenge */}
+            <TodayChallengeCard
+              currentDay={user.currentDay}
+              title={
+                isEmptyProfile
+                  ? "Pick a track to see your challenge"
+                  : todayChallenge.title
+              }
+              estimatedTime={todayChallenge.estimatedTime}
+              difficulty={todayChallenge.difficulty}
+              isCompleted={user.todaySubmitted}
+              isMissedDay={isMissedDay}
+            />
 
-          {/* 2. Progress */}
-          <ProgressCard
-            currentDay={user.currentDay}
-            totalDays={60}
-            completedDays={user.completedDays}
-          />
+            {/* 3. Activity Heatmap */}
+            <WeeklyHeatmap
+              completedDays={user.completedDays}
+              missedDays={user.missedDays}
+              enrolledAt={user.enrolledAt}
+            />
 
-          {/* 3. Today's Challenge */}
-          <TodayChallengeCard
-            currentDay={user.currentDay}
-            title={
-              isEmptyProfile
-                ? "Pick a track to see your challenge"
-                : todayChallenge.title
-            }
-            estimatedTime={todayChallenge.estimatedTime}
-            difficulty={todayChallenge.difficulty}
-            isCompleted={user.todaySubmitted}
-            isMissedDay={isMissedDay}
-          />
+            {/* 4. Achievements */}
+            <AchievementsPanel
+              completedDays={user.completedDays.length}
+              streak={user.streak}
+              xp={user.totalXp}
+              level={user.level}
+              isFirstDay={isFirstDay}
+            />
+          </div>
 
-          {/* 4. Achievements + XP */}
-          <AchievementsPanel
-            completedDays={user.completedDays.length}
-            streak={user.streak}
-            xp={user.totalXp}
-            level={user.level}
-            isFirstDay={isFirstDay}
-          />
+          {/* Right Column (1 span on desktop) */}
+          <div className="space-y-6">
+            {/* 5. Progress */}
+            <ProgressCard
+              currentDay={user.currentDay}
+              totalDays={60}
+              completedDays={user.completedDays}
+            />
 
-          {/* 5. Activity Heatmap */}
-          <WeeklyHeatmap
-            completedDays={user.completedDays}
-            missedDays={user.missedDays}
-            enrolledAt={user.enrolledAt}
-          />
-
-          {/* 6. Leaderboard Preview */}
-          <LeaderboardPreview
-            entries={leaderboard}
-            isFirstDay={isFirstDay || isEmptyProfile}
-          />
-
-          {/* Bottom padding for nav */}
-          <div className="h-4" />
+            {/* 6. Leaderboard Preview */}
+            <LeaderboardPreview
+              entries={leaderboard}
+              isFirstDay={isFirstDay || isEmptyProfile}
+            />
+          </div>
         </div>
       </main>
 
       {/* Bottom navigation */}
       <BottomNav />
-    </>
+    </div>
   );
 }
