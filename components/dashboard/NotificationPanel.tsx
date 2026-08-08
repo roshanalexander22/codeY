@@ -48,7 +48,7 @@ export function NotificationPanel({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed bottom-0 left-0 right-0 z-50 w-full rounded-t-3xl border-t border-zinc-800 bg-[#18181B] p-5 shadow-2xl md:absolute md:bottom-auto md:top-14 md:right-0 md:left-auto md:w-96 md:rounded-2xl md:border md:border-zinc-800"
+            className="fixed bottom-0 left-0 right-0 z-50 w-full rounded-t-3xl border-t border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] p-5 shadow-2xl md:absolute md:bottom-auto md:top-14 md:right-0 md:left-auto md:w-96 md:rounded-2xl md:border glass-modal"
           >
             {/* Top header */}
             <div className="flex items-center justify-between pb-3 border-b border-zinc-800">

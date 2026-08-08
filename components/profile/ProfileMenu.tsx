@@ -41,8 +41,7 @@ export function ProfileMenu({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -10 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="pointer-events-auto w-full max-w-sm rounded-2xl border border-[var(--border)] bg-[#18181B] text-[#FAFAFA] p-5 shadow-2xl space-y-4 relative z-10"
-          style={{ background: "var(--card)", borderColor: "var(--border)" }}
+          className="pointer-events-auto w-full max-w-sm rounded-2xl border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] p-5 shadow-2xl space-y-4 relative z-10 glass-modal"
         >
           {/* Header with Avatar & Student Info */}
           <div className="flex items-start justify-between">

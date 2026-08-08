@@ -15,17 +15,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4F46E5] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090B] disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] cursor-pointer rounded-[16px]";
+      "inline-flex items-center justify-center font-medium transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] cursor-pointer rounded-[16px]";
 
     const variants = {
       primary:
-        "bg-[#4F46E5] text-white hover:bg-[#6366F1] shadow-[0_0_20px_rgba(79,70,229,0.35)] hover:shadow-[0_0_25px_rgba(99,102,241,0.5)] border border-[#6366F1]/30",
+        "bg-[var(--primary)] text-white hover:opacity-90 shadow-[0_0_20px_var(--primary-glow)] border border-[var(--primary)]",
       secondary:
-        "bg-[#18181B] text-[#FAFAFA] hover:bg-[#27272A] border border-[#27272A]",
+        "bg-[var(--card)] text-[var(--foreground)] hover:bg-[var(--muted)] border border-[var(--border)] shadow-xs",
       outline:
-        "bg-transparent text-[#FAFAFA] border border-[#27272A] hover:bg-[#18181B] hover:border-[#3F3F46]",
+        "bg-transparent text-[var(--foreground)] border border-[var(--border)] hover:bg-[var(--card)]",
       ghost:
-        "bg-transparent text-[#A1A1AA] hover:text-[#FAFAFA] hover:bg-[#18181B]",
+        "bg-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--card)]",
       danger:
         "bg-[#EF4444] text-white hover:bg-[#F87171] shadow-[0_0_15px_rgba(239,68,68,0.3)]",
       success:

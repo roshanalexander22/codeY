@@ -29,19 +29,19 @@ export function LeaderboardPreview({ entries, isFirstDay }: LeaderboardPreviewPr
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.6 }}
-      className="rounded-3xl p-5"
+      className="rounded-3xl p-5 glass-card"
       style={{
-        background: "#18181B",
-        border: "1px solid #27272a",
+        background: "var(--card)",
+        border: "1px solid var(--border)",
       }}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-sm font-semibold" style={{ color: "#fafafa" }}>
+          <h3 className="text-sm font-semibold text-[var(--foreground)]">
             Leaderboard
           </h3>
-          <p className="text-xs mt-0.5" style={{ color: "#a1a1aa" }}>
+          <p className="text-xs mt-0.5 text-[var(--muted-foreground)]">
             {isFirstDay ? "Compete with your cohort" : "Top performers this week"}
           </p>
         </div>
@@ -53,7 +53,7 @@ export function LeaderboardPreview({ entries, isFirstDay }: LeaderboardPreviewPr
           }}
         >
           <Crown size={12} color="#f59e0b" />
-          <span className="text-xs font-bold" style={{ color: "#f59e0b" }}>
+          <span className="text-xs font-bold text-amber-500">
             Weekly
           </span>
         </div>
@@ -63,12 +63,12 @@ export function LeaderboardPreview({ entries, isFirstDay }: LeaderboardPreviewPr
         <div
           className="rounded-2xl p-4 text-center"
           style={{
-            background: "rgba(79, 70, 229, 0.06)",
-            border: "1px solid rgba(79, 70, 229, 0.15)",
+            background: "var(--primary-glow)",
+            border: "1px solid var(--primary)",
           }}
         >
-          <TrendingUp size={24} color="#818cf8" className="mx-auto mb-2" />
-          <p className="text-sm font-medium" style={{ color: "#a1a1aa" }}>
+          <TrendingUp size={24} style={{ color: "var(--primary)" }} className="mx-auto mb-2" />
+          <p className="text-sm font-medium text-[var(--muted-foreground)]">
             Complete Day 1 to appear on the leaderboard
           </p>
         </div>
@@ -83,10 +83,10 @@ export function LeaderboardPreview({ entries, isFirstDay }: LeaderboardPreviewPr
               className="flex items-center gap-3 p-3 rounded-2xl"
               style={{
                 background: entry.isCurrentUser
-                  ? "rgba(79, 70, 229, 0.1)"
+                  ? "var(--primary-glow)"
                   : "rgba(255,255,255,0.02)",
                 border: entry.isCurrentUser
-                  ? "1px solid rgba(79, 70, 229, 0.25)"
+                  ? "1px solid var(--primary)"
                   : "1px solid transparent",
               }}
             >
@@ -108,8 +108,7 @@ export function LeaderboardPreview({ entries, isFirstDay }: LeaderboardPreviewPr
                   />
                 ) : (
                   <span
-                    className="text-xs font-bold tabular-nums"
-                    style={{ color: "#6b7280" }}
+                    className="text-xs font-bold tabular-nums text-[var(--muted-foreground)]"
                   >
                     {entry.rank}
                   </span>
@@ -121,8 +120,8 @@ export function LeaderboardPreview({ entries, isFirstDay }: LeaderboardPreviewPr
                 className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0"
                 style={{
                   border: entry.isCurrentUser
-                    ? "2px solid #4F46E5"
-                    : "2px solid #27272a",
+                    ? "2px solid var(--primary)"
+                    : "2px solid var(--border)",
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -136,19 +135,19 @@ export function LeaderboardPreview({ entries, isFirstDay }: LeaderboardPreviewPr
               {/* Name */}
               <div className="flex-1 min-w-0">
                 <p
-                  className="text-sm font-semibold truncate"
+                  className="text-sm font-semibold truncate text-[var(--foreground)]"
                   style={{
-                    color: entry.isCurrentUser ? "#818cf8" : "#fafafa",
+                    color: entry.isCurrentUser ? "var(--primary)" : "var(--foreground)",
                   }}
                 >
                   {entry.name}{" "}
                   {entry.isCurrentUser && (
-                    <span className="text-xs font-normal" style={{ color: "#6b7280" }}>
+                    <span className="text-xs font-normal text-[var(--muted-foreground)]">
                       (you)
                     </span>
                   )}
                 </p>
-                <p className="text-xs" style={{ color: "#6b7280" }}>
+                <p className="text-xs text-[var(--muted-foreground)]">
                   🔥 {entry.streak} streak
                 </p>
               </div>
@@ -156,12 +155,11 @@ export function LeaderboardPreview({ entries, isFirstDay }: LeaderboardPreviewPr
               {/* XP */}
               <div className="text-right">
                 <p
-                  className="text-sm font-bold tabular-nums"
-                  style={{ color: "#fafafa" }}
+                  className="text-sm font-bold tabular-nums text-[var(--foreground)]"
                 >
                   {entry.xp.toLocaleString()}
                 </p>
-                <p className="text-xs" style={{ color: "#6b7280" }}>
+                <p className="text-xs text-[var(--muted-foreground)]">
                   XP
                 </p>
               </div>

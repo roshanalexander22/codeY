@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowLeft, Settings as SettingsIcon } from "lucide-react";
 import { usePreferences } from "@/hooks/usePreferences";
-import { SettingsCategory, SettingsSidebar, SETTINGS_CATEGORIES } from "./SettingsSidebar";
+import { SettingsCategory, SettingsSidebar } from "./SettingsSidebar";
 import { SettingsHeader } from "./SettingsHeader";
 import { ProfileSettings } from "./ProfileSettings";
 import { AppearanceSettings } from "./AppearanceSettings";
@@ -40,8 +40,8 @@ export function SettingsModal({
   useEffect(() => {
     if (isOpen) {
       setActiveCategory(initialCategory);
-      setMobileSubPage(false);
       setSearchQuery("");
+      setMobileSubPage(false);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -122,7 +122,7 @@ export function SettingsModal({
     }
   };
 
-  const activeCategoryMeta = SETTINGS_CATEGORIES.find((c) => c.id === activeCategory);
+  if (!isOpen) return null;
 
   return (
     <AnimatePresence>
@@ -136,7 +136,7 @@ export function SettingsModal({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md"
+            className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md"
             aria-hidden="true"
           />
 
@@ -151,16 +151,16 @@ export function SettingsModal({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 16 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="pointer-events-auto w-full h-full lg:h-[85vh] lg:max-w-[1100px] lg:rounded-3xl border border-[var(--border)] overflow-hidden flex flex-col bg-[#09090B] text-[#FAFAFA] shadow-2xl"
+              className="pointer-events-auto w-full h-full lg:h-[85vh] lg:max-w-[1100px] lg:rounded-3xl border border-[var(--border)] overflow-hidden flex flex-col bg-[var(--card)] text-[var(--foreground)] shadow-2xl glass-modal"
             >
               {/* Modal Top Nav Bar */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border)] bg-[#18181B]/80 backdrop-blur-md">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border)] bg-[var(--background)]/80 backdrop-blur-md">
                 <div className="flex items-center gap-3">
                   {mobileSubPage && (
                     <button
                       type="button"
                       onClick={() => setMobileSubPage(false)}
-                      className="lg:hidden p-1.5 rounded-xl bg-white/5 text-zinc-300 hover:text-white"
+                      className="lg:hidden p-1.5 rounded-xl bg-white/5 text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
                       aria-label="Back to settings menu"
                     >
                       <ArrowLeft size={18} />
@@ -168,7 +168,7 @@ export function SettingsModal({
                   )}
                   <div className="flex items-center gap-2">
                     <SettingsIcon size={18} style={{ color: "var(--primary)" }} />
-                    <h2 id="settings-title" className="text-base font-bold text-zinc-100">
+                    <h2 id="settings-title" className="text-base font-bold text-[var(--foreground)]">
                       Global Settings & Preferences
                     </h2>
                   </div>
@@ -177,7 +177,7 @@ export function SettingsModal({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/5 border border-[var(--border)] text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+                  className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/5 border border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-white/10 transition-colors"
                   aria-label="Close Settings"
                 >
                   <X size={16} />
@@ -188,8 +188,8 @@ export function SettingsModal({
               <div className="flex-1 overflow-hidden flex flex-col lg:flex-row">
                 {/* DESKTOP VIEW (≥1024px): 2 Columns */}
                 <div className="hidden lg:flex w-full h-full overflow-hidden">
-                  {/* Left Sidebar (250px) */}
-                  <div className="w-[260px] border-r border-[var(--border)] p-4 overflow-y-auto bg-[#09090B]/60 flex-shrink-0">
+                  {/* Left Sidebar (260px) */}
+                  <div className="w-[260px] border-r border-[var(--border)] p-4 overflow-y-auto bg-[var(--background)]/40 flex-shrink-0">
                     <SettingsSidebar
                       activeCategory={activeCategory}
                       onSelectCategory={(cat) => setActiveCategory(cat)}
@@ -197,7 +197,7 @@ export function SettingsModal({
                   </div>
 
                   {/* Right Main Content Area */}
-                  <div className="flex-1 overflow-y-auto p-6 bg-[#18181B]/40">
+                  <div className="flex-1 overflow-y-auto p-6 bg-[var(--card)]/60">
                     <SettingsHeader
                       name={preferences.profile.name}
                       track={preferences.profile.track}
@@ -208,14 +208,14 @@ export function SettingsModal({
                       onSearchChange={setSearchQuery}
                     />
 
-                    <div className="card p-6 border border-[var(--border)] bg-[#18181B]">
+                    <div className="card p-6 border border-[var(--border)] bg-[var(--card)]">
                       {renderActiveCategoryContent()}
                     </div>
                   </div>
                 </div>
 
                 {/* MOBILE VIEW (<1024px): 1-Column Sheet */}
-                <div className="lg:hidden flex-1 overflow-y-auto p-4">
+                <div className="lg:hidden flex-1 overflow-y-auto p-4 bg-[var(--background)]">
                   {!mobileSubPage ? (
                     <div className="space-y-4 pb-12">
                       <SettingsHeader
@@ -227,24 +227,14 @@ export function SettingsModal({
                         searchQuery={searchQuery}
                         onSearchChange={setSearchQuery}
                       />
-
                       <SettingsSidebar
                         activeCategory={activeCategory}
-                        onSelectCategory={(cat) => handleSelectCategoryMobile(cat)}
+                        onSelectCategory={handleSelectCategoryMobile}
                       />
                     </div>
                   ) : (
                     <div className="space-y-4 pb-12">
-                      <div className="flex items-center gap-2 pb-2 border-b border-[var(--border)]">
-                        {activeCategoryMeta && (
-                          <>
-                            <activeCategoryMeta.icon size={18} style={{ color: activeCategoryMeta.color }} />
-                            <span className="text-sm font-bold">{activeCategoryMeta.label}</span>
-                          </>
-                        )}
-                      </div>
-
-                      <div className="card p-4 border border-[var(--border)] bg-[#18181B]">
+                      <div className="card p-4 border border-[var(--border)] bg-[var(--card)]">
                         {renderActiveCategoryContent()}
                       </div>
                     </div>

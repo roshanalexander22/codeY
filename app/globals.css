@@ -5,7 +5,7 @@
   --foreground: #FAFAFA;
   --card: #18181B;
   --card-foreground: #FAFAFA;
-  --popover: #18181B;
+  --popover: #1F1F23;
   --popover-foreground: #FAFAFA;
   --primary: #4F46E5;
   --primary-hover: #6366F1;
@@ -75,7 +75,7 @@ body {
 /* Responsive container layout */
 .day-layout-grid {
   width: 100%;
-  max-w: 1280px;
+  max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
@@ -105,29 +105,67 @@ body {
   }
 }
 
-/* ===== ACCENT COLOR PREFERENCES ===== */
+/* ===== ACCENT COLOR PREFERENCES ENGINE ===== */
+html[data-accent="indigo"] {
+  --primary: #4F46E5;
+  --primary-hover: #6366F1;
+  --primary-glow: rgba(79, 70, 229, 0.18);
+  --ring: #4F46E5;
+}
+
 html[data-accent="emerald"] {
   --primary: #10B981;
   --primary-hover: #34D399;
-  --primary-glow: rgba(16, 185, 129, 0.15);
+  --primary-glow: rgba(16, 185, 129, 0.18);
   --ring: #10B981;
 }
 
 html[data-accent="blue"] {
   --primary: #2563EB;
   --primary-hover: #60A5FA;
-  --primary-glow: rgba(37, 99, 235, 0.15);
+  --primary-glow: rgba(37, 99, 235, 0.18);
   --ring: #2563EB;
 }
 
 html[data-accent="amber"] {
   --primary: #F59E0B;
   --primary-hover: #FBBF24;
-  --primary-glow: rgba(245, 158, 11, 0.15);
+  --primary-glow: rgba(245, 158, 11, 0.18);
   --ring: #F59E0B;
 }
 
-/* ===== LIGHT MODE PREFERENCES & LIQUID GLASS ===== */
+/* Dynamic Accent token overrides for all component elements */
+.text-indigo-300,
+.text-indigo-400,
+.text-indigo-500,
+.text-indigo-600 {
+  color: var(--primary) !important;
+}
+
+.bg-indigo-600,
+.bg-indigo-500 {
+  background-color: var(--primary) !important;
+}
+
+.bg-indigo-600\/20,
+.bg-indigo-500\/10,
+.bg-indigo-500\/20,
+.bg-indigo-950\/30 {
+  background-color: var(--primary-glow) !important;
+}
+
+.border-indigo-500,
+.border-indigo-500\/30,
+.border-indigo-500\/40 {
+  border-color: var(--primary) !important;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  accent-color: var(--primary) !important;
+}
+
+/* ===== LIGHT MODE PREFERENCES & APPLE-INSPIRED LIQUID GLASS ===== */
 html.light {
   color-scheme: light;
   --background: #F4F4F5;
@@ -143,55 +181,95 @@ html.light {
 
 html.light body,
 html.light main,
-html.light .bg-\[\#09090B\],
 html.light .day-page-wrapper {
   background-color: #F4F4F5 !important;
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(79, 70, 229, 0.04), transparent 75%) !important;
   color: #18181B !important;
 }
 
+/* Light mode card surfaces */
 html.light .card,
-html.light .bg-\[\#18181B\],
-html.light .bg-\[\#18181b\] {
-  background-color: #FFFFFF !important;
+html.light .glass-card {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
   color: #18181B !important;
   border-color: #E4E4E7 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important;
 }
 
+/* Light mode nested panels & dialogs */
+html.light .glass-modal,
+html.light .glass-surface,
+html.light [role="dialog"] {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  color: #18181B !important;
+  border-color: #E4E4E7 !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light mode headers & navbars */
+html.light header,
+html.light nav,
+html.light .glass-nav {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-color: #E4E4E7 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Light mode text contrast overrides */
 html.light .text-zinc-100,
 html.light .text-zinc-200,
-html.light .text-\[\#FAFAFA\],
-html.light .text-\[\#fafafa\] {
+html.light .text-white {
   color: #18181B !important;
 }
 
+html.light .text-zinc-300,
 html.light .text-zinc-400,
-html.light .text-zinc-500,
-html.light .text-\[\#A1A1AA\],
-html.light .text-\[\#a1a1aa\] {
+html.light .text-zinc-500 {
   color: #52525B !important;
 }
 
-html.light .border-\[\#27272A\],
-html.light .border-zinc-800 {
+html.light .text-zinc-600,
+html.light .text-gray-400,
+html.light .text-gray-500 {
+  color: #71717A !important;
+}
+
+/* Light mode borders */
+html.light .border-zinc-800,
+html.light .border-zinc-700 {
   border-color: #E4E4E7 !important;
 }
 
-html.light header {
-  background-color: rgba(255, 255, 255, 0.85) !important;
+/* Light mode form inputs & selects */
+html.light input,
+html.light select,
+html.light textarea {
+  background-color: #FFFFFF !important;
+  color: #18181B !important;
+  border-color: #D4D4D8 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #71717A !important;
+}
+
+/* Light mode secondary surface fills */
+html.light .bg-zinc-900,
+html.light .bg-zinc-950,
+html.light .bg-neutral-900 {
+  background-color: #F4F4F5 !important;
   border-color: #E4E4E7 !important;
 }
 
 /* ===== LIQUID GLASS SYSTEM UTILITIES ===== */
 .glass-surface {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(228, 228, 231, 0.8);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
-}
-
-.dark .glass-surface {
   background: rgba(24, 24, 27, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -200,14 +278,6 @@ html.light header {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(228, 228, 231, 0.9);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
-}
-
-.dark .glass-card {
   background: rgba(24, 24, 27, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -216,13 +286,6 @@ html.light header {
 }
 
 .glass-nav {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(228, 228, 231, 0.8);
-}
-
-.dark .glass-nav {
   background: rgba(9, 9, 11, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -230,14 +293,6 @@ html.light header {
 }
 
 .glass-modal {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(228, 228, 231, 0.9);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-}
-
-.dark .glass-modal {
   background: rgba(18, 18, 20, 0.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);

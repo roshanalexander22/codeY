@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Search, Flame, Zap, User } from "lucide-react";
+import { Search, Zap, User } from "lucide-react";
 
 interface SettingsHeaderProps {
   name: string;
@@ -28,8 +27,8 @@ export function SettingsHeader({
       <div
         className="rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
         style={{
-          background: "linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(245, 158, 11, 0.05) 100%)",
-          border: "1px solid rgba(79, 70, 229, 0.25)",
+          background: "var(--primary-glow)",
+          border: "1px solid var(--primary)",
         }}
       >
         <div className="flex items-center gap-3">
@@ -45,10 +44,10 @@ export function SettingsHeader({
             )}
           </div>
           <div>
-            <h3 className="text-base font-bold" style={{ color: "var(--foreground)" }}>
+            <h3 className="text-base font-bold text-[var(--foreground)]">
               {name}
             </h3>
-            <p className="text-xs" style={{ color: "var(--muted-foreground)" }}>
+            <p className="text-xs text-[var(--muted-foreground)]">
               {track}
             </p>
           </div>
@@ -61,15 +60,15 @@ export function SettingsHeader({
             style={{ background: "rgba(245, 158, 11, 0.12)", border: "1px solid rgba(245, 158, 11, 0.3)" }}
           >
             <span className="text-sm streak-fire">🔥</span>
-            <span className="text-xs font-bold text-amber-400">{streak} Day Streak</span>
+            <span className="text-xs font-bold text-amber-500">{streak} Day Streak</span>
           </div>
 
           <div
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-            style={{ background: "var(--primary-glow)", border: "1px solid rgba(79, 70, 229, 0.3)" }}
+            style={{ background: "var(--primary-glow)", border: "1px solid var(--primary)" }}
           >
-            <Zap size={14} fill="currentColor" style={{ color: "#818cf8" }} />
-            <span className="text-xs font-bold" style={{ color: "#818cf8" }}>{xp} XP</span>
+            <Zap size={14} fill="currentColor" style={{ color: "var(--primary)" }} />
+            <span className="text-xs font-bold" style={{ color: "var(--primary)" }}>{xp} XP</span>
           </div>
         </div>
       </div>
@@ -78,27 +77,20 @@ export function SettingsHeader({
       <div className="relative">
         <Search
           size={16}
-          className="absolute left-3.5 top-1/2 -translate-y-1/2"
-          style={{ color: "var(--muted-foreground)" }}
+          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]"
         />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search settings (e.g. theme, streak, notifications, profile)..."
-          className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm transition-all focus:outline-none"
-          style={{
-            background: "rgba(255, 255, 255, 0.04)",
-            border: "1px solid var(--border)",
-            color: "var(--foreground)",
-          }}
+          className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm transition-all focus:outline-none border border-[var(--border)] text-[var(--foreground)] bg-white/[0.04]"
         />
         {searchQuery && (
           <button
             type="button"
             onClick={() => onSearchChange("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-xs hover:underline"
-            style={{ color: "var(--muted-foreground)" }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[var(--muted-foreground)] hover:underline"
           >
             Clear
           </button>

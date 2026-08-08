@@ -31,9 +31,9 @@ export function MomentumCard({ score, label }: MomentumCardProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.15 }}
-      className="rounded-3xl p-5 relative overflow-hidden flex flex-col justify-between"
+      className="rounded-3xl p-5 relative overflow-hidden flex flex-col justify-between glass-card"
       style={{
-        background: "#18181B",
+        background: "var(--card)",
         border: `1px solid ${border}`,
       }}
     >
@@ -47,8 +47,8 @@ export function MomentumCard({ score, label }: MomentumCardProps) {
             <Gauge size={16} color={color} />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-zinc-100">Momentum</h3>
-            <p className="text-[11px] text-zinc-400">Consistency score</p>
+            <h3 className="text-sm font-semibold text-[var(--foreground)]">Momentum</h3>
+            <p className="text-[11px] text-[var(--muted-foreground)]">Consistency score</p>
           </div>
         </div>
 
@@ -63,13 +63,13 @@ export function MomentumCard({ score, label }: MomentumCardProps) {
 
       {/* Progress Bar */}
       <div className="space-y-1.5 my-2">
-        <div className="flex justify-between text-[11px] text-zinc-400">
+        <div className="flex justify-between text-[11px] text-[var(--muted-foreground)]">
           <span>Current Pace</span>
           <span className="font-semibold" style={{ color }}>
             {isHigh ? "Strong" : isMedium ? "Steady" : "Low"}
           </span>
         </div>
-        <div className="w-full h-2 rounded-full bg-zinc-800 overflow-hidden">
+        <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${score}%` }}
@@ -81,7 +81,7 @@ export function MomentumCard({ score, label }: MomentumCardProps) {
       </div>
 
       {/* Subtitle / Feedback */}
-      <p className="text-xs text-zinc-300 leading-relaxed mt-1 font-medium">{label}</p>
+      <p className="text-xs text-[var(--foreground)] leading-relaxed mt-1 font-medium">{label}</p>
     </motion.div>
   );
 }

@@ -67,7 +67,7 @@ export function SettingsSidebar({ activeCategory, onSelectCategory }: SettingsSi
               background: isActive ? "var(--primary-glow)" : "transparent",
               color: isActive ? "var(--foreground)" : "var(--muted-foreground)",
               fontWeight: isActive ? 600 : 400,
-              border: isActive ? "1px solid rgba(79, 70, 229, 0.3)" : "1px solid transparent",
+              border: isActive ? "1px solid var(--primary)" : "1px solid transparent",
             }}
           >
             <Icon size={16} style={{ color: cat.color }} />
