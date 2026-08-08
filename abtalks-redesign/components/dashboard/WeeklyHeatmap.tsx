@@ -38,7 +38,7 @@ export function WeeklyHeatmap({
 
       let status: DayCell["status"] = "future";
       if (date < enrolled) {
-        status = "future"; // before enrollment
+        status = "future";
       } else if (date > today) {
         status = "future";
       } else if (isToday(date)) {
@@ -48,7 +48,7 @@ export function WeeklyHeatmap({
       } else if (missedDays.includes(diffFromEnroll)) {
         status = "missed";
       } else if (date < today && date >= enrolled) {
-        status = "missed"; // past day not submitted
+        status = "missed";
       }
 
       weekCells.push({
@@ -71,8 +71,8 @@ export function WeeklyHeatmap({
       border: "rgba(239, 68, 68, 0.3)",
     },
     today: {
-      bg: "rgba(79, 70, 229, 0.35)",
-      border: "rgba(79, 70, 229, 0.6)",
+      bg: "rgba(79, 70, 229, 0.45)",
+      border: "rgba(79, 70, 229, 0.7)",
     },
     future: {
       bg: "rgba(255,255,255,0.03)",
@@ -99,7 +99,7 @@ export function WeeklyHeatmap({
             Activity
           </h3>
           <p className="text-xs mt-0.5" style={{ color: "#a1a1aa" }}>
-            {completedCount} submissions total
+            {completedCount} submission{completedCount !== 1 ? "s" : ""} total
           </p>
         </div>
 
@@ -117,7 +117,10 @@ export function WeeklyHeatmap({
           <div className="flex items-center gap-1.5">
             <div
               className="w-2.5 h-2.5 rounded-sm"
-              style={{ background: "rgba(239,68,68,0.25)", border: "1px solid rgba(239,68,68,0.3)" }}
+              style={{
+                background: "rgba(239,68,68,0.25)",
+                border: "1px solid rgba(239,68,68,0.3)",
+              }}
             />
             <span className="text-xs" style={{ color: "#6b7280" }}>
               Missed
@@ -127,11 +130,11 @@ export function WeeklyHeatmap({
       </div>
 
       {/* Day-of-week labels */}
-      <div className="flex gap-1 mb-1.5 pl-0">
+      <div className="flex gap-1.5 mb-2">
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
           <div
             key={i}
-            className="flex-1 text-center text-xs"
+            className="text-center flex-1"
             style={{ color: "#4b5563", fontSize: "10px" }}
           >
             {d}
@@ -139,37 +142,40 @@ export function WeeklyHeatmap({
         ))}
       </div>
 
-      {/* Heatmap grid - 7 cols (days) x 7 rows (weeks) */}
-      <div className="space-y-1">
-        {weeks.map((week, wi) => (
-          <div key={wi} className="flex gap-1">
-            {week.map((cell, di) => {
-              const style = statusStyles[cell.status];
-              return (
-                <motion.div
-                  key={di}
-                  className="flex-1 rounded-sm"
-                  style={{
-                    background: style.bg,
-                    border: `1px solid ${style.border}`,
-                    aspectRatio: "1",
-                  }}
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    delay: 0.6 + (wi * 7 + di) * 0.005,
-                    duration: 0.2,
-                  }}
-                  title={`${format(cell.date, "MMM d")} — ${cell.status}`}
-                />
-              );
-            })}
-          </div>
-        ))}
+      {/* Heatmap grid — horizontally scrollable on very small screens */}
+      <div className="overflow-x-auto -mx-1 px-1">
+        <div className="min-w-[260px] space-y-1.5">
+          {weeks.map((week, wi) => (
+            <div key={wi} className="flex gap-1.5">
+              {week.map((cell, di) => {
+                const style = statusStyles[cell.status];
+                return (
+                  <motion.div
+                    key={di}
+                    className="flex-1 rounded-md"
+                    style={{
+                      background: style.bg,
+                      border: `1px solid ${style.border}`,
+                      aspectRatio: "1",
+                      minWidth: "12px",
+                    }}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      delay: 0.55 + (wi * 7 + di) * 0.004,
+                      duration: 0.2,
+                    }}
+                    title={`${format(cell.date, "MMM d")} — ${cell.status}`}
+                  />
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Month labels - subtle */}
-      <div className="flex justify-between mt-2">
+      {/* Month labels */}
+      <div className="flex justify-between mt-3">
         <span className="text-xs" style={{ color: "#374151", fontSize: "10px" }}>
           6 weeks ago
         </span>

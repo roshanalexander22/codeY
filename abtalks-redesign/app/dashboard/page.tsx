@@ -95,7 +95,7 @@ export default function DashboardPage() {
       />
 
       {/* 3. Main Container */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-28 md:pb-12">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 pb-28 md:pb-12">
 
         {/* ── Empty Profile Banner ───────────────────────────────── */}
         {isEmptyProfile && (
@@ -181,10 +181,10 @@ export default function DashboardPage() {
         )}
 
         {/* ── RESPONSIVE DASHBOARD GRID ───────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
 
           {/* Row 1: Streak (4 cols) + Momentum (4 cols) + Progress (4 cols) */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-4 flex flex-col">
             <StreakCard
               streak={user.streak}
               longestStreak={user.longestStreak}
@@ -193,14 +193,14 @@ export default function DashboardPage() {
             />
           </div>
 
-          <div className="md:col-span-4">
+          <div className="md:col-span-4 flex flex-col">
             <MomentumCard
               score={user.momentumScore}
               label={user.momentumLabel}
             />
           </div>
 
-          <div className="md:col-span-4">
+          <div className="md:col-span-4 flex flex-col">
             <ProgressCard
               currentDay={user.currentDay}
               totalDays={60}
@@ -209,8 +209,8 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Row 2: Today's Challenge (8 cols) + Achievements (4 cols) */}
-          <div className="md:col-span-8" id="today-challenge">
+          {/* Row 2: Today's Challenge (7 cols) + Achievements (5 cols) */}
+          <div className="md:col-span-7" id="today-challenge">
             <TodayChallengeCard
               currentDay={user.currentDay}
               title={
@@ -226,7 +226,7 @@ export default function DashboardPage() {
             />
           </div>
 
-          <div className="md:col-span-4">
+          <div className="md:col-span-5">
             <AchievementsPanel
               completedDays={user.completedDays.length}
               streak={user.streak}

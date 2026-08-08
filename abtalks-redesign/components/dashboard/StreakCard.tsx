@@ -17,36 +17,50 @@ export function StreakCard({
   isFirstDay,
 }: StreakCardProps) {
   const isActive = !isMissedDay;
+  const isMilestone = streak >= 7;
+  const isLegendary = streak >= 30;
+
   const flameColor = isMissedDay
     ? "#6b7280"
-    : streak >= 30
+    : isLegendary
     ? "#f97316"
-    : streak >= 14
+    : isMilestone
     ? "#f59e0b"
     : "#ef4444";
 
   const glowColor = isMissedDay
-    ? "rgba(107, 114, 128, 0.1)"
-    : streak >= 14
-    ? "rgba(245, 158, 11, 0.15)"
-    : "rgba(239, 68, 68, 0.12)";
+    ? "rgba(107, 114, 128, 0.08)"
+    : isLegendary
+    ? "rgba(249, 115, 22, 0.15)"
+    : isMilestone
+    ? "rgba(245, 158, 11, 0.12)"
+    : "rgba(239, 68, 68, 0.10)";
+
+  // Ring color for milestone streaks
+  const ringColor = isMissedDay
+    ? "#27272a"
+    : isLegendary
+    ? "#f97316"
+    : isMilestone
+    ? "#f59e0b"
+    : "rgba(239, 68, 68, 0.4)";
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.1 }}
-      className="relative overflow-hidden rounded-3xl p-5"
+      className="relative overflow-hidden rounded-3xl p-5 h-full"
       style={{
         background: `linear-gradient(135deg, #18181B 0%, #1c1c20 100%)`,
-        border: `1px solid ${isMissedDay ? "#27272a" : "rgba(239, 68, 68, 0.25)"}`,
+        border: `1px solid ${isMissedDay ? "#27272a" : isMilestone ? ringColor : "rgba(239, 68, 68, 0.22)"}`,
         boxShadow: `0 0 40px ${glowColor}`,
       }}
     >
       {/* Background gradient orb */}
       {isActive && (
         <div
-          className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-20 pointer-events-none"
+          className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-15 pointer-events-none"
           style={{ background: flameColor }}
         />
       )}
@@ -54,37 +68,55 @@ export function StreakCard({
       <div className="relative flex items-center justify-between">
         {/* Left: streak count */}
         <div className="flex items-center gap-4">
-          {/* Flame icon */}
-          <div
-            className="w-14 h-14 rounded-2xl flex items-center justify-center relative"
-            style={{
-              background: isMissedDay
-                ? "rgba(107, 114, 128, 0.1)"
-                : "rgba(239, 68, 68, 0.12)",
-              border: `1px solid ${isMissedDay ? "#27272a" : "rgba(239, 68, 68, 0.25)"}`,
-            }}
-          >
-            <motion.div
-              animate={
-                isActive
-                  ? {
-                      scale: [1, 1.08, 1],
-                      rotate: [-2, 2, -2],
-                    }
-                  : {}
-              }
-              transition={{
-                duration: 1.8,
-                repeat: Infinity,
-                ease: "easeInOut",
+          {/* Flame icon with milestone ring */}
+          <div className="relative">
+            {/* Pulsing ring for milestone streaks */}
+            {isMilestone && isActive && (
+              <motion.div
+                className="absolute inset-0 rounded-2xl"
+                animate={{
+                  boxShadow: [
+                    `0 0 0 0 ${flameColor}40`,
+                    `0 0 0 6px ${flameColor}00`,
+                  ],
+                }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                style={{ borderRadius: "16px" }}
+              />
+            )}
+            <div
+              className="w-14 h-14 rounded-2xl flex items-center justify-center relative"
+              style={{
+                background: isMissedDay
+                  ? "rgba(107, 114, 128, 0.1)"
+                  : isMilestone
+                  ? `rgba(${isLegendary ? "249,115,22" : "245,158,11"}, 0.12)`
+                  : "rgba(239, 68, 68, 0.1)",
+                border: `2px solid ${isMissedDay ? "#27272a" : ringColor}`,
               }}
             >
-              <Flame
-                size={28}
-                fill={isMissedDay ? "none" : flameColor}
-                color={flameColor}
-              />
-            </motion.div>
+              <motion.div
+                animate={
+                  isActive
+                    ? {
+                        scale: [1, 1.1, 1],
+                        rotate: [-3, 3, -3],
+                      }
+                    : {}
+                }
+                transition={{
+                  duration: 1.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <Flame
+                  size={28}
+                  fill={isMissedDay ? "none" : flameColor}
+                  color={flameColor}
+                />
+              </motion.div>
+            </div>
           </div>
 
           {/* Streak number */}
@@ -109,14 +141,25 @@ export function StreakCard({
                 day{streak !== 1 ? "s" : ""}
               </span>
             </motion.div>
-            <p
-              className="text-xs font-semibold uppercase tracking-wider mt-0.5"
-              style={{
-                color: isMissedDay ? "#6b7280" : flameColor,
-              }}
-            >
-              {isMissedDay ? "Streak broken" : isFirstDay ? "Starting today!" : "Current streak"}
-            </p>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              {isMilestone && isActive && (
+                <Zap size={10} color={flameColor} className="flex-shrink-0" />
+              )}
+              <p
+                className="text-xs font-semibold uppercase tracking-wider"
+                style={{
+                  color: isMissedDay ? "#6b7280" : flameColor,
+                }}
+              >
+                {isMissedDay
+                  ? "Streak broken"
+                  : isFirstDay
+                  ? "Starting today!"
+                  : isMilestone
+                  ? "🔥 On fire!"
+                  : "Current streak"}
+              </p>
+            </div>
           </div>
         </div>
 
