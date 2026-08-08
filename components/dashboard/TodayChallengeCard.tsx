@@ -61,14 +61,14 @@ export function TodayChallengeCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.3 }}
       whileHover={{ y: -2 }}
-      className="rounded-3xl p-5 flex flex-col justify-between transition-all"
+      className="rounded-3xl p-5 flex flex-col justify-between transition-all card"
       style={{
-        background: "#18181B",
+        background: "var(--card)",
         border: isCompleted
           ? "1px solid rgba(34, 197, 94, 0.3)"
           : isMissedDay
           ? "1px solid rgba(239, 68, 68, 0.3)"
-          : "1px solid rgba(79, 70, 229, 0.3)",
+          : "1px solid var(--border)",
       }}
     >
       <div>
@@ -77,9 +77,9 @@ export function TodayChallengeCard({
           <span
             className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
             style={{
-              background: "rgba(79, 70, 229, 0.12)",
+              background: "var(--primary-glow)",
               border: "1px solid rgba(79, 70, 229, 0.25)",
-              color: "#818cf8",
+              color: "var(--primary)",
             }}
           >
             Day {currentDay} Challenge
@@ -116,8 +116,7 @@ export function TodayChallengeCard({
 
         {/* Title */}
         <h3
-          className="text-base sm:text-lg font-bold leading-snug break-words mb-3"
-          style={{ color: "#fafafa" }}
+          className="text-base sm:text-lg font-bold leading-snug break-words mb-3 text-[var(--foreground)]"
         >
           {title}
         </h3>
@@ -125,10 +124,10 @@ export function TodayChallengeCard({
         {/* Meta tags */}
         <div className="flex items-center gap-2.5 mb-5 flex-wrap">
           <div
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs text-zinc-400"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid #27272a" }}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs text-[var(--muted-foreground)]"
+            style={{ background: "rgba(161, 161, 170, 0.08)", border: "1px solid var(--border)" }}
           >
-            <Clock size={13} color="#a1a1aa" />
+            <Clock size={13} className="text-[var(--muted-foreground)]" />
             <span>{estimatedTime}</span>
           </div>
 
@@ -150,7 +149,7 @@ export function TodayChallengeCard({
       <Link
         href={`/day/${currentDay}`}
         id="open-today-challenge"
-        className="flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-2xl font-bold text-sm transition-all duration-200 group"
+        className="flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-2xl font-bold text-sm transition-all duration-200 group cursor-pointer"
         style={
           isCompleted
             ? {
@@ -159,9 +158,9 @@ export function TodayChallengeCard({
                 color: "#4ade80",
               }
             : {
-                background: "#4F46E5",
+                background: "var(--primary)",
                 color: "white",
-                boxShadow: "0 4px 20px rgba(79, 70, 229, 0.35)",
+                boxShadow: "0 4px 20px var(--primary-glow)",
               }
         }
       >
@@ -172,7 +171,7 @@ export function TodayChallengeCard({
           </>
         ) : (
           <>
-            <Play size={15} className="fill-white" />
+            <Play size={15} className="fill-white text-white" />
             <span>{ctaText}</span>
             <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </>

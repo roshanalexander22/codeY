@@ -32,31 +32,31 @@ export function ProgressCard({
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.2 }}
       whileHover={{ y: -2 }}
       onClick={onClick}
-      className="rounded-3xl p-5 cursor-pointer hover:border-indigo-500/40 transition-all flex flex-col justify-between"
+      className="rounded-3xl p-5 cursor-pointer hover:border-indigo-500/40 transition-all flex flex-col justify-between card"
       style={{
-        background: "#18181B",
-        border: "1px solid rgba(79, 70, 229, 0.2)",
+        background: "var(--card)",
+        border: "1px solid var(--border)",
       }}
     >
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-sm font-semibold flex items-center gap-1.5" style={{ color: "#fafafa" }}>
+          <h3 className="text-sm font-semibold flex items-center gap-1.5 text-[var(--foreground)]">
             Challenge Progress
             <Info size={12} className="text-indigo-400 opacity-70" />
           </h3>
-          <p className="text-xs mt-0.5" style={{ color: "#a1a1aa" }}>
+          <p className="text-xs mt-0.5 text-[var(--muted-foreground)]">
             60-Day journey
           </p>
         </div>
         <div
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
           style={{
-            background: "rgba(79, 70, 229, 0.12)",
+            background: "var(--primary-glow)",
             border: "1px solid rgba(79, 70, 229, 0.25)",
           }}
         >
-          <Target size={12} color="#818cf8" />
-          <span className="text-xs font-bold" style={{ color: "#818cf8" }}>
+          <Target size={12} style={{ color: "var(--primary)" }} />
+          <span className="text-xs font-bold" style={{ color: "var(--primary)" }}>
             Day {currentDay}
           </span>
         </div>
@@ -72,7 +72,7 @@ export function ProgressCard({
               cy="55"
               r="44"
               fill="none"
-              stroke="#27272a"
+              stroke="rgba(161, 161, 170, 0.2)"
               strokeWidth="7"
             />
             {/* Progress arc */}
@@ -98,7 +98,7 @@ export function ProgressCard({
                 x2="100%"
                 y2="0%"
               >
-                <stop offset="0%" stopColor="#4F46E5" />
+                <stop offset="0%" stopColor="var(--primary)" />
                 <stop offset="100%" stopColor="#818cf8" />
               </linearGradient>
             </defs>
@@ -109,12 +109,11 @@ export function ProgressCard({
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.6, duration: 0.4 }}
-              className="text-2xl font-black tabular-nums"
-              style={{ color: "#fafafa" }}
+              className="text-2xl font-black tabular-nums text-[var(--foreground)]"
             >
               {completedDays.length}
             </motion.span>
-            <span className="text-xs" style={{ color: "#a1a1aa" }}>
+            <span className="text-xs text-[var(--muted-foreground)]">
               / {totalDays}
             </span>
           </div>
@@ -124,14 +123,14 @@ export function ProgressCard({
         <div className="flex-1 space-y-4">
           {/* Days remaining */}
           <div>
-            <p className="text-xs mb-1.5" style={{ color: "#a1a1aa" }}>
+            <p className="text-xs mb-1.5 text-[var(--muted-foreground)]">
               Days remaining
             </p>
             <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-bold" style={{ color: "#fafafa" }}>
+              <span className="text-2xl font-bold text-[var(--foreground)]">
                 {totalDays - completedDays.length}
               </span>
-              <span className="text-xs" style={{ color: "#a1a1aa" }}>
+              <span className="text-xs text-[var(--muted-foreground)]">
                 days
               </span>
             </div>
@@ -140,13 +139,13 @@ export function ProgressCard({
           {/* Progress bar */}
           <div>
             <div className="flex justify-between mb-1.5">
-              <span className="text-xs" style={{ color: "#a1a1aa" }}>
+              <span className="text-xs text-[var(--muted-foreground)]">
                 {Math.round(progress)}% complete
               </span>
             </div>
             <div
               className="rounded-full overflow-hidden"
-              style={{ background: "#27272a", height: "6px" }}
+              style={{ background: "rgba(161, 161, 170, 0.2)", height: "6px" }}
             >
               <motion.div
                 initial={{ width: 0 }}
@@ -154,7 +153,7 @@ export function ProgressCard({
                 transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
                 className="h-full rounded-full"
                 style={{
-                  background: "linear-gradient(90deg, #4F46E5, #818cf8)",
+                  background: "linear-gradient(90deg, var(--primary), #818cf8)",
                 }}
               />
             </div>

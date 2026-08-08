@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { UserPreferences } from "@/lib/preferences";
-import { Save, Sparkles } from "lucide-react";
+import { useStudentProfile } from "@/context/ProfileContext";
+import { Save } from "lucide-react";
 import { toast } from "sonner";
+import { Avatar } from "@/components/ui/avatar";
 
 interface ProfileSettingsProps {
   preferences: UserPreferences;
@@ -19,46 +21,62 @@ const AVATAR_SELECTIONS = [
 ];
 
 export function ProfileSettings({ preferences, onUpdate }: ProfileSettingsProps) {
-  const [form, setForm] = useState(preferences.profile);
+  const { profile, updateProfile, setAvatar } = useStudentProfile();
+  const [form, setForm] = useState({
+    name: profile.name,
+    username: profile.username,
+    college: profile.college,
+    track: profile.track,
+    bio: profile.bio,
+    avatar: profile.avatar,
+  });
+
+  const handleSelectAvatar = (url: string) => {
+    setForm((prev) => ({ ...prev, avatar: url }));
+    setAvatar(url);
+    onUpdate({ profile: { ...preferences.profile, avatar: url } });
+    toast.success("Avatar updated globally!");
+  };
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-    onUpdate({ profile: form });
-    toast.success("Profile settings updated!");
+    updateProfile(form);
+    onUpdate({ profile: { ...preferences.profile, ...form } });
+    toast.success("Student profile saved globally!");
   };
 
   return (
     <form onSubmit={handleSave} className="space-y-5">
       <div>
-        <h3 className="text-base font-bold mb-1" style={{ color: "var(--foreground)" }}>
+        <h3 className="text-base font-bold mb-1 text-[var(--foreground)]">
           Student Profile Settings
         </h3>
-        <p className="text-xs" style={{ color: "var(--muted-foreground)" }}>
-          Manage your public identity, college, track, and avatar. (Mocked local state)
+        <p className="text-xs text-[var(--muted-foreground)]">
+          Manage your public identity, college, track, and avatar. Changes update across all pages instantly.
         </p>
       </div>
 
       {/* Avatar Selection */}
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "var(--muted-foreground)" }}>
+        <label className="block text-xs font-semibold uppercase tracking-wider mb-2.5 text-[var(--muted-foreground)]">
           Choose Avatar
         </label>
         <div className="flex items-center gap-3">
           {AVATAR_SELECTIONS.map((url) => {
-            const isSelected = form.avatar === url;
+            const isSelected = form.avatar === url || profile.avatar === url;
             return (
               <button
                 key={url}
                 type="button"
-                onClick={() => setForm((prev) => ({ ...prev, avatar: url }))}
-                className="w-10 h-10 rounded-full overflow-hidden transition-all"
-                style={{
-                  border: isSelected ? "2px solid var(--primary)" : "2px solid transparent",
-                  transform: isSelected ? "scale(1.1)" : "scale(1)",
-                }}
+                onClick={() => handleSelectAvatar(url)}
+                className="transition-transform active:scale-95"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={url} alt="avatar option" className="w-full h-full object-cover" />
+                <Avatar
+                  src={url}
+                  size="lg"
+                  border={isSelected}
+                  className={isSelected ? "ring-2 ring-indigo-500 scale-105" : "opacity-80 hover:opacity-100"}
+                />
               </button>
             );
           })}
@@ -68,29 +86,27 @@ export function ProfileSettings({ preferences, onUpdate }: ProfileSettingsProps)
       {/* Fields */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--foreground)" }}>
+          <label className="block text-xs font-medium mb-1.5 text-[var(--foreground)]">
             Display Name
           </label>
           <input
             type="text"
             value={form.name}
             onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
-            className="w-full px-3.5 py-2 rounded-xl text-sm"
-            style={{ background: "rgba(255, 255, 255, 0.04)", border: "1px solid var(--border)", color: "var(--foreground)" }}
+            className="w-full px-3.5 py-2 rounded-xl text-sm bg-white/[0.04] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)]"
             required
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--foreground)" }}>
+          <label className="block text-xs font-medium mb-1.5 text-[var(--foreground)]">
             Username
           </label>
           <input
             type="text"
             value={form.username}
             onChange={(e) => setForm((prev) => ({ ...prev, username: e.target.value }))}
-            className="w-full px-3.5 py-2 rounded-xl text-sm"
-            style={{ background: "rgba(255, 255, 255, 0.04)", border: "1px solid var(--border)", color: "var(--foreground)" }}
+            className="w-full px-3.5 py-2 rounded-xl text-sm bg-white/[0.04] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)]"
             required
           />
         </div>
@@ -98,27 +114,25 @@ export function ProfileSettings({ preferences, onUpdate }: ProfileSettingsProps)
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--foreground)" }}>
+          <label className="block text-xs font-medium mb-1.5 text-[var(--foreground)]">
             College / Institute
           </label>
           <input
             type="text"
             value={form.college}
             onChange={(e) => setForm((prev) => ({ ...prev, college: e.target.value }))}
-            className="w-full px-3.5 py-2 rounded-xl text-sm"
-            style={{ background: "rgba(255, 255, 255, 0.04)", border: "1px solid var(--border)", color: "var(--foreground)" }}
+            className="w-full px-3.5 py-2 rounded-xl text-sm bg-white/[0.04] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)]"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--foreground)" }}>
+          <label className="block text-xs font-medium mb-1.5 text-[var(--foreground)]">
             Enrolled Track
           </label>
           <select
             value={form.track}
             onChange={(e) => setForm((prev) => ({ ...prev, track: e.target.value }))}
-            className="w-full px-3.5 py-2 rounded-xl text-sm"
-            style={{ background: "rgba(255, 255, 255, 0.04)", border: "1px solid var(--border)", color: "var(--foreground)" }}
+            className="w-full px-3.5 py-2 rounded-xl text-sm bg-white/[0.04] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)]"
           >
             <option value="Full Stack Development">Full Stack Development</option>
             <option value="Frontend Development">Frontend Development</option>
@@ -129,15 +143,14 @@ export function ProfileSettings({ preferences, onUpdate }: ProfileSettingsProps)
       </div>
 
       <div>
-        <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--foreground)" }}>
+        <label className="block text-xs font-medium mb-1.5 text-[var(--foreground)]">
           Short Bio
         </label>
         <textarea
           value={form.bio}
           onChange={(e) => setForm((prev) => ({ ...prev, bio: e.target.value }))}
           rows={3}
-          className="w-full px-3.5 py-2 rounded-xl text-sm"
-          style={{ background: "rgba(255, 255, 255, 0.04)", border: "1px solid var(--border)", color: "var(--foreground)", resize: "vertical" }}
+          className="w-full px-3.5 py-2 rounded-xl text-sm bg-white/[0.04] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)] resize-vertical"
         />
       </div>
 

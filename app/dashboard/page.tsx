@@ -17,6 +17,7 @@ import { StateSwitcher } from "@/components/dashboard/StateSwitcher";
 import { NotificationPanel } from "@/components/dashboard/NotificationPanel";
 import { SettingsModal } from "@/components/settings/SettingsModal";
 import { ProfileModal } from "@/components/dashboard/ProfileModal";
+import { ProfileMenu } from "@/components/profile/ProfileMenu";
 import { ProgressDetailModal } from "@/components/dashboard/ProgressDetailModal";
 import { AchievementDetailModal } from "@/components/dashboard/AchievementDetailModal";
 import {
@@ -44,6 +45,7 @@ export default function DashboardPage() {
 
   // Profile Modal State
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   // Progress Detail Modal State
   const [isProgressDetailOpen, setIsProgressDetailOpen] = useState(false);
@@ -82,7 +84,7 @@ export default function DashboardPage() {
         isEmptyProfile={isEmptyProfile}
         onOpenNotifications={() => setIsNotificationsOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
-        onOpenProfile={() => setIsProfileOpen(true)}
+        onOpenProfile={() => setIsProfileMenuOpen(true)}
       />
 
       {/* 2. Desktop Responsive Header (>= md) */}
@@ -91,7 +93,7 @@ export default function DashboardPage() {
         unreadCount={unreadCount}
         onOpenNotifications={() => setIsNotificationsOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
-        onOpenProfile={() => setIsProfileOpen(true)}
+        onOpenProfile={() => setIsProfileMenuOpen(true)}
       />
 
       {/* 3. Main Container */}
@@ -298,6 +300,12 @@ export default function DashboardPage() {
         onClose={() => setSelectedAchievement(null)}
       />
 
+      <ProfileMenu
+        isOpen={isProfileMenuOpen}
+        onClose={() => setIsProfileMenuOpen(false)}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+        onOpenProfileModal={() => setIsProfileOpen(true)}
+      />
     </div>
   );
 }

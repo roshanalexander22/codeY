@@ -71,12 +71,12 @@ export function WeeklyHeatmap({
       border: "rgba(239, 68, 68, 0.3)",
     },
     today: {
-      bg: "rgba(79, 70, 229, 0.35)",
-      border: "rgba(79, 70, 229, 0.6)",
+      bg: "var(--primary-glow)",
+      border: "var(--primary)",
     },
     future: {
-      bg: "rgba(255,255,255,0.03)",
-      border: "#27272a",
+      bg: "rgba(161, 161, 170, 0.08)",
+      border: "var(--border)",
     },
   };
 
@@ -87,18 +87,18 @@ export function WeeklyHeatmap({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.55 }}
-      className="rounded-3xl p-5"
+      className="rounded-3xl p-5 card"
       style={{
-        background: "#18181B",
-        border: "1px solid #27272a",
+        background: "var(--card)",
+        border: "1px solid var(--border)",
       }}
     >
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-sm font-semibold" style={{ color: "#fafafa" }}>
+          <h3 className="text-sm font-semibold text-[var(--foreground)]">
             Activity
           </h3>
-          <p className="text-xs mt-0.5" style={{ color: "#a1a1aa" }}>
+          <p className="text-xs mt-0.5 text-[var(--muted-foreground)]">
             {completedCount} submissions total
           </p>
         </div>
@@ -110,7 +110,7 @@ export function WeeklyHeatmap({
               className="w-2.5 h-2.5 rounded-sm"
               style={{ background: "#22c55e" }}
             />
-            <span className="text-xs" style={{ color: "#6b7280" }}>
+            <span className="text-xs text-[var(--muted-foreground)]">
               Done
             </span>
           </div>
@@ -119,7 +119,7 @@ export function WeeklyHeatmap({
               className="w-2.5 h-2.5 rounded-sm"
               style={{ background: "rgba(239,68,68,0.25)", border: "1px solid rgba(239,68,68,0.3)" }}
             />
-            <span className="text-xs" style={{ color: "#6b7280" }}>
+            <span className="text-xs text-[var(--muted-foreground)]">
               Missed
             </span>
           </div>
@@ -131,8 +131,8 @@ export function WeeklyHeatmap({
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
           <div
             key={i}
-            className="flex-1 text-center text-xs"
-            style={{ color: "#4b5563", fontSize: "10px" }}
+            className="flex-1 text-center text-xs text-[var(--muted-foreground)]"
+            style={{ fontSize: "10px" }}
           >
             {d}
           </div>
@@ -170,10 +170,10 @@ export function WeeklyHeatmap({
 
       {/* Month labels - subtle */}
       <div className="flex justify-between mt-2">
-        <span className="text-xs" style={{ color: "#374151", fontSize: "10px" }}>
+        <span className="text-xs text-[var(--muted-foreground)]" style={{ fontSize: "10px" }}>
           6 weeks ago
         </span>
-        <span className="text-xs" style={{ color: "#374151", fontSize: "10px" }}>
+        <span className="text-xs text-[var(--muted-foreground)]" style={{ fontSize: "10px" }}>
           Today
         </span>
       </div>

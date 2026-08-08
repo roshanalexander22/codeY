@@ -70,6 +70,7 @@ interface NextChallenge {
 }
 
 import { SettingsModal } from "@/components/settings/SettingsModal";
+import { ProfileMenu } from "@/components/profile/ProfileMenu";
 
 interface DayPageClientProps {
   challenge: Challenge;
@@ -164,6 +165,7 @@ export function DayPageClient({
   ];
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   return (
     <div className="day-page-wrapper min-h-screen">
@@ -173,6 +175,7 @@ export function DayPageClient({
         dayId={dayId}
         track={challenge.track}
         onOpenSettings={() => setIsSettingsOpen(true)}
+        onOpenProfile={() => setIsProfileMenuOpen(true)}
       />
 
       {/* Main Container - Mobile 1-col, Desktop 2-col */}
@@ -269,6 +272,13 @@ export function DayPageClient({
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
+      />
+
+      {/* Global Profile Menu */}
+      <ProfileMenu
+        isOpen={isProfileMenuOpen}
+        onClose={() => setIsProfileMenuOpen(false)}
+        onOpenSettings={() => setIsSettingsOpen(true)}
       />
     </div>
   );

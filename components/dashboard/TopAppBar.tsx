@@ -2,11 +2,13 @@
 
 import { motion } from "framer-motion";
 import { Bell, Settings } from "lucide-react";
+import { useStudentProfile } from "@/context/ProfileContext";
+import { Avatar } from "@/components/ui/avatar";
 
 interface TopAppBarProps {
-  name: string;
-  avatar: string;
-  track: string;
+  name?: string;
+  avatar?: string;
+  track?: string;
   notificationCount?: number;
   isEmptyProfile?: boolean;
   onOpenNotifications?: () => void;
@@ -15,16 +17,21 @@ interface TopAppBarProps {
 }
 
 export function TopAppBar({
-  name,
-  avatar,
-  track,
+  name: propName,
+  avatar: propAvatar,
+  track: propTrack,
   notificationCount = 0,
   isEmptyProfile,
   onOpenNotifications,
   onOpenSettings,
   onOpenProfile,
 }: TopAppBarProps) {
-  const firstName = name.split(" ")[0];
+  const { profile } = useStudentProfile();
+  const displayName = propName || profile.name;
+  const displayAvatar = propAvatar || profile.avatar;
+  const displayTrack = propTrack || profile.track;
+
+  const firstName = displayName.split(" ")[0];
   const hour = new Date().getHours();
   const greeting =
     hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
@@ -34,64 +41,24 @@ export function TopAppBar({
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="md:hidden flex items-center justify-between px-5 pt-safe-top pb-2 sticky top-0 z-40"
+      className="md:hidden flex items-center justify-between px-5 pt-safe-top pb-2 sticky top-0 z-40 bg-[var(--background)]/90 backdrop-blur-md border-b border-[var(--border)]"
       style={{
-        background: "rgba(9, 9, 11, 0.92)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        borderBottom: "1px solid rgba(39, 39, 42, 0.8)",
         paddingTop: "env(safe-area-inset-top, 12px)",
       }}
     >
       {/* Avatar + greeting (Clickable for profile) */}
       <button
         onClick={onOpenProfile}
-        className="flex items-center gap-3 text-left group transition-transform active:scale-95"
+        className="flex items-center gap-3 text-left group transition-transform active:scale-95 cursor-pointer"
         aria-label="Open profile menu"
       >
-        <div className="relative">
-          {isEmptyProfile || !avatar ? (
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center"
-              style={{
-                background: "rgba(79, 70, 229, 0.15)",
-                border: "2px solid rgba(79, 70, 229, 0.3)",
-              }}
-            >
-              <span className="text-sm font-bold" style={{ color: "#818cf8" }}>
-                {name.charAt(0)}
-              </span>
-            </div>
-          ) : (
-            <div
-              className="w-10 h-10 rounded-full overflow-hidden"
-              style={{
-                border: "2px solid rgba(79, 70, 229, 0.4)",
-              }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={avatar}
-                alt={name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
-          {/* Online dot */}
-          <div
-            className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full"
-            style={{
-              background: "#22c55e",
-              border: "2px solid #09090B",
-            }}
-          />
-        </div>
+        <Avatar src={isEmptyProfile ? "" : displayAvatar} name={displayName} size="md" onlineDot />
 
         <div>
-          <p className="text-xs" style={{ color: "#6b7280" }}>
+          <p className="text-xs text-[var(--muted-foreground)]">
             {greeting},
           </p>
-          <p className="text-sm font-bold leading-tight" style={{ color: "#fafafa" }}>
+          <p className="text-sm font-bold leading-tight text-[var(--foreground)]">
             {isEmptyProfile ? "Set up profile" : firstName} 👋
           </p>
         </div>
@@ -100,16 +67,16 @@ export function TopAppBar({
       {/* Right actions */}
       <div className="flex items-center gap-2">
         {/* Track badge */}
-        {!isEmptyProfile && track && (
+        {!isEmptyProfile && displayTrack && (
           <div
             className="hidden sm:flex items-center px-2.5 py-1 rounded-full"
             style={{
-              background: "rgba(79, 70, 229, 0.1)",
+              background: "var(--primary-glow)",
               border: "1px solid rgba(79, 70, 229, 0.2)",
             }}
           >
-            <span className="text-xs font-medium" style={{ color: "#818cf8" }}>
-              {track.split(" ").slice(0, 2).join(" ")}
+            <span className="text-xs font-medium" style={{ color: "var(--primary)" }}>
+              {displayTrack.split(" ").slice(0, 2).join(" ")}
             </span>
           </div>
         )}
@@ -118,18 +85,18 @@ export function TopAppBar({
         <button
           id="notification-bell"
           onClick={onOpenNotifications}
-          className="relative w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200 hover:bg-zinc-800"
+          className="relative w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200 hover:bg-white/10"
           style={{
             background: "rgba(255,255,255,0.04)",
-            border: "1px solid #27272a",
+            border: "1px solid var(--border)",
           }}
           aria-label="Open notifications"
         >
-          <Bell size={16} color="#a1a1aa" />
+          <Bell size={16} className="text-[var(--muted-foreground)]" />
           {notificationCount > 0 && (
             <div
               className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center"
-              style={{ background: "#4F46E5" }}
+              style={{ background: "var(--primary)" }}
             >
               <span className="text-xs font-bold text-white" style={{ fontSize: "9px" }}>
                 {notificationCount}
@@ -142,14 +109,14 @@ export function TopAppBar({
         <button
           id="settings-button"
           onClick={onOpenSettings}
-          className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200 hover:bg-zinc-800"
+          className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-200 hover:bg-white/10"
           style={{
             background: "rgba(255,255,255,0.04)",
-            border: "1px solid #27272a",
+            border: "1px solid var(--border)",
           }}
           aria-label="Open settings"
         >
-          <Settings size={16} color="#a1a1aa" />
+          <Settings size={16} className="text-[var(--muted-foreground)]" />
         </button>
       </div>
     </motion.header>

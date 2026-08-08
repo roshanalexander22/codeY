@@ -36,10 +36,10 @@ export function StreakCard({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut", delay: 0.1 }}
-      className="relative overflow-hidden rounded-3xl p-5"
+      className="relative overflow-hidden rounded-3xl p-5 card"
       style={{
-        background: `linear-gradient(135deg, #18181B 0%, #1c1c20 100%)`,
-        border: `1px solid ${isMissedDay ? "#27272a" : "rgba(239, 68, 68, 0.25)"}`,
+        background: "var(--card)",
+        border: `1px solid ${isMissedDay ? "var(--border)" : "rgba(239, 68, 68, 0.25)"}`,
         boxShadow: `0 0 40px ${glowColor}`,
       }}
     >
@@ -61,7 +61,7 @@ export function StreakCard({
               background: isMissedDay
                 ? "rgba(107, 114, 128, 0.1)"
                 : "rgba(239, 68, 68, 0.12)",
-              border: `1px solid ${isMissedDay ? "#27272a" : "rgba(239, 68, 68, 0.25)"}`,
+              border: `1px solid ${isMissedDay ? "var(--border)" : "rgba(239, 68, 68, 0.25)"}`,
             }}
           >
             <motion.div
@@ -97,14 +97,12 @@ export function StreakCard({
               className="flex items-baseline gap-1"
             >
               <span
-                className="text-5xl font-black tabular-nums"
-                style={{ color: isMissedDay ? "#6b7280" : "#fafafa" }}
+                className="text-5xl font-black tabular-nums text-[var(--foreground)]"
               >
                 {isFirstDay ? 0 : streak}
               </span>
               <span
-                className="text-sm font-medium"
-                style={{ color: "#a1a1aa" }}
+                className="text-sm font-medium text-[var(--muted-foreground)]"
               >
                 day{streak !== 1 ? "s" : ""}
               </span>
@@ -123,18 +121,17 @@ export function StreakCard({
         {/* Right: best streak */}
         <div className="text-right">
           <div className="flex items-center gap-1.5 justify-end mb-1">
-            <TrendingUp size={12} color="#a1a1aa" />
-            <span className="text-xs" style={{ color: "#a1a1aa" }}>
+            <TrendingUp size={12} className="text-[var(--muted-foreground)]" />
+            <span className="text-xs text-[var(--muted-foreground)]">
               Best
             </span>
           </div>
           <span
-            className="text-xl font-bold"
-            style={{ color: "#fafafa" }}
+            className="text-xl font-bold text-[var(--foreground)]"
           >
             {longestStreak}
           </span>
-          <p className="text-xs" style={{ color: "#6b7280" }}>
+          <p className="text-xs text-[var(--muted-foreground)]">
             days
           </p>
         </div>
@@ -167,12 +164,12 @@ export function StreakCard({
           transition={{ delay: 0.3 }}
           className="mt-4 rounded-2xl px-4 py-3 flex items-center gap-2"
           style={{
-            background: "rgba(79, 70, 229, 0.08)",
-            border: "1px solid rgba(79, 70, 229, 0.2)",
+            background: "var(--primary-glow)",
+            border: "1px solid var(--primary)",
           }}
         >
-          <Zap size={14} color="#818cf8" />
-          <p className="text-xs font-medium" style={{ color: "#818cf8" }}>
+          <Zap size={14} style={{ color: "var(--primary)" }} />
+          <p className="text-xs font-medium" style={{ color: "var(--primary)" }}>
             Day 1! Submit your first proof of work to start your streak
           </p>
         </motion.div>

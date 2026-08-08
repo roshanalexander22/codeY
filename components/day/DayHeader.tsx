@@ -4,12 +4,15 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Settings as SettingsIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useStudentProfile } from "@/context/ProfileContext";
+import { Avatar } from "@/components/ui/avatar";
 
 interface DayHeaderProps {
   streak: number;
   dayId: number;
   track?: string;
   onOpenSettings?: () => void;
+  onOpenProfile?: () => void;
 }
 
 export function DayHeader({
@@ -17,19 +20,17 @@ export function DayHeader({
   dayId,
   track = "Full Stack Development",
   onOpenSettings,
+  onOpenProfile,
 }: DayHeaderProps) {
+  const { profile } = useStudentProfile();
+  const activeStreak = profile.streak || streak;
+
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="sticky top-0 z-50 w-full border-b"
-      style={{
-        background: "rgba(9, 9, 11, 0.85)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        borderColor: "var(--border)",
-      }}
+      className="sticky top-0 z-50 w-full border-b bg-[var(--background)]/85 backdrop-blur-md border-[var(--border)]"
     >
       <div className="max-w-[1280px] mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
         {/* Left: Back button & track info */}
@@ -52,9 +53,9 @@ export function DayHeader({
 
           <div className="hidden sm:flex flex-col">
             <span className="text-xs font-semibold text-indigo-400 uppercase tracking-wider">
-              {track}
+              {profile.track || track}
             </span>
-            <span className="text-xs text-zinc-400">
+            <span className="text-xs text-[var(--muted-foreground)]">
               ABTalks 60-Day Challenge
             </span>
           </div>
@@ -73,39 +74,51 @@ export function DayHeader({
           </span>
         </div>
 
-        {/* Right: Streak badge & Settings trigger */}
+        {/* Right: Streak badge, Avatar profile, & Settings trigger */}
         <div className="flex items-center gap-2">
+          {/* Streak pill */}
           <div
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-2xl"
             style={{
               background:
-                streak > 0
+                activeStreak > 0
                   ? "rgba(245, 158, 11, 0.12)"
                   : "rgba(255,255,255,0.06)",
-              border: `1px solid ${streak > 0 ? "rgba(245, 158, 11, 0.3)" : "var(--border)"}`,
+              border: `1px solid ${activeStreak > 0 ? "rgba(245, 158, 11, 0.3)" : "var(--border)"}`,
             }}
           >
             <span
-              className={cn("text-sm sm:text-base", streak > 0 && "streak-fire")}
+              className={cn("text-sm sm:text-base", activeStreak > 0 && "streak-fire")}
               role="img"
               aria-label="streak"
             >
-              {streak > 0 ? "🔥" : "💤"}
+              {activeStreak > 0 ? "🔥" : "💤"}
             </span>
             <span
               className="text-xs sm:text-sm font-bold"
-              style={{ color: streak > 0 ? "#fbbf24" : "var(--muted-foreground)" }}
+              style={{ color: activeStreak > 0 ? "#fbbf24" : "var(--muted-foreground)" }}
             >
-              {streak > 0 ? `${streak} day streak` : "0 streak"}
+              {activeStreak > 0 ? `${activeStreak} day streak` : "0 streak"}
             </span>
           </div>
+
+          {/* Profile Avatar Control */}
+          <button
+            type="button"
+            onClick={onOpenProfile || onOpenSettings}
+            className="flex items-center gap-1.5 p-1 rounded-2xl transition-transform active:scale-95 cursor-pointer"
+            aria-label="Open profile menu"
+            title="Profile Menu"
+          >
+            <Avatar src={profile.avatar} name={profile.name} size="sm" border={false} />
+          </button>
 
           {/* Settings Trigger Button */}
           {onOpenSettings && (
             <button
               type="button"
               onClick={onOpenSettings}
-              className="w-10 h-10 rounded-2xl flex items-center justify-center transition-colors hover:bg-white/10"
+              className="w-9 h-9 rounded-2xl flex items-center justify-center transition-colors hover:bg-white/10"
               style={{
                 background: "rgba(255,255,255,0.06)",
                 border: "1px solid var(--border)",
@@ -113,7 +126,7 @@ export function DayHeader({
               aria-label="Open Settings"
               title="Open Settings"
             >
-              <SettingsIcon size={18} style={{ color: "var(--foreground)" }} />
+              <SettingsIcon size={16} style={{ color: "var(--foreground)" }} />
             </button>
           )}
         </div>

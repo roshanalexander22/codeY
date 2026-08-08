@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -9,6 +10,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Flame, Rocket } from "lucide-react";
+import { useStudentProfile } from "@/context/ProfileContext";
 
 const joinSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
@@ -28,6 +30,8 @@ interface JoinModalProps {
 }
 
 export function JoinModal({ isOpen, onClose }: JoinModalProps) {
+  const router = useRouter();
+  const { updateProfile } = useStudentProfile();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const {
@@ -48,16 +52,30 @@ export function JoinModal({ isOpen, onClose }: JoinModalProps) {
   const onSubmit = async (data: JoinFormData) => {
     setIsSubmitting(true);
     // Simulate lightweight submit delay
-    await new Promise((res) => setTimeout(res, 800));
+    await new Promise((res) => setTimeout(res, 600));
     setIsSubmitting(false);
 
+    updateProfile({
+      name: data.fullName,
+      username: `@${data.githubHandle}`,
+      track:
+        data.track === "fullstack"
+          ? "Full Stack Development"
+          : data.track === "frontend"
+          ? "Frontend Development"
+          : data.track === "ai"
+          ? "AI & Data Engineering"
+          : "DevOps & Cloud Track",
+    });
+
     toast.success("Welcome to ABTalks 60-Day Challenge! 🔥", {
-      description: `Streak tracking activated for @${data.githubHandle} (${data.track.toUpperCase()} track).`,
-      duration: 5000,
+      description: `Streak tracking activated for @${data.githubHandle}. Redirecting to your Dashboard...`,
+      duration: 3000,
     });
 
     reset();
     onClose();
+    router.push("/dashboard");
   };
 
   return (
@@ -70,7 +88,7 @@ export function JoinModal({ isOpen, onClose }: JoinModalProps) {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
         {/* Full Name */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-[#FAFAFA] flex items-center justify-between">
+          <label className="text-xs font-semibold text-[var(--foreground)] flex items-center justify-between">
             <span>Full Name</span>
             {errors.fullName && (
               <span className="text-[#EF4444] text-[11px]">{errors.fullName.message}</span>
@@ -84,7 +102,7 @@ export function JoinModal({ isOpen, onClose }: JoinModalProps) {
 
         {/* Email */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-[#FAFAFA] flex items-center justify-between">
+          <label className="text-xs font-semibold text-[var(--foreground)] flex items-center justify-between">
             <span>Email Address</span>
             {errors.email && (
               <span className="text-[#EF4444] text-[11px]">{errors.email.message}</span>
@@ -99,14 +117,14 @@ export function JoinModal({ isOpen, onClose }: JoinModalProps) {
 
         {/* GitHub Handle */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-[#FAFAFA] flex items-center justify-between">
+          <label className="text-xs font-semibold text-[var(--foreground)] flex items-center justify-between">
             <span>GitHub Username</span>
             {errors.githubHandle && (
               <span className="text-[#EF4444] text-[11px]">{errors.githubHandle.message}</span>
             )}
           </label>
           <div className="relative">
-            <span className="absolute left-4 top-3.5 text-xs text-[#A1A1AA]">github.com/</span>
+            <span className="absolute left-4 top-3.5 text-xs text-[var(--muted-foreground)]">github.com/</span>
             <Input
               className="pl-24"
               placeholder="username"
@@ -117,10 +135,10 @@ export function JoinModal({ isOpen, onClose }: JoinModalProps) {
 
         {/* Track Selection */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-[#FAFAFA]">Select Track</label>
+          <label className="text-xs font-semibold text-[var(--foreground)]">Select Track</label>
           <select
             {...register("track")}
-            className="flex h-12 w-full rounded-[16px] border border-[#27272A] bg-[#18181B] px-4 text-sm text-[#FAFAFA] focus:border-[#4F46E5] focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40"
+            className="flex h-12 w-full rounded-[16px] border border-[var(--border)] bg-[var(--card)] px-4 text-sm text-[var(--foreground)] focus:border-[#4F46E5] focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40"
           >
             <option value="fullstack">🚀 Fullstack Track (Next.js & Node)</option>
             <option value="frontend">🎨 Frontend Track (React & Tailwind)</option>
@@ -130,7 +148,7 @@ export function JoinModal({ isOpen, onClose }: JoinModalProps) {
         </div>
 
         {/* Commit Agreement notice */}
-        <div className="p-3 rounded-[12px] bg-[#09090B] border border-[#27272A] text-xs text-[#A1A1AA] flex items-start gap-2.5">
+        <div className="p-3 rounded-[12px] bg-white/[0.04] border border-[var(--border)] text-xs text-[var(--muted-foreground)] flex items-start gap-2.5">
           <Flame className="h-4 w-4 text-[#F59E0B] shrink-0 mt-0.5" />
           <span>By starting, you commit to publishing daily code commits for 60 consecutive days.</span>
         </div>
@@ -142,7 +160,7 @@ export function JoinModal({ isOpen, onClose }: JoinModalProps) {
             disabled={isSubmitting}
             variant="primary"
             size="lg"
-            className="w-full gap-2 text-base h-12"
+            className="w-full gap-2 text-base h-12 cursor-pointer"
           >
             {isSubmitting ? (
               <span className="flex items-center gap-2">
