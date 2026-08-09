@@ -36,12 +36,29 @@ export function SettingsModal({
 
   const { preferences, updatePreferences, changeTheme, currentTheme, resetAll } = usePreferences();
 
-  // Reset to initial category on open
+  // Handle search query change directly
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    if (!query.trim()) return;
+    const q = query.toLowerCase();
+    if (q.includes("theme") || q.includes("dark") || q.includes("light") || q.includes("color") || q.includes("compact")) {
+      setActiveCategory("appearance");
+    } else if (q.includes("streak") || q.includes("reminder") || q.includes("pace") || q.includes("intensity")) {
+      setActiveCategory("challenge");
+    } else if (q.includes("notif") || q.includes("alert") || q.includes("email")) {
+      setActiveCategory("notifications");
+    } else if (q.includes("profile") || q.includes("name") || q.includes("avatar") || q.includes("college")) {
+      setActiveCategory("profile");
+    } else if (q.includes("data") || q.includes("export") || q.includes("clear") || q.includes("storage")) {
+      setActiveCategory("data");
+    } else if (q.includes("access") || q.includes("motion") || q.includes("contrast") || q.includes("scale")) {
+      setActiveCategory("accessibility");
+    }
+  };
+
+  // Lock body scroll when open
   useEffect(() => {
     if (isOpen) {
-      setActiveCategory(initialCategory);
-      setSearchQuery("");
-      setMobileSubPage(false);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -49,7 +66,7 @@ export function SettingsModal({
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isOpen, initialCategory]);
+  }, [isOpen]);
 
   // Keyboard shortcut: Escape to close
   useEffect(() => {
@@ -61,27 +78,6 @@ export function SettingsModal({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
-
-  // Search filtering logic
-  useEffect(() => {
-    if (!searchQuery.trim()) return;
-    const q = searchQuery.toLowerCase();
-    if (q.includes("theme") || q.includes("dark") || q.includes("light") || q.includes("color") || q.includes("compact")) {
-      setActiveCategory("appearance");
-    } else if (q.includes("streak") || q.includes("reminder") || q.includes("pace") || q.includes("intensity")) {
-      setActiveCategory("challenge");
-    } else if (q.includes("notif") || q.includes("alert") || q.includes("email")) {
-      setActiveCategory("notifications");
-    } else if (q.includes("profile") || q.includes("name") || q.includes("avatar") || q.includes("college")) {
-      setActiveCategory("profile");
-    } else if (q.includes("contrast") || q.includes("text") || q.includes("motion") || q.includes("accessibility")) {
-      setActiveCategory("accessibility");
-    } else if (q.includes("privacy") || q.includes("public") || q.includes("github") || q.includes("linkedin")) {
-      setActiveCategory("privacy");
-    } else if (q.includes("reset") || q.includes("export") || q.includes("data") || q.includes("json")) {
-      setActiveCategory("data");
-    }
-  }, [searchQuery]);
 
   const handleSelectCategoryMobile = (cat: SettingsCategory) => {
     setActiveCategory(cat);
@@ -205,7 +201,7 @@ export function SettingsModal({
                       xp={1650}
                       avatar={preferences.profile.avatar}
                       searchQuery={searchQuery}
-                      onSearchChange={setSearchQuery}
+                      onSearchChange={handleSearchChange}
                     />
 
                     <div className="card p-6 border border-[var(--border)] bg-[var(--card)]">

@@ -91,7 +91,7 @@ export function Navbar({ onOpenJoinModal, onOpenSettings }: NavbarProps) {
               className="p-2.5 rounded-xl bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] transition-colors"
               aria-label="Open settings"
             >
-              <Settings className="h-5 w-5 text-[var(--muted-foreground)]" />
+              <Settings className="h-5 w-5 text-[var(--foreground)]" />
             </button>
           )}
 

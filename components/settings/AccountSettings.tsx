@@ -27,7 +27,7 @@ export function AccountSettings({ preferences }: AccountSettingsProps) {
       >
         <UserCheck size={20} style={{ color: "#4ade80" }} className="flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-semibold" style={{ color: "#4ade80" }}>
+          <p className="text-sm font-semibold text-[var(--foreground)]">
             Active Prototype Account — {preferences.profile.name}
           </p>
           <p className="text-xs mt-1 leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
@@ -37,23 +37,23 @@ export function AccountSettings({ preferences }: AccountSettingsProps) {
       </div>
 
       <div className="rounded-xl p-4 border border-[var(--border)] bg-white/[0.02] space-y-2">
-        <p className="text-xs font-semibold text-zinc-300">Account Details</p>
+        <p className="text-xs font-semibold" style={{ color: "var(--foreground)" }}>Account Details</p>
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div>
-            <span className="text-zinc-500 block">Username</span>
-            <span className="text-zinc-200 font-medium">{preferences.profile.username}</span>
+            <span className="text-[var(--muted-foreground)] block">Username</span>
+            <span className="font-medium" style={{ color: "var(--foreground)" }}>{preferences.profile.username}</span>
           </div>
           <div>
-            <span className="text-zinc-500 block">Enrolled Track</span>
-            <span className="text-zinc-200 font-medium">{preferences.profile.track}</span>
+            <span className="text-[var(--muted-foreground)] block">Enrolled Track</span>
+            <span className="font-medium" style={{ color: "var(--foreground)" }}>{preferences.profile.track}</span>
           </div>
           <div>
-            <span className="text-zinc-500 block">College</span>
-            <span className="text-zinc-200 font-medium">{preferences.profile.college}</span>
+            <span className="text-[var(--muted-foreground)] block">College</span>
+            <span className="font-medium" style={{ color: "var(--foreground)" }}>{preferences.profile.college}</span>
           </div>
           <div>
-            <span className="text-zinc-500 block">Status</span>
-            <span className="text-emerald-400 font-medium">Demo Mode (No Auth Required)</span>
+            <span className="text-[var(--muted-foreground)] block">Status</span>
+            <span className="text-emerald-500 font-medium">Demo Mode (No Auth Required)</span>
           </div>
         </div>
       </div>

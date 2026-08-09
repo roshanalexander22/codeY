@@ -13,7 +13,6 @@ import {
   Sparkles,
   RefreshCw,
 } from "lucide-react";
-import { toast } from "sonner";
 import { submissionSchema, type SubmissionFormData } from "@/lib/validators";
 
 interface SubmissionFormProps {
@@ -109,10 +108,10 @@ export function SubmissionForm({ dayId, onSuccess, isAlreadySubmitted }: Submiss
       <div
         className="card p-5"
         style={{
-          background: "linear-gradient(135deg, var(--card) 0%, rgba(79, 70, 229, 0.04) 100%)",
+          background: "linear-gradient(135deg, var(--card) 0%, var(--primary-glow) 100%)",
           borderColor: isAlreadySubmitted
             ? "rgba(34, 197, 94, 0.3)"
-            : "rgba(79, 70, 229, 0.25)",
+            : "var(--primary)",
         }}
       >
         {/* Header */}
@@ -123,15 +122,15 @@ export function SubmissionForm({ dayId, onSuccess, isAlreadySubmitted }: Submiss
               background: isAlreadySubmitted
                 ? "rgba(34, 197, 94, 0.12)"
                 : "var(--primary-glow)",
-              border: `1px solid ${isAlreadySubmitted ? "rgba(34, 197, 94, 0.3)" : "rgba(79, 70, 229, 0.3)"}`,
+              border: `1px solid ${isAlreadySubmitted ? "rgba(34, 197, 94, 0.3)" : "var(--primary)"}`,
             }}
           >
-            <Send size={13} style={{ color: isAlreadySubmitted ? "#4ade80" : "#818cf8" }} />
+            <Send size={13} style={{ color: isAlreadySubmitted ? "#22c55e" : "var(--primary)" }} />
           </div>
           <span
             className="text-xs font-semibold uppercase tracking-widest"
             style={{
-              color: isAlreadySubmitted ? "#4ade80" : "#818cf8",
+              color: isAlreadySubmitted ? "#22c55e" : "var(--primary)",
               letterSpacing: "0.1em",
             }}
           >

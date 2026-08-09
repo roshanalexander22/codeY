@@ -87,7 +87,7 @@ export function BuildPlan({ steps }: BuildPlanProps) {
                     <span className="text-xs">{step.time}</span>
                   </span>
                 </div>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+                <p className="text-sm leading-relaxed font-medium" style={{ color: "var(--foreground)" }}>
                   {step.description}
                 </p>
               </div>

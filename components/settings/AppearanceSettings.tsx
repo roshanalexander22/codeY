@@ -1,7 +1,7 @@
 "use client";
 
 import { UserPreferences, AccentColorOption } from "@/lib/preferences";
-import { Sun, Moon, Monitor, Check } from "lucide-react";
+import { Moon, Check } from "lucide-react";
 import { toast } from "sonner";
 
 interface AppearanceSettingsProps {
@@ -21,13 +21,7 @@ const ACCENT_OPTIONS: { id: AccentColorOption; label: string; hex: string }[] = 
 export function AppearanceSettings({
   preferences,
   onUpdate,
-  onChangeTheme,
-  currentTheme,
 }: AppearanceSettingsProps) {
-  const handleThemeChange = (newTheme: "dark" | "light" | "system") => {
-    onChangeTheme(newTheme);
-    toast.success(`Theme updated to ${newTheme.toUpperCase()}`);
-  };
 
   const handleAccentChange = (accent: AccentColorOption) => {
     onUpdate({ accentColor: accent });
@@ -45,38 +39,24 @@ export function AppearanceSettings({
         </p>
       </div>
 
-      {/* Theme Picker */}
-      <div>
-        <label className="block text-xs font-semibold uppercase tracking-wider mb-2.5" style={{ color: "var(--muted-foreground)" }}>
-          Color Theme
-        </label>
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            { id: "dark", label: "Dark", icon: Moon },
-            { id: "light", label: "Light", icon: Sun },
-            { id: "system", label: "System", icon: Monitor },
-          ].map((item) => {
-            const Icon = item.icon;
-            const isSelected = currentTheme === item.id;
-
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => handleThemeChange(item.id as "dark" | "light" | "system")}
-                className="flex flex-col items-center gap-2 p-3.5 rounded-2xl transition-all"
-                style={{
-                  background: isSelected ? "var(--primary-glow)" : "rgba(255, 255, 255, 0.03)",
-                  border: `1.5px solid ${isSelected ? "var(--primary)" : "var(--border)"}`,
-                  color: isSelected ? "var(--foreground)" : "var(--muted-foreground)",
-                }}
-              >
-                <Icon size={20} style={{ color: isSelected ? "var(--primary)" : "inherit" }} />
-                <span className="text-xs font-semibold">{item.label}</span>
-              </button>
-            );
-          })}
+      {/* Theme Status */}
+      <div className="p-4 rounded-2xl bg-[var(--surface-fill)] border border-[var(--border)] flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[var(--primary-glow)] border border-[var(--primary)] flex items-center justify-center">
+            <Moon size={20} className="text-[var(--primary)]" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold" style={{ color: "var(--foreground)" }}>
+              Dark Mode (Default)
+            </h4>
+            <p className="text-xs" style={{ color: "var(--muted-foreground)" }}>
+              Optimized for late-night college coding sessions
+            </p>
+          </div>
         </div>
+        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+          Active
+        </span>
       </div>
 
       {/* Accent Color Picker */}

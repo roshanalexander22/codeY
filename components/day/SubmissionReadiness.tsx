@@ -46,7 +46,7 @@ export function SubmissionReadiness({ fields }: SubmissionReadinessProps) {
         <div className="flex items-center justify-between mb-3">
           <span
             className="text-xs font-semibold uppercase tracking-widest"
-            style={{ color: "var(--muted-foreground)", letterSpacing: "0.1em" }}
+            style={{ color: "var(--foreground)", letterSpacing: "0.1em" }}
           >
             Submission Readiness
           </span>

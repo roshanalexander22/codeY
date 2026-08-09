@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, CheckCircle2, Zap, Flame, Trophy, CheckCheck, X } from "lucide-react";
 import { NotificationItem } from "@/data/dashboard";
@@ -51,10 +50,10 @@ export function NotificationPanel({
             className="fixed bottom-0 left-0 right-0 z-50 w-full rounded-t-3xl border-t border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] p-5 shadow-2xl md:absolute md:bottom-auto md:top-14 md:right-0 md:left-auto md:w-96 md:rounded-2xl md:border glass-modal"
           >
             {/* Top header */}
-            <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
+            <div className="flex items-center justify-between pb-3 border-b border-[var(--border)]">
               <div className="flex items-center gap-2">
                 <Bell size={16} className="text-indigo-400" />
-                <h3 className="text-sm font-bold text-zinc-100">Notifications</h3>
+                <h3 className="text-sm font-bold text-[var(--foreground)]">Notifications</h3>
                 {unreadCount > 0 && (
                   <span className="px-2 py-0.5 rounded-full bg-indigo-600/30 border border-indigo-500/40 text-[11px] font-semibold text-indigo-300">
                     {unreadCount} new

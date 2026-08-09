@@ -37,7 +37,7 @@ export function ProgressDetailModal({
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-sm bg-[#18181B] border border-zinc-800 rounded-3xl p-6 shadow-2xl overflow-hidden relative"
+              className="w-full max-w-sm bg-[var(--card)] border border-[var(--border)] rounded-3xl p-6 shadow-2xl overflow-hidden relative glass-card"
             >
               <button
                 onClick={onClose}
@@ -49,14 +49,14 @@ export function ProgressDetailModal({
 
               <div className="flex items-center gap-2 mb-4">
                 <Target size={20} className="text-indigo-400" />
-                <h3 className="text-base font-bold text-zinc-100">60-Day Progress Breakdown</h3>
+                <h3 className="text-base font-bold text-[var(--foreground)]">60-Day Progress Breakdown</h3>
               </div>
 
               {/* Main Gauge Stats */}
-              <div className="p-4 rounded-2xl bg-indigo-950/20 border border-indigo-500/30 text-center mb-4">
-                <p className="text-3xl font-black text-indigo-300">{percentage}%</p>
-                <p className="text-xs text-zinc-400 mt-1 font-semibold">Challenge Overall Completion</p>
-                <div className="w-full h-2.5 rounded-full bg-zinc-800 mt-3 overflow-hidden">
+              <div className="p-4 rounded-2xl bg-[var(--primary-glow)] border border-[var(--primary)] text-center mb-4">
+                <p className="text-3xl font-black" style={{ color: "var(--primary)" }}>{percentage}%</p>
+                <p className="text-xs text-[var(--muted-foreground)] mt-1 font-semibold">Challenge Overall Completion</p>
+                <div className="w-full h-2.5 rounded-full mt-3 overflow-hidden" style={{ background: "var(--surface-fill, rgba(161,161,170,0.2))" }}>
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-indigo-600 to-indigo-400"
                     style={{ width: `${percentage}%` }}
@@ -66,43 +66,43 @@ export function ProgressDetailModal({
 
               {/* Detailed Breakdown Items */}
               <div className="space-y-2.5">
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-                  <div className="flex items-center gap-2 text-xs text-zinc-300">
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
+                  <div className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
                     <CheckCircle2 size={16} className="text-emerald-400" />
                     <span>Completed Days</span>
                   </div>
-                  <span className="text-sm font-bold text-zinc-100">{completedCount} of 60 days</span>
+                  <span className="text-sm font-bold text-[var(--foreground)]">{completedCount} of 60 days</span>
                 </div>
 
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-                  <div className="flex items-center gap-2 text-xs text-zinc-300">
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
+                  <div className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
                     <Calendar size={16} className="text-indigo-400" />
                     <span>Days Remaining</span>
                   </div>
-                  <span className="text-sm font-bold text-zinc-100">{remainingDays} days</span>
+                  <span className="text-sm font-bold text-[var(--foreground)]">{remainingDays} days</span>
                 </div>
 
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-                  <div className="flex items-center gap-2 text-xs text-zinc-300">
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
+                  <div className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
                     <Flame size={16} className="text-orange-400" />
                     <span>Current Streak</span>
                   </div>
-                  <span className="text-sm font-bold text-zinc-100">{user.streak} days</span>
+                  <span className="text-sm font-bold text-[var(--foreground)]">{user.streak} days</span>
                 </div>
 
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-                  <div className="flex items-center gap-2 text-xs text-zinc-300">
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
+                  <div className="flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
                     <TrendingUp size={16} className="text-amber-400" />
                     <span>Best Streak Record</span>
                   </div>
-                  <span className="text-sm font-bold text-zinc-100">{user.longestStreak} days</span>
+                  <span className="text-sm font-bold text-[var(--foreground)]">{user.longestStreak} days</span>
                 </div>
               </div>
 
               <div className="mt-5 text-center">
                 <button
                   onClick={onClose}
-                  className="w-full py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold text-zinc-200 transition-colors"
+                  className="w-full py-2.5 rounded-xl border border-[var(--border)] hover:opacity-80 text-xs font-semibold text-[var(--foreground)] transition-colors"
                 >
                   Close Summary
                 </button>

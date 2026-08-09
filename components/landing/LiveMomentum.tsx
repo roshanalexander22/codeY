@@ -10,7 +10,7 @@ export function LiveMomentum() {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-3.5 py-1.5 rounded-full bg-[#18181B] border border-[#27272A] shadow-[0_0_20px_rgba(79,70,229,0.15)] text-xs text-[#FAFAFA]"
+      className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-3.5 py-1.5 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-[0_0_20px_var(--primary-glow)] text-xs text-[var(--foreground)] glass-card"
     >
       {/* Pulse Dot */}
       <span className="flex items-center gap-1.5 font-semibold text-[#22C55E]">
@@ -21,20 +21,20 @@ export function LiveMomentum() {
         LIVE CHALLENGE
       </span>
 
-      <span className="text-[#3F3F46] hidden xs:inline">•</span>
+      <span className="text-[var(--border)] hidden xs:inline">•</span>
 
       {/* Building today count */}
-      <span className="text-[#A1A1AA] flex items-center gap-1">
-        <Users className="h-3.5 w-3.5 text-[#818CF8]" />
-        <strong className="text-[#FAFAFA] font-mono">1,420</strong> students building today
+      <span className="text-[var(--muted-foreground)] flex items-center gap-1">
+        <Users className="h-3.5 w-3.5 text-[var(--primary)]" />
+        <strong className="text-[var(--foreground)] font-mono">1,420</strong> students building today
       </span>
 
-      <span className="text-[#3F3F46] hidden sm:inline">•</span>
+      <span className="text-[var(--border)] hidden sm:inline">•</span>
 
       {/* Commits count */}
-      <span className="text-[#A1A1AA] hidden sm:flex items-center gap-1">
+      <span className="text-[var(--muted-foreground)] hidden sm:flex items-center gap-1">
         <GitCommit className="h-3.5 w-3.5 text-[#22C55E]" />
-        <strong className="text-[#FAFAFA] font-mono">12,480+</strong> commits this week
+        <strong className="text-[var(--foreground)] font-mono">12,480+</strong> commits this week
       </span>
     </motion.div>
   );

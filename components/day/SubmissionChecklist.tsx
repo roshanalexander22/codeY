@@ -59,7 +59,7 @@ export function SubmissionChecklist() {
             <span
               className="text-xs font-semibold uppercase tracking-widest"
               style={{
-                color: allChecked ? "#4ade80" : "var(--muted-foreground)",
+                color: allChecked ? "var(--primary)" : "var(--foreground)",
                 letterSpacing: "0.1em",
                 transition: "color 0.3s ease",
               }}
@@ -70,7 +70,7 @@ export function SubmissionChecklist() {
           <span
             className="text-xs font-semibold"
             style={{
-              color: allChecked ? "#4ade80" : "var(--muted-foreground)",
+              color: allChecked ? "var(--primary)" : "var(--foreground)",
               transition: "color 0.3s ease",
             }}
           >
@@ -95,9 +95,9 @@ export function SubmissionChecklist() {
                   className="w-full flex items-center gap-3 rounded-xl p-3 text-left"
                   style={{
                     background: isChecked
-                      ? "rgba(34, 197, 94, 0.06)"
-                      : "rgba(255,255,255,0.02)",
-                    border: `1px solid ${isChecked ? "rgba(34,197,94,0.2)" : "var(--border)"}`,
+                      ? "rgba(34, 197, 94, 0.08)"
+                      : "var(--surface-fill)",
+                    border: `1px solid ${isChecked ? "rgba(34, 197, 94, 0.3)" : "var(--border)"}`,
                     cursor: "pointer",
                     transition: "all 0.2s ease",
                   }}
@@ -109,15 +109,16 @@ export function SubmissionChecklist() {
                     transition={{ duration: 0.2 }}
                   >
                     {isChecked ? (
-                      <CheckCircle2 size={16} style={{ color: "#4ade80" }} />
+                      <CheckCircle2 size={16} className="text-emerald-500" />
                     ) : (
                       <Circle size={16} style={{ color: "var(--muted-foreground)" }} />
                     )}
                   </motion.div>
                   <span
-                    className="text-sm"
+                    className="text-sm font-medium"
                     style={{
-                      color: isChecked ? "var(--foreground)" : "var(--muted-foreground)",
+                      color: "var(--foreground)",
+                      opacity: isChecked ? 0.75 : 1,
                       textDecoration: isChecked ? "none" : "none",
                       transition: "color 0.2s ease",
                     }}

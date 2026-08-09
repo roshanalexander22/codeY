@@ -14,8 +14,8 @@ interface AchievementsPanelProps {
 }
 
 export function AchievementsPanel({
-  completedDays,
-  streak,
+  completedDays: _completedDays,
+  streak: _streak,
   xp,
   level,
   isFirstDay,

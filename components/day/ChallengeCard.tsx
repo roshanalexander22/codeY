@@ -76,7 +76,7 @@ export function ChallengeCard({
 
         {/* Description */}
         <p
-          className="text-sm sm:text-base leading-relaxed mb-4 text-[var(--foreground)] opacity-90"
+          className="text-sm sm:text-base leading-relaxed mb-4 text-[var(--foreground)]"
         >
           {description}
         </p>
@@ -105,7 +105,7 @@ export function ChallengeCard({
           <p className="text-xs font-semibold mb-1 text-[var(--primary)]">
             💬 Why this matters today
           </p>
-          <p className="text-sm leading-relaxed text-[var(--muted-foreground)]">
+          <p className="text-sm leading-relaxed font-medium text-[var(--foreground)]">
             {context}
           </p>
         </div>

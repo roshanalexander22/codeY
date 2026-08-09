@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { EdgeCase } from "@/data/dashboard";
 import { Sliders, Sparkles, AlertTriangle, UserCircle2, CheckCircle2 } from "lucide-react";
 
@@ -18,9 +17,9 @@ const states: { id: EdgeCase; label: string; icon: React.ElementType; color: str
 
 export function StateSwitcher({ currentCase, onChange }: StateSwitcherProps) {
   return (
-    <div className="w-full bg-[#18181B] border-b border-[#27272a] px-4 py-2.5 flex items-center justify-between text-xs overflow-x-auto gap-2">
-      <div className="flex items-center gap-1.5 text-zinc-400 font-semibold flex-shrink-0">
-        <Sliders size={13} className="text-indigo-400" />
+    <div className="w-full bg-[var(--background)] border-b border-[var(--border)] px-4 py-2.5 flex items-center justify-between text-xs overflow-x-auto gap-2">
+      <div className="flex items-center gap-1.5 text-[var(--muted-foreground)] font-semibold flex-shrink-0">
+        <Sliders size={13} className="text-[var(--primary)]" />
         <span className="hidden sm:inline">Preview Mode:</span>
       </div>
 
@@ -34,9 +33,9 @@ export function StateSwitcher({ currentCase, onChange }: StateSwitcherProps) {
               onClick={() => onChange(st.id)}
               className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all flex-shrink-0"
               style={{
-                background: isActive ? "rgba(79, 70, 229, 0.2)" : "rgba(255,255,255,0.03)",
-                border: `1px solid ${isActive ? "rgba(79, 70, 229, 0.4)" : "#27272a"}`,
-                color: isActive ? "#fafafa" : "#a1a1aa",
+                background: isActive ? "var(--primary-glow)" : "var(--surface-fill)",
+                border: `1px solid ${isActive ? "var(--primary)" : "var(--border)"}`,
+                color: isActive ? "var(--foreground)" : "var(--muted-foreground)",
               }}
               aria-label={`Switch to ${st.label} mode`}
             >

@@ -115,21 +115,21 @@ export function SuccessDialog({
               }}
             >
               <div
-                className="card p-6 relative overflow-hidden"
+                className="card p-6 relative overflow-hidden glass-modal"
                 style={{
                   borderRadius: "24px",
-                  background: "linear-gradient(170deg, #18181B 0%, rgba(79, 70, 229, 0.12) 100%)",
-                  borderColor: "rgba(79, 70, 229, 0.35)",
-                  boxShadow: "0 20px 50px rgba(0, 0, 0, 0.5)",
+                  background: "linear-gradient(170deg, var(--card) 0%, var(--primary-glow) 100%)",
+                  borderColor: "var(--primary)",
+                  boxShadow: "0 20px 50px rgba(0, 0, 0, 0.3)",
                 }}
               >
                 {/* Close button */}
                 <button
                   type="button"
                   onClick={onClose}
-                  className="absolute top-4 right-4 w-8 h-8 rounded-xl flex items-center justify-center transition-colors hover:bg-white/10"
+                  className="absolute top-4 right-4 w-8 h-8 rounded-xl flex items-center justify-center transition-colors hover:bg-[var(--surface-fill)]"
                   style={{
-                    background: "rgba(255,255,255,0.06)",
+                    background: "var(--surface-fill)",
                     border: "1px solid var(--border)",
                     cursor: "pointer",
                   }}
@@ -153,7 +153,7 @@ export function SuccessDialog({
                       boxShadow: "0 0 32px rgba(34, 197, 94, 0.25)",
                     }}
                   >
-                    <CheckCircle2 size={28} style={{ color: "#4ade80" }} />
+                    <CheckCircle2 size={28} style={{ color: "#22c55e" }} />
                   </div>
                 </motion.div>
 
@@ -171,7 +171,7 @@ export function SuccessDialog({
                   >
                     Day {dayId} Complete! 🎉
                   </h2>
-                  <p className="text-sm font-medium" style={{ color: "#818cf8" }}>
+                  <p className="text-sm font-medium" style={{ color: "var(--primary)" }}>
                     You&apos;re building momentum.
                   </p>
                   <p className="text-xs mt-0.5" style={{ color: "var(--muted-foreground)" }}>
@@ -190,23 +190,23 @@ export function SuccessDialog({
                   <div
                     className="rounded-2xl p-4 text-center"
                     style={{
-                      background: "rgba(79, 70, 229, 0.1)",
-                      border: "1px solid rgba(79, 70, 229, 0.25)",
+                      background: "var(--primary-glow)",
+                      border: "1px solid var(--primary)",
                     }}
                   >
                     <Zap
                       size={20}
                       fill="currentColor"
                       className="mx-auto mb-1"
-                      style={{ color: "#818cf8" }}
+                      style={{ color: "var(--primary)" }}
                     />
                     <p
                       className="text-2xl font-black xp-appear"
-                      style={{ color: "#c7d2fe" }}
+                      style={{ color: "var(--foreground)" }}
                     >
                       +{xp}
                     </p>
-                    <p className="text-xs" style={{ color: "#818cf8" }}>
+                    <p className="text-xs" style={{ color: "var(--primary)" }}>
                       XP Earned
                     </p>
                   </div>

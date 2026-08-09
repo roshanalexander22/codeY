@@ -43,7 +43,7 @@ export function DayHeader({
               "transition-colors duration-200 hover:bg-white/10"
             )}
             style={{
-              background: "rgba(255,255,255,0.06)",
+              background: "var(--surface-fill, rgba(255,255,255,0.06))",
               border: "1px solid var(--border)",
             }}
             aria-label="Back to dashboard"
@@ -52,7 +52,7 @@ export function DayHeader({
           </Link>
 
           <div className="hidden sm:flex flex-col">
-            <span className="text-xs font-semibold text-indigo-400 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-[var(--primary)] uppercase tracking-wider">
               {profile.track || track}
             </span>
             <span className="text-xs text-[var(--muted-foreground)]">
@@ -120,7 +120,7 @@ export function DayHeader({
               onClick={onOpenSettings}
               className="w-9 h-9 rounded-2xl flex items-center justify-center transition-colors hover:bg-white/10"
               style={{
-                background: "rgba(255,255,255,0.06)",
+                background: "var(--surface-fill, rgba(255,255,255,0.06))",
                 border: "1px solid var(--border)",
               }}
               aria-label="Open Settings"

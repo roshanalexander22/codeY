@@ -82,7 +82,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090B] text-zinc-100 flex flex-col selection:bg-indigo-500/20">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col selection:bg-indigo-500/20">
 
       {/* 0. Preview Edge Case Switcher Bar */}
       <StateSwitcher currentCase={activeEdgeCase} onChange={setActiveEdgeCase} />
@@ -118,19 +118,19 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-amber-500/10 border border-amber-500/30 text-amber-200">
+            <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-amber-500/10 border border-amber-500/30">
               <div className="flex items-start gap-3">
-                <UserCircle2 size={22} className="text-amber-400 flex-shrink-0 mt-0.5" />
+                <UserCircle2 size={22} className="text-amber-500 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="text-sm font-bold text-amber-200">Complete your challenger profile</h3>
-                  <p className="text-xs text-amber-300/80 mt-1 leading-relaxed">
+                  <h3 className="text-sm font-bold text-[var(--foreground)]">Complete your challenger profile</h3>
+                  <p className="text-xs text-[var(--muted-foreground)] mt-1 leading-relaxed">
                     Set up your full name, college name, and active track to start recording your 60-day learning streak.
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setIsSettingsOpen(true)}
-                className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs flex-shrink-0 transition-colors shadow-md shadow-amber-500/20"
+                className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs flex-shrink-0 transition-colors shadow-md shadow-amber-500/20"
               >
                 Setup Profile
               </button>
@@ -145,14 +145,14 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-rose-500/10 border border-rose-500/30 text-rose-200">
+            <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-rose-500/10 border border-rose-500/30">
               <div className="flex items-start gap-3">
-                <AlertTriangle size={22} className="text-rose-400 flex-shrink-0 mt-0.5" />
+                <AlertTriangle size={22} className="text-rose-500 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="text-sm font-bold text-rose-200">
+                  <h3 className="text-sm font-bold text-[var(--foreground)]">
                     Streak broken — You missed yesterday
                   </h3>
-                  <p className="text-xs text-rose-300/80 mt-1 leading-relaxed">
+                  <p className="text-xs text-[var(--muted-foreground)] mt-1 leading-relaxed">
                     Your journey isn&apos;t over! Submit today&apos;s Day 12 challenge before midnight to restart your momentum.
                   </p>
                 </div>
@@ -174,19 +174,19 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-200">
+            <div className="flex items-start justify-between gap-4 p-4 sm:p-5 rounded-3xl bg-emerald-500/10 border border-emerald-500/30">
               <div className="flex items-start gap-3">
-                <Sparkles size={22} className="text-emerald-400 flex-shrink-0 mt-0.5" />
+                <Sparkles size={22} className="text-emerald-500 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="text-sm font-bold text-emerald-200">Welcome to Day 1 of ABTalks! 🎉</h3>
-                  <p className="text-xs text-emerald-300/80 mt-1 leading-relaxed">
+                  <h3 className="text-sm font-bold text-[var(--foreground)]">Welcome to Day 1 of ABTalks! 🎉</h3>
+                  <p className="text-xs text-[var(--muted-foreground)] mt-1 leading-relaxed">
                     Your first streak starts today. Complete Day 1 objectives and post your public proof of work to kick off your streak!
                   </p>
                 </div>
               </div>
               <a
                 href={`/day/${user.currentDay}`}
-                className="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs flex-shrink-0 transition-colors shadow-md shadow-emerald-500/20"
+                className="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs flex-shrink-0 transition-colors shadow-md shadow-emerald-500/20"
               >
                 Start Day 1
               </a>
@@ -345,7 +345,7 @@ export default function DashboardPage() {
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         initialSettings={settings}
-        onSave={(newSettings: any) => setSettings(newSettings)}
+        onSave={(newSettings) => setSettings(newSettings as UserSettings)}
       />
 
       <ProfileModal

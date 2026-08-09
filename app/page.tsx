@@ -26,7 +26,7 @@ export default function LandingPage() {
   const handleCloseJoinModal = () => setIsJoinModalOpen(false);
 
   return (
-    <div className="min-h-screen bg-[#09090B] text-[#FAFAFA] selection:bg-[#4F46E5] selection:text-white flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-[var(--primary)] selection:text-white flex flex-col font-sans overflow-x-hidden">
       {/* Top Navbar */}
       <Navbar
         onOpenJoinModal={handleOpenJoinModal}

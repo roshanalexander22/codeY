@@ -69,7 +69,7 @@ export function MomentumCard({ score, label }: MomentumCardProps) {
             {isHigh ? "Strong" : isMedium ? "Steady" : "Low"}
           </span>
         </div>
-        <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
+        <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: "var(--surface-fill, rgba(161,161,170,0.2))" }}>
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${score}%` }}

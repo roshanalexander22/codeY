@@ -24,11 +24,11 @@ export function WeeklyHeatmap({
   const today = new Date();
   const enrolled = new Date(enrolledAt);
 
-  // Build a 5-week grid (35 days) for a compact height matching leaderboard
+  // Build a 4-week grid (28 days) for a compact height matching leaderboard
   const weeks: DayCell[][] = [];
-  const startDate = subDays(today, 27); // 4 weeks back from today
+  const startDate = subDays(today, 21); // 3 weeks back from today
 
-  for (let week = 0; week < 5; week++) {
+  for (let week = 0; week < 4; week++) {
     const weekCells: DayCell[] = [];
     for (let day = 0; day < 7; day++) {
       const date = addDays(startDate, week * 7 + day);
@@ -143,7 +143,7 @@ export function WeeklyHeatmap({
               return (
                 <motion.div
                   key={di}
-                  className="flex-1 rounded-sm h-6 sm:h-7"
+                  className="flex-1 rounded-sm h-5"
                   style={{
                     background: style.bg,
                     border: `1px solid ${style.border}`,

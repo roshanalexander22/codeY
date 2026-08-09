@@ -102,7 +102,7 @@ export function DesktopHeader({
           className="w-10 h-10 rounded-xl bg-white/[0.04] border border-[var(--border)] flex items-center justify-center hover:bg-white/10 transition-colors"
           aria-label="Open settings"
         >
-          <Settings size={18} className="text-[var(--muted-foreground)] hover:rotate-45 transition-transform duration-300" />
+          <Settings size={18} className="text-[var(--foreground)] hover:rotate-45 transition-transform duration-300" />
         </button>
 
         {/* Profile Avatar */}

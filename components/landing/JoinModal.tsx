@@ -138,7 +138,7 @@ export function JoinModal({ isOpen, onClose }: JoinModalProps) {
           <label className="text-xs font-semibold text-[var(--foreground)]">Select Track</label>
           <select
             {...register("track")}
-            className="flex h-12 w-full rounded-[16px] border border-[var(--border)] bg-[var(--card)] px-4 text-sm text-[var(--foreground)] focus:border-[#4F46E5] focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40"
+            className="flex h-12 w-full rounded-[16px] border border-[var(--border)] bg-[var(--card)] px-4 text-sm text-[var(--foreground)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/40"
           >
             <option value="fullstack">🚀 Fullstack Track (Next.js & Node)</option>
             <option value="frontend">🎨 Frontend Track (React & Tailwind)</option>

@@ -49,22 +49,20 @@ interface ProfileContextType {
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [profile, setProfile] = useState<StudentProfile>(DEFAULT_STUDENT_PROFILE);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Load from localStorage on client mount
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        setProfile((prev) => ({ ...prev, ...parsed }));
+  const [profile, setProfile] = useState<StudentProfile>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          return { ...DEFAULT_STUDENT_PROFILE, ...JSON.parse(raw) };
+        }
+      } catch (e) {
+        console.error("Failed to load canonical profile from localStorage", e);
       }
-    } catch (e) {
-      console.error("Failed to load canonical profile from localStorage", e);
     }
-    setIsLoaded(true);
-  }, []);
+    return DEFAULT_STUDENT_PROFILE;
+  });
+  const [isLoaded] = useState(() => typeof window !== "undefined");
 
   const updateProfile = useCallback((updates: Partial<StudentProfile>) => {
     setProfile((prev) => {

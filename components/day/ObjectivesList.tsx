@@ -56,20 +56,23 @@ export function ObjectivesList({ objectives, onCompletionChange }: ObjectivesLis
           <div className="flex items-center gap-2">
             <div
               className="w-7 h-7 rounded-xl flex items-center justify-center"
-              style={{ background: "rgba(34, 197, 94, 0.12)", border: "1px solid rgba(34, 197, 94, 0.3)" }}
+              style={{
+                background: "var(--primary-glow)",
+                border: "1px solid var(--primary)",
+              }}
             >
-              <Target size={14} style={{ color: "#4ade80" }} />
+              <Target size={14} style={{ color: "var(--primary)" }} />
             </div>
             <span
               className="text-xs font-semibold uppercase tracking-widest"
-              style={{ color: "#4ade80", letterSpacing: "0.1em" }}
+              style={{ color: "var(--primary)", letterSpacing: "0.1em" }}
             >
               Learning Objectives
             </span>
           </div>
 
-          <span className="text-xs font-semibold" style={{ color: "var(--muted-foreground)" }}>
-            <span style={{ color: completedCount > 0 ? "#4ade80" : "inherit" }}>{completedCount}</span> / {totalCount} completed
+          <span className="text-xs font-semibold" style={{ color: "var(--foreground)" }}>
+            <span style={{ color: completedCount > 0 ? "var(--primary)" : "inherit" }}>{completedCount}</span> / {totalCount} completed
           </span>
         </div>
 

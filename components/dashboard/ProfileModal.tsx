@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { User, Flame, Zap, Trophy, Award, ExternalLink, Edit3, X, CheckCircle2 } from "lucide-react";
+import { Flame, Zap, Trophy, Award, ExternalLink, Edit3, X } from "lucide-react";
 import { toast } from "sonner";
 import { DashboardUser } from "@/data/dashboard";
 
@@ -43,7 +43,7 @@ export function ProfileModal({
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-sm bg-[#18181B] border border-zinc-800 rounded-3xl p-6 shadow-2xl overflow-hidden relative"
+              className="w-full max-w-sm bg-[var(--card)] border border-[var(--border)] rounded-3xl p-6 shadow-2xl overflow-hidden relative glass-card"
             >
               {/* Close */}
               <button
@@ -55,7 +55,7 @@ export function ProfileModal({
               </button>
 
               {/* Avatar & Header */}
-              <div className="text-center pt-2 pb-4 border-b border-zinc-800">
+              <div className="text-center pt-2 pb-4 border-b border-[var(--border)]">
                 <div className="relative w-20 h-20 mx-auto mb-3">
                   {user.avatar ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -72,43 +72,43 @@ export function ProfileModal({
                   <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#18181B]" />
                 </div>
 
-                <h2 className="text-lg font-bold text-zinc-100">{user.name}</h2>
-                <p className="text-xs text-indigo-400 font-semibold mt-0.5">{user.track || "Student Challenger"}</p>
-                <p className="text-[11px] text-zinc-500 mt-0.5">{user.college || "College Student"}</p>
+                <h2 className="text-lg font-bold text-[var(--foreground)]">{user.name}</h2>
+                <p className="text-xs text-[var(--primary)] font-semibold mt-0.5">{user.track || "Student Challenger"}</p>
+                <p className="text-[11px] text-[var(--muted-foreground)] mt-0.5">{user.college || "College Student"}</p>
               </div>
 
               {/* Stats Grid */}
               <div className="grid grid-cols-2 gap-2.5 py-4">
-                <div className="p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-                  <div className="flex items-center gap-1.5 text-zinc-400 text-xs mb-1">
+                <div className="p-3 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
+                  <div className="flex items-center gap-1.5 text-[var(--muted-foreground)] text-xs mb-1">
                     <Flame size={14} className="text-orange-500" />
                     <span>Streak</span>
                   </div>
-                  <p className="text-base font-black text-zinc-100">{user.streak} Days</p>
+                  <p className="text-base font-black text-[var(--foreground)]">{user.streak} Days</p>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-                  <div className="flex items-center gap-1.5 text-zinc-400 text-xs mb-1">
+                <div className="p-3 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
+                  <div className="flex items-center gap-1.5 text-[var(--muted-foreground)] text-xs mb-1">
                     <Zap size={14} className="text-indigo-400" />
                     <span>Progress</span>
                   </div>
-                  <p className="text-base font-black text-zinc-100">Day {user.currentDay} / 60</p>
+                  <p className="text-base font-black text-[var(--foreground)]">Day {user.currentDay} / 60</p>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-                  <div className="flex items-center gap-1.5 text-zinc-400 text-xs mb-1">
+                <div className="p-3 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
+                  <div className="flex items-center gap-1.5 text-[var(--muted-foreground)] text-xs mb-1">
                     <Trophy size={14} className="text-amber-400" />
                     <span>Total XP</span>
                   </div>
-                  <p className="text-base font-black text-zinc-100">{user.totalXp.toLocaleString()} XP</p>
+                  <p className="text-base font-black text-[var(--foreground)]">{user.totalXp.toLocaleString()} XP</p>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-                  <div className="flex items-center gap-1.5 text-zinc-400 text-xs mb-1">
+                <div className="p-3 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
+                  <div className="flex items-center gap-1.5 text-[var(--muted-foreground)] text-xs mb-1">
                     <Award size={14} className="text-purple-400" />
                     <span>Level</span>
                   </div>
-                  <p className="text-base font-black text-zinc-100">Level {user.level}</p>
+                  <p className="text-base font-black text-[var(--foreground)]">Level {user.level}</p>
                 </div>
               </div>
 
@@ -118,7 +118,7 @@ export function ProfileModal({
                   <span className="text-zinc-400 font-semibold">Profile Completion</span>
                   <span className="text-indigo-400 font-bold">{user.profileCompletion}%</span>
                 </div>
-                <div className="w-full h-2 rounded-full bg-zinc-800 overflow-hidden">
+                <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: "var(--surface-fill, rgba(161,161,170,0.2))" }}>
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-indigo-600 to-purple-500 transition-all duration-500"
                     style={{ width: `${user.profileCompletion}%` }}
@@ -127,11 +127,11 @@ export function ProfileModal({
               </div>
 
               {/* Actions */}
-              <div className="flex gap-2 pt-2 border-t border-zinc-800">
+              <div className="flex gap-2 pt-2 border-t border-[var(--border)]">
                 <button
                   type="button"
                   onClick={handleViewPublicProfile}
-                  className="flex-1 py-2.5 px-3 rounded-xl border border-zinc-700 bg-zinc-900/50 hover:bg-zinc-800 text-xs font-semibold text-zinc-200 transition-colors flex items-center justify-center gap-1.5"
+                  className="flex-1 py-2.5 px-3 rounded-xl border border-[var(--border)] bg-[var(--card)] hover:opacity-80 text-xs font-semibold text-[var(--foreground)] transition-colors flex items-center justify-center gap-1.5"
                 >
                   <ExternalLink size={14} />
                   View Profile

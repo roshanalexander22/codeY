@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Clock, Zap, Star } from "lucide-react";
-import { cn, getDifficultyColor, getDifficultyStars } from "@/lib/utils";
+import { getDifficultyColor, getDifficultyStars } from "@/lib/utils";
 
 interface DayBadgeProps {
   dayId: number;

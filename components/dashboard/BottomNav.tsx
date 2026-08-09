@@ -29,7 +29,7 @@ export function BottomNav({ currentDay = 12, onOpenProfile }: BottomNavProps) {
       style={{ paddingBottom: "env(safe-area-inset-bottom, 8px)" }}
     >
       <div
-        className="w-full max-w-[480px] flex items-center justify-around px-4 py-2 bg-[#18181B]/95 border-t border-zinc-800 backdrop-blur-xl shadow-2xl"
+        className="w-full max-w-[480px] flex items-center justify-around px-4 py-2 bg-[var(--card)]/90 border-t border-[var(--border)] backdrop-blur-xl shadow-2xl glass-nav"
       >
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -41,7 +41,7 @@ export function BottomNav({ currentDay = 12, onOpenProfile }: BottomNavProps) {
                 key={item.label}
                 type="button"
                 onClick={onOpenProfile}
-                className="flex flex-col items-center gap-1 py-1.5 px-3 rounded-2xl transition-all duration-200 min-w-[56px] text-zinc-400 hover:text-zinc-200"
+                className="flex flex-col items-center gap-1 py-1.5 px-3 rounded-2xl transition-all duration-200 min-w-[56px] text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
                 aria-label="Open profile modal"
               >
                 <Icon size={20} />
@@ -60,17 +60,17 @@ export function BottomNav({ currentDay = 12, onOpenProfile }: BottomNavProps) {
               {isActive && (
                 <motion.div
                   layoutId="nav-active"
-                  className="absolute inset-0 rounded-2xl bg-indigo-600/15 border border-indigo-500/30"
+                  className="absolute inset-0 rounded-2xl bg-[var(--primary-glow)] border border-[var(--primary)]"
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
               <Icon
                 size={20}
-                className={isActive ? "text-indigo-400 relative z-10" : "text-zinc-400 relative z-10"}
+                className={isActive ? "text-[var(--primary)] relative z-10" : "text-[var(--muted-foreground)] relative z-10"}
               />
               <span
                 className={`text-[11px] font-medium relative z-10 ${
-                  isActive ? "text-indigo-300 font-semibold" : "text-zinc-400"
+                  isActive ? "text-[var(--primary)] font-semibold" : "text-[var(--muted-foreground)]"
                 }`}
               >
                 {item.label}

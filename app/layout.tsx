@@ -44,10 +44,19 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col font-sans selection:bg-[#4F46E5] selection:text-white">
+      <body
+        className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col font-sans selection:bg-[var(--primary)] selection:text-white"
+        suppressHydrationWarning
+      >
+        {/* Inline blocking script: apply dark theme BEFORE React hydration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=JSON.parse(localStorage.getItem('abtalks_user_preferences_v1')||'{}');var r=document.documentElement;r.classList.remove('light');r.classList.add('dark');if(s.accentColor){r.setAttribute('data-accent',s.accentColor);}else{r.setAttribute('data-accent','indigo');}}catch(e){}})();`,
+          }}
+        />
         <ThemeProvider>
           <ProfileProvider>
             {children}

@@ -111,7 +111,7 @@ export function ResourcesCard({ resources }: ResourcesCardProps) {
                     )}
                   </div>
                   {resource.description ? (
-                    <p className="text-xs truncate mt-0.5" style={{ color: "var(--muted-foreground)" }}>
+                    <p className="text-xs truncate mt-0.5 font-medium" style={{ color: "var(--foreground)", opacity: 0.85 }}>
                       {resource.description}
                     </p>
                   ) : (

@@ -94,7 +94,7 @@ export function DayPageClient({
   const [completedObjectivesCount, setCompletedObjectivesCount] = useState(0);
 
   // Form field completion states for SubmissionReadiness calculation
-  const [formFieldsState, setFormFieldsState] = useState({
+  const [formFieldsState] = useState({
     githubRepo: false,
     commitUrl: false,
     linkedinUrl: false,
