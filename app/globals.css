@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* ===================================================
+   DESIGN TOKENS — DARK MODE (DEFAULT)
+=================================================== */
+:root {
+  --background: #09090B;
+  --foreground: #FAFAFA;
+  --card: #18181B;
+  --card-foreground: #FAFAFA;
+  --popover: #1F1F23;
+  --popover-foreground: #FAFAFA;
+  --primary: #4F46E5;
+  --primary-hover: #6366F1;
+  --primary-foreground: #FFFFFF;
+  --primary-glow: rgba(79, 70, 229, 0.18);
+  --secondary: #27272A;
+  --secondary-foreground: #FAFAFA;
+  --muted: #27272A;
+  --muted-foreground: #A1A1AA;
+  --accent: #27272A;
+  --accent-foreground: #FAFAFA;
+  --destructive: #EF4444;
+  --destructive-foreground: #FAFAFA;
+  --border: #27272A;
+  --input: #27272A;
+  --ring: #4F46E5;
+  --radius: 0.75rem;
+
+  /* Glass surface fill — dark */
+  --glass-fill: rgba(24, 24, 27, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --surface-fill: rgba(255, 255, 255, 0.04);
+
+  --chart-1: #4F46E5;
+  --chart-2: #10B981;
+  --chart-3: #F59E0B;
+  --chart-4: #EC4899;
+  --chart-5: #8B5CF6;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(161, 161, 170, 0.2); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(161, 161, 170, 0.4); }
+
+/* Card Glow Utilities */
+.card-glow { box-shadow: 0 0 30px var(--primary-glow); }
+.streak-fire { filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6)); }
+
+/* Mobile-first touch targets */
+.touch-target { min-height: 44px; min-width: 44px; }
+
+/* Responsive container layout */
+.day-layout-grid {
+  width: 100%; max-width: 1280px;
+  margin-left: auto; margin-right: auto;
+  padding: 1rem 1rem 3rem;
+}
+@media (min-width: 1024px) {
+  .day-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    align-items: start;
+    padding-top: 1.5rem;
+  }
+}
+.day-side-column-sticky { position: relative; }
+@media (min-width: 1024px) {
+  .day-side-column-sticky { position: sticky; top: 5rem; }
+}
+
+/* ===================================================
+   ACCENT COLOR ENGINE
+=================================================== */
+html[data-accent="indigo"] {
+  --primary: #4F46E5;
+  --primary-hover: #6366F1;
+  --primary-glow: rgba(79, 70, 229, 0.18);
+  --ring: #4F46E5;
+}
+html[data-accent="emerald"] {
+  --primary: #10B981;
+  --primary-hover: #34D399;
+  --primary-glow: rgba(16, 185, 129, 0.18);
+  --ring: #10B981;
+}
+html[data-accent="blue"] {
+  --primary: #2563EB;
+  --primary-hover: #60A5FA;
+  --primary-glow: rgba(37, 99, 235, 0.18);
+  --ring: #2563EB;
+}
+html[data-accent="amber"] {
+  --primary: #F59E0B;
+  --primary-hover: #FBBF24;
+  --primary-glow: rgba(245, 158, 11, 0.18);
+  --ring: #F59E0B;
+}
+
+/* Dynamic accent overrides — all tailwind accent/indigo classes follow --primary */
+.text-indigo-300, .text-indigo-400, .text-indigo-500, .text-indigo-600 { color: var(--primary) !important; }
+.bg-indigo-600, .bg-indigo-500 { background-color: var(--primary) !important; }
+.bg-indigo-600\/20, .bg-indigo-500\/10, .bg-indigo-500\/20, .bg-indigo-950\/30, .bg-indigo-600\/15, .bg-indigo-600\/30 { background-color: var(--primary-glow) !important; }
+.border-indigo-500, .border-indigo-500\/30, .border-indigo-500\/40 { border-color: var(--primary) !important; }
+.focus\:border-indigo-500:focus, .focus\:ring-indigo-500:focus { border-color: var(--primary) !important; outline-color: var(--primary) !important; }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--primary) !important; }
+input[type="checkbox"]:checked, input[type="radio"]:checked { accent-color: var(--primary) !important; }
+
+/* ===================================================
+   LIQUID GLASS SYSTEM — 4-TIER ARCHITECTURE
+=================================================== */
+/* Tier 2: Standard Glass Surface & Cards */
+.glass-surface {
+  background: rgba(24, 24, 27, 0.8);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-card {
+  background: rgba(24, 24, 27, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* Tier 3: Elevated Glass Panels */
+.glass-elevated {
+  background: rgba(30, 30, 35, 0.9);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Tier 4: Floating Nav & Portals / Modals */
+.glass-nav {
+  background: rgba(9, 9, 11, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-modal {
+  background: rgba(18, 18, 20, 0.92);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Body & page backgrounds */
+body,
+main,
+.day-page-wrapper {
+  background-color: var(--background) !important;
+  background-image: radial-gradient(ellipse at 50% 0%, var(--primary-glow), transparent 70%) !important;
+  color: var(--foreground) !important;
+}
+
+/* ===================================================
+   ACCESSIBILITY & LAYOUT MODES
+=================================================== */
+html[data-contrast="high"] {
+  --border: #71717A !important;
+  --muted-foreground: #F4F4F5 !important;
+}
+html[data-contrast="high"] .border,
+html[data-contrast="high"] [style*="border"] { border-color: #71717A !important; }
+
+html[data-compact="true"] .card,
+html[data-compact="true"] .p-5,
+html[data-compact="true"] .p-6 { padding: 0.75rem 1rem !important; }
+html[data-compact="true"] .space-y-4 > * + * { margin-top: 0.5rem !important; }
+
+html[data-text-scale="large"] { font-size: 108%; }
+
+html[data-reduced-motion="true"] *,
+html[data-reduced-motion="true"] *::before,
+html[data-reduced-motion="true"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
